@@ -1,97 +1,70 @@
-# SE-project - Rental management system
+# Getting Started with Create React App
 
-## Team members (team 24)
-- Sahithi Vasireddy - svasire@iu.edu
-- Tejaswy Ghanta - lghanta@iu.edu
-- Vanita Lalwani - vlalwani@iu.edu
-- Zachary Orth - zorth@iu.edu
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Project
+## Available Scripts
 
-Rental & Services Management System is a way for customers/people and the 
-management (person who is renting/providing service) to interact in such a way that it 
-simplifies and organizes tasks related to their property. The system should encompass 
-functionalities including, but not limited to, different rental items such as apartments, 
-cars, boats and services such as plumbing, pest control and so on. More specifics about 
-the rental & services management details would be described in the feature page. Also 
-the website should have different views for management and customers. The website 
-should also provide the way of interacting with customers & management. Customers 
-should be able to rate the rented items or services. 
-For more details visit this website. Although this website contains a wide variety of 
-options, you would be asked to build only some of the functionalities. 
-https://us.sulekha.com/ 
+In the project directory, you can run:
 
-Views: 
-1. The Renter: 
+### `npm start`
 
-a. A customer can choose the item/place for rent e.g. Car, House, 
-Boat, apply offers, make payments, cancel rental bookings, lodge 
-complaints, apply for refund.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-2. The Owner: 
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-a. The renter should be able to post the item for rent. View the 
-information of the customer who rented the items/services. 
+### `npm test`
 
-3. The Admin: 
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-a. The Admin view should enable the admin to approve the item 
-added for rent, accept customer complaints and route it to the 
-appropriate renter, issue a refund to the renter. 
+### `npm run build`
 
-4. Public facing View: 
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-a. This is the landing page of the website where anyone can view the 
-items for rent, search & filter and be able to see the ratings & 
-reviews 
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-Core Features 
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-1. Login & Registration (User Specific) 
+### `npm run eject`
 
-a. Automatically generate unique ID (username) for each user 
-b. Login using either email address or username 
-c. Provide login using OAuth providers (Google, Facebook etc.) 
-d. Forgot Password/username feature -
-i.  Show Security Questions 
-ii. Send a one-time password (OTP) either through email, text 
-message, 3rd party OTP provider (like Duo) 
-iii. Prompt for setting new password, if successful 
-iv. If a user changed the password recently, show the image captcha 
-for the next login 
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-2. Search, Filter & Recommendation 
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-a. Users should be able to search for Rental items or services by applying 
-the filters such as ratings, distance, owner, category, brand etc., 
-b. Recommendation should be done to the users based on the rented items 
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-3. Maps & Multimedia 
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-a. The person who is viewing the page should be able to locate the place of 
-the item to be rented 
-b. Owner should be able to upload the images/video of the item and 
-customers should be able to view them 
-c. Similarly, owner should be able to view the location of the customer in the 
-maps 
+## Learn More
 
-4. View specific functionalities 
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-a. The public view remains the same for the users and the person who is just 
-browsing through. 
-b. Once the user logs in, the user should be able to rate & review the item, 
-view the past rented items, lodge complaints etc., 
-c. The Admin view should enable the admin to approve the item added for 
-rent, accept customer complaints and route it to the appropriate renter, 
-issue a refund to the renter. 
-d. The renter should be able to make the payment for the item/services 
-e. Email notifications to the renter and the owner when the payment is made 
-f. Option to apply coupon codes for the renter 
-g. Lodge the complaint and request for refund (Ticket system) 
-5. Messaging & Chat 
-a. The renter should be able to chat with the owner 
-b. The renter should be able to chat with the admin (you can simulate using 
-the bot) 
-c. Ability to view the message/person status (online, delivered, read, typing, 
-etc.) 
-d. Group chat with the Admin/Owner/Customer 
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
