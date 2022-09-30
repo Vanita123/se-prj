@@ -32,25 +32,38 @@ app.use(
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "password",
-    database: "LoginSystem",
+    password: "seprj24",
+    database: "paw",
 });
+db.connect((err) => {
+    if (err) {
+      console.log("Database Connection Failed !!!", err);
+    } else {
+      console.log("connected to Database");
+    }
+});
+  
 
-app.post("/register", (req, res) => {
+app.post("/signin", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
+    const fname = req.body.fname;
+    const lname = req.body.lname;
+    const email = req.body.email;
+    const phone = req.body.phone;
     console.log(username);
     console.log(password);
 
     db.query(
-        "INSERT INTO users (username, password) VALUES (?,?)",
+        "INSERT INTO Security (fname,lname,email,phone,password) VALUES (?,?)",
         [username, password],
         (err, result) => {
             console.log(err);
         }
     );
 });
-app.get("/login", (req, res) => {
+
+/*app.get("/login", (req, res) => {
     if (req.session.user) {
         res.send({ loggedIn: true, user: req.session.user });
     } else {
@@ -84,7 +97,7 @@ app.post("/login", (req, res) => {
             }
         }
     );
-});
-app.listen(3001, () => {
+});*/
+app.listen(3000, () => {
     console.log("running server");
 }); 
