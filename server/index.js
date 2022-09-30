@@ -9,7 +9,7 @@ const session = require("express-session");
 app.use(express.json());
 app.use(
     cors({
-        origin: ["http://localhost:3000"],
+        origin: ["http://localhost:3001"],
         methods: ["GET", "POST"],
         credentials: true,
     })
@@ -32,7 +32,7 @@ app.use(
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "seprj24",
+    password: "projectse",
     database: "paw",
 });
 db.connect((err) => {
@@ -45,19 +45,22 @@ db.connect((err) => {
   
 
 app.post("/signin", (req, res) => {
-    const password = req.body.password;
+    const username = 'vanita';
+    const password = '1234';
     const fname = req.body.fname;
     const lname = req.body.lname;
     const email = req.body.email;
-    const sq1 = req.body.sq1;
-    const sq2 = req.body.sq2;
-    const phone = req.body.phone;
+    const phno = req.body.phone;
+    const role = req.body.role;
+    const address = '';
+    const roleid = 1
     console.log(username);
     console.log(password);
 
     db.query(
-        "INSERT INTO Security (fname,lname,email,phone, sq1, sq2,password) VALUES (?,?,?,?,?,?,?,?)",
-        [fname,lname,email,phone, sq1, sq2, password],
+
+        "INSERT INTO Users (username, fname, lname, email, phno, password, address, role, roleid) VALUES (?,?,?,?,?,?,?,?,?)",
+        [username, fname, lname, email, phno, password, address, role, roleid],
         (err, result) => {
             console.log(err);
         }
