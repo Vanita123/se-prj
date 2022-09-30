@@ -45,25 +45,26 @@ db.connect((err) => {
   
 
 app.post("/signin", (req, res) => {
-    const username = req.body.username;
     const password = req.body.password;
     const fname = req.body.fname;
     const lname = req.body.lname;
     const email = req.body.email;
+    const sq1 = req.body.sq1;
+    const sq2 = req.body.sq2;
     const phone = req.body.phone;
     console.log(username);
     console.log(password);
 
     db.query(
-        "INSERT INTO Security (fname,lname,email,phone,password) VALUES (?,?)",
-        [username, password],
+        "INSERT INTO Security (fname,lname,email,phone, sq1, sq2,password) VALUES (?,?,?,?,?,?,?,?)",
+        [fname,lname,email,phone, sq1, sq2, password],
         (err, result) => {
             console.log(err);
         }
     );
 });
 
-/*app.get("/login", (req, res) => {
+app.get("/signin", (req, res) => {
     if (req.session.user) {
         res.send({ loggedIn: true, user: req.session.user });
     } else {
@@ -72,32 +73,34 @@ app.post("/signin", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
+  const username = req.body.username;
+  const password = req.body.password;
 
-    db.query(
-        "SELECT * FROM users WHERE username = ?;",
-        username,
-        (err, result) => {
-            if (err) {
-                res.send({ err: err });
-            }
+  db.query(
+    "SELECT * FROM users WHERE username = ?;",
+    username,
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
 
-            if (result.length > 0) {
-                if (response) {
-                    req.session.user = result;
-                    console.log(req.session.user);
-                    res.send(result);
-                } else {
-                    res.send({ message: "Wrong username/password combination!" });
-                }
+      if (result.length > 0) {
+        bcrypt.compare(password, result[0].password, (error, response) => {
+          if (response) {
+            req.session.user = result;
+            console.log(req.session.user);
+            res.send(result);
+          } else {
+            res.send({ message: "Wrong username/password combination!" });
+          }
+        });
+      } else {
+        res.send({ message: "User doesn't exist" });
+      }
+    }
+  );
+});
 
-            } else {
-                res.send({ message: "User doesn't exist" });
-            }
-        }
-    );
-});*/
 app.listen(3000, () => {
     console.log("running server");
 }); 

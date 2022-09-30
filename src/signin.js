@@ -9,8 +9,10 @@ export function Signin(props){
     const [lname, setLname] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhoneNo] = useState("");
+    const [sq2 , setSq2] = useState("");
+    const [sq1 , setSq1] = useState("");
     const [password , setPassword] = useState("");
-
+    
 
     
     const [ profile, setProfile ] = useState(
@@ -35,7 +37,10 @@ export function Signin(props){
         fname: fname,
         email: email,
         phone : phone,
+        sq1: sq1,
+        sq2: sq2,
         password: password,
+
         
       }).then((response) => {
        console.log(response)
@@ -74,11 +79,11 @@ return (
       <br></br>
       <label htmlFor="phno"><b>Security question 1 - What would you name your pet?    </b></label>
       <br></br>
-      <input type="text"  maxLength={10} placeholder="Enter answer" name="sq1" value= {profile.sq1} onChange = {handleChange} required/>
+      <input type="text"  onChange={(e) => {setSq1(e.target.value);}} maxLength={10} placeholder="Enter answer" name="sq1" value= {profile.sq1} onChange = {handleChange} required/>
       <br></br>
       <label htmlFor="phno"><b>Security question 2 - What would you name your pet home?    </b></label>
       <br></br>
-      <input type="text" maxLength={10} placeholder="Enter answer" name="sq2" value= {profile.sq2} onChange = {handleChange} required/>
+      <input type="text" onChange={(e) => {setSq2(e.target.value);}} maxLength={10} placeholder="Enter answer" name="sq2" value= {profile.sq2} onChange = {handleChange} required/>
       <br></br>
       <label htmlFor="phno"><b>Enter password    </b></label>
       
