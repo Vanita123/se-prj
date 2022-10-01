@@ -5,6 +5,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const { generateFromEmail, generateUsername } = require("unique-username-generator");
+
 
 app.use(express.json());
 app.use(
@@ -32,7 +34,7 @@ app.use(
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "projectse",
+    password: "password",
     database: "paw",
 });
 db.connect((err) => {
@@ -45,15 +47,18 @@ db.connect((err) => {
   
 
 app.post("/signin", (req, res) => {
-    const username = 'vanita';
-    const password = '1234';
+    const password = req.body.password;
     const fname = req.body.fname;
     const lname = req.body.lname;
     const email = req.body.email;
     const phno = req.body.phone;
     const role = req.body.role;
-    const address = '';
-    const roleid = 1
+    const address = req.body.address;
+    const roleid = req.body.roleid;
+    const username = generateFromEmail(
+      email,
+      3
+    );
     console.log(username);
     console.log(password);
 
@@ -62,7 +67,7 @@ app.post("/signin", (req, res) => {
         "INSERT INTO Users (username, fname, lname, email, phno, password, address, role, roleid) VALUES (?,?,?,?,?,?,?,?,?)",
         [username, fname, lname, email, phno, password, address, role, roleid],
         (err, result) => {
-            console.log(err);
+            console.log(err,result);
         }
     );
 });
@@ -104,6 +109,6 @@ app.post("/login", (req, res) => {
   );
 });
 
-app.listen(3000, () => {
+app.listen(3001, () => {
     console.log("running server");
 }); 
