@@ -3,22 +3,27 @@ const mysql = require("mysql");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+//const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const { generateFromEmail, generateUsername } = require("unique-username-generator");
+const { UNSAFE_NavigationContext } = require("react-router-dom");
 
 
 app.use(express.json());
+console.log('working');
 app.use(
     cors({
-        origin: ["http://localhost:3001"],
+        origin: ["http://localhost:3000"],
         methods: ["GET", "POST"],
         credentials: true,
     })
-);
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
 
+);
+console.log('working');
+//app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+console.log('working');
 app.use(
     session({
         key: "userId",
@@ -34,7 +39,7 @@ app.use(
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "password",
+    password: "projectse",
     database: "paw",
 });
 db.connect((err) => {
@@ -47,32 +52,38 @@ db.connect((err) => {
   
 
 app.post("/signin", (req, res) => {
-    const password = req.body.password;
+
     const fname = req.body.fname;
     const lname = req.body.lname;
     const email = req.body.email;
-    const phno = req.body.phone;
-    const role = req.body.role;
-    const address = req.body.address;
-    const roleid = req.body.roleid;
     const username = generateFromEmail(
       email,
       3
     );
+    const phno = req.body.phone;
+    const role = req.body.role;
+    
+    const sq1 =  req.body.sq1;
+    const sq2 =  req.body.sq2;
+    const address = '';
+    //const roleid = 1
+    const password = '1234';
     console.log(username);
     console.log(password);
+    console.log(fname);
 
     db.query(
 
-        "INSERT INTO Users (username, fname, lname, email, phno, password, address, role, roleid) VALUES (?,?,?,?,?,?,?,?,?)",
-        [username, fname, lname, email, phno, password, address, role, roleid],
+        "INSERT INTO Users (username, fname, lname, email, phno, password, address, security_ques, sqans, role) VALUES (?,?,?,?,?,?,?,?,?,?)",
+        [username, fname, lname, email, phno, password, address, sq1, sq2, role, roleid],
         (err, result) => {
             console.log(err,result);
         }
     );
 });
 
-app.get("/signin", (req, res) => {
+app.post("/signin", (req, res) => {
+    
     if (req.session.user) {
         res.send({ loggedIn: true, user: req.session.user });
     } else {
@@ -109,6 +120,6 @@ app.post("/login", (req, res) => {
   );
 });
 
-app.listen(3001, () => {
+app.listen(3000, () => {
     console.log("running server");
 }); 

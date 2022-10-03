@@ -7,7 +7,7 @@ export function Login(){
   const [password, setPassword] = useState("");
 
   const login = () => {
-    axios.post("http://localhost:3001/login", {
+    axios.post("http://localhost:3000/login", {
       username: username,
       password: password,
     }).then((response) => {
