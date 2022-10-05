@@ -61,13 +61,13 @@ app.post("/signin", (req, res) => {
       3
     );
     const phno = req.body.phone;
-    const role = req.body.role;
+    //const role = req.body.role;
     const sec_ques1 = 'What would you name your pet?';
     const sec_ques2 = 'What would you name your pet home?';
     const sq1 =  req.body.sq1;
     const sq2 =  req.body.sq2;
     const address = '';
-    const roleid = 1
+    //const roleid = 1
     const password = '1234';
     console.log(username);
     console.log(password);
@@ -75,23 +75,23 @@ app.post("/signin", (req, res) => {
 
     db.query(
 
-        "INSERT INTO Users (username, fname, lname, email, phno, password, address, role, roleid) VALUES (?,?,?,?,?,?,?,?,?)",
-        [username, fname, lname, email, phno, password, address, role, roleid],
+        "INSERT INTO Users (username, fname, lname, email, phno, password, address) VALUES (?,?,?,?,?,?,?)",
+        [username, fname, lname, email, phno, password, address],
 
         (err, result) => {
             console.log(err,result);
         }
     );
 
-    db.query(
+  //   db.query(
 
-      "INSERT INTO Security (username, sq1,sq2, answer1, answer2) VALUES (?,?,?,?,?)",
-        [username, sec_ques1, sec_ques2, sq1, sq2],
+  //     "INSERT INTO Security (username, sq1,sq2, answer1, answer2) VALUES (?,?,?,?,?)",
+  //       [username, sec_ques1, sec_ques2, sq1, sq2],
 
-      (err, result) => {
-          console.log(err,result);
-      }
-  );
+  //     (err, result) => {
+  //         console.log(err,result);
+  //     }
+  // );
 
    
 });
