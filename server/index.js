@@ -39,7 +39,7 @@ app.use(
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "projectse",
+    password: "password",
     database: "paw",
 });
 db.connect((err) => {
@@ -58,20 +58,20 @@ app.post("/signin", (req, res) => {
     const email = req.body.email;
     const username = generateFromEmail(
       email,
-      3
+      4
     );
     const phno = req.body.phone;
     const role = req.body.role;
-    const sec_ques1 = 'What would you name your pet?';
-    const sec_ques2 = 'What would you name your pet home?';
+    const sec_ques1 = req.body.SQ1;
+    const sec_ques2 = req.body.SQ2;
     const sq1 =  req.body.sq1;
     const sq2 =  req.body.sq2;
-    const address = '';
-    const roleid = 1
-    const password = '1234';
+    const address = req.body.address;
+    const roleid = req.body.roleid
+    const password = req.body.password;
     console.log(username);
-    console.log(password);
-    console.log(fname);
+    // console.log(password);
+    // console.log(fname);
 
     db.query(
 
@@ -85,7 +85,7 @@ app.post("/signin", (req, res) => {
 
     db.query(
 
-      "INSERT INTO Security (username, sq1,sq2, answer1, answer2) VALUES (?,?,?,?,?)",
+      "INSERT INTO Security (username, sq1, sq2, answer1, answer2) VALUES (?,?,?,?,?)",
         [username, sec_ques1, sec_ques2, sq1, sq2],
 
       (err, result) => {
