@@ -28,7 +28,7 @@ export function Signin(props){
         fname: profile.fname,
         lname : profile.lname,
         email: profile.email,
-        phone: profile.phone,
+        phone: profile.phno,
         role: profile.role,
         sq1: profile.sq1,
         sq2: profile.sq2,
