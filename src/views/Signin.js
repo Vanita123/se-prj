@@ -15,7 +15,11 @@ export function Signin(props){
             phno : '',
             role : '',
             sq1 : '',
-            sq2 : ''
+            sq2 : '',
+            country: '',
+            state: '',
+            county: '',
+
 
         }
     );
@@ -32,7 +36,11 @@ export function Signin(props){
         role: profile.role,
         sq1: profile.sq1,
         sq2: profile.sq2,
+        country: profile.country,
+        state: profile.state,
+        county: profile.county,
         password: '',
+
 
         
       }).then((response) => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 import '../styles/form.css';
 
 export function Search(){
@@ -13,6 +13,8 @@ export function Search(){
         other:[],
         searchQuery : ''
     });
+
+
 
     const handleChange = (event) => {
         console.log(filters);
@@ -35,16 +37,33 @@ export function Search(){
         
       };
 
-      const handleSubmit = () => {
-          console.log(filters);
+      const handleSubmit = (event) => {
+            console.log(filters);
+            axios.post("/search", {
+              pet: filters.pet,
+              size : filters.size,
+              temp: filters.temp,
+              breed: filters.breed,
+              color: filters.color,
+              age: filters.age,
+              searchQuery: filters.searchQuery,
+              other: filters.other,
+            }).then((response) => {
+             console.log(response);
+            });
+              // prevents the submit button from refreshing the page
+              event.preventDefault();
+
+            };
+      
         //Check the filters output in the console to get the data
-      };
+
 
 return(
     <div>
         <form class="nosubmit">
   <input className="nosubmit" name="searchQuery" type="search" placeholder="Search..." onChange = {handleChange}/>
-  <button onClick={handleSubmit} className="button button-primary button-wide-mobile button-sm">Search</button>
+  <button type="submit" onClick={handleSubmit} className="button button-primary button-wide-mobile button-sm">Search</button>
 </form>
 <div className='search-area'>
     <div className='filters'>
