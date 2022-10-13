@@ -208,8 +208,13 @@ app.post("/signin", (req, res) => {
     const sq1 =  req.body.sq1;
     const sq2 =  req.body.sq2;
     const address = req.body.address;
+    const country = req.body.country;
+    const state = req.body.state;
+    const county = req.body.county;
     const roleid = 1
-    console.log(username);
+    console.log(country);
+    console.log(state);
+    console.log(county);
     password = req.body.password;
 
     bcrypt.hash(req.body.password, 10, function(err, hash) {
@@ -271,6 +276,27 @@ app.post("/login", (req, res) => {
       }
     }
   );
+});
+
+app.post("/search", (req, res) => {
+    const pet = req.body.pet;
+    const size = req.body.size;
+    const temp = req.body.temp;
+    const breed = req.body.breed;
+    const color = req.body.color;
+    const age = req.body.age;
+    const other = req.body.other;
+    const searchQuery = req.body.searchQuery;
+    console.log('pet is',pet);
+    console.log('size is',size);
+    console.log('temparment is',temp);
+    console.log('breed is', breed);
+    console.log('color is',color);
+    console.log('age of the pet is', age);
+    console.log('other criterias are', other);
+    console.log('search Query is', searchQuery);
+
+
 });
 
 app.listen(3000, () => {
