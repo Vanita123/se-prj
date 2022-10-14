@@ -40,14 +40,15 @@ export function Search(){
       const handleSubmit = (event) => {
             console.log(filters);
             axios.post("/search", {
-              pet: filters.pet,
+                filter : filters
+              /*pet: filters.pet,
               size : filters.size,
               temp: filters.temp,
               breed: filters.breed,
               color: filters.color,
               age: filters.age,
               searchQuery: filters.searchQuery,
-              other: filters.other,
+              other: filters.other,*/
             }).then((response) => {
              console.log(response);
             });

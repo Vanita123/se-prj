@@ -279,7 +279,10 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/search", (req, res) => {
+
+    /*const output = rows;
     const pet = req.body.pet;
+    
     const size = req.body.size;
     const temp = req.body.temp;
     const breed = req.body.breed;
@@ -287,17 +290,63 @@ app.post("/search", (req, res) => {
     const age = req.body.age;
     const other = req.body.other;
     const searchQuery = req.body.searchQuery;
-    console.log('pet is',pet);
+    console.log('other requirements are', other);
+    console.log('search query is', searchQuery);
+
+    let query =
+     "SELECT * FROM pets WHERE " +
+     "name IN (" + pet.map(name => `'${name}'`).join() + ") " +
+     "AND species IN (" + breed.map(species => `'${species}'`).join() + ") " +
+     "AND age IN (" + age.map(age => `'${age}'`).join() + ")" +
+     "AND breed IN (" + breed.map(breed => `'${bree.d}'`).join() + ")" +
+     "AND size IN (" + size.map(size => `'${size}'`).join() + ")" +
+     "AND temperment IN (" + temp.map(temperment => `'${temperment}'`).join() + ")" +
+     "AND color IN (" + color.map(color => `'${color}'`).join() + ")";
+
+     db.query(query, (err, rows) => {
+      if (err) {
+          console.log("internal error", err);
+          return;
+      }*/
+      //setOutput(rows);
+  
+
+    /*console.log('pet is',pet);
     console.log('size is',size);
     console.log('temparment is',temp);
     console.log('breed is', breed);
     console.log('color is',color);
     console.log('age of the pet is', age);
     console.log('other criterias are', other);
-    console.log('search Query is', searchQuery);
+    console.log('search Query is', searchQuery);*/
 
+     const filter=req.body.filter;
+     console.log(filter);
+
+
+     let query =
+     "SELECT * FROM pets WHERE " +
+     "species IN (" + filter.pet.map(name => `'${name}'`).join() + ") " 
+     /*+ "AND species IN (" + filter.breed.map(species => `'${species}'`).join() + ") " +
+     "AND age IN (" + filter.age.map(age => `'${age}'`).join() + ")" +
+     "AND breed IN (" + filter.breed.map(breed => `'${breed}'`).join() + ")" +
+     "AND size IN (" + filter.size.map(size => `'${size}'`).join() + ")" +
+     "AND temperment IN (" + filter.temp.map(temperment => `'${temperment}'`).join() + ")" +
+     "AND color IN (" + filter.color.map(color => `'${color}'`).join() + ")";*/
+
+     console.log(query);
+     db.query(query, (err, rows) => {
+      if (err) {
+          console.log("internal error", err);
+          return;
+      }
+      console.log(rows);
+      //setOutput(rows);
+      res.send(rows);
+    });
 
 });
+
 
 app.listen(3000, () => {
     console.log("running server");
