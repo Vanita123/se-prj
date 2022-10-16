@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FormLabel from '../components/elements/FormLabel';
 import '../styles/form.css';
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 export function Login(){
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loginStatus, setLoginStatus] = useState("");
+
   const navigate = useNavigate();
   
   const login = () => {
@@ -14,16 +16,33 @@ export function Login(){
       username: username,
       password: password,
     }).then((response) => {
-     console.log(response)
-    });
+      console.log(response)
+      console.log(response.data);
+      console.log(response.data.message);
+      if(response.data.message){
+      setLoginStatus(response.data.message);
+    } else {
+      setLoginStatus(response.data[0].username);
+    }
+  });
+};
+
+useEffect(() => {
+  axios.get("http://localhost:3000/login").then((response) => {
+    if (response.data.loggedIn === true) {
+      setLoginStatus(response.data.user[0].username);
+      console.log(loginStatus);
+    }
+  });
+}, []);
 
     
-    navigate("/search");
-  };
+    //navigate("/search");
+  
 
-  const forgotPassword = ()=>{
+  /*const forgotPassword = ()=>{
     alert('Forgot password - yet to implement')
-  }
+  }*/
 
 return (
     <div className='form-content'>
@@ -53,7 +72,8 @@ return (
 
      </form>
     </div>
+
 )
-}
+};
 
 export default Login;

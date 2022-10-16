@@ -227,6 +227,7 @@ app.post("/signin", (req, res) => {
 
           (err, result) => {
               console.log(err,result);
+              //res.send(result);
           }
       );
 
@@ -237,9 +238,12 @@ app.post("/signin", (req, res) => {
 
         (err, result) => {
             console.log(err,result);
+            //res.send(result);
         }
     );
     });  
+
+
 });
 
 app.post("/signin", (req, res) => {
@@ -258,11 +262,15 @@ app.post("/login", (req, res) => {
     "SELECT * FROM Users WHERE username = ?;",
     [username],
     (err, result) => {
+      console.log(result);
       if (err) {
         res.send({ err: err });
       }
       if (result.length > 0) {
+        console.log(result[0].password);
+
         bcrypt.compare(password, result[0].password, (error, response) => {
+          console.log(response);
           if (response) {
             req.session.user = result;
             console.log(req.session.user);

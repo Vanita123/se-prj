@@ -19,6 +19,7 @@ export function Signin(props){
             country: '',
             state: '',
             county: '',
+            pswd : ''
 
 
         }
@@ -39,17 +40,17 @@ export function Signin(props){
         country: profile.country,
         state: profile.state,
         county: profile.county,
-        password: '',
+        password: profile.pswd
 
 
-        
       }).then((response) => {
-       console.log(response)
+       console.log(response);
+       console.log(response.data);
       });
         // prevents the submit button from refreshing the page
         event.preventDefault();
         console.log(profile); //all the form details are here
-        navigate("/search");
+        //navigate("/search");
       };
 
 return (
