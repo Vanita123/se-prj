@@ -16,9 +16,6 @@ export function Login(){
       username: username,
       password: password,
     }).then((response) => {
-      console.log(response)
-      console.log(response.data);
-      console.log(response.data.message);
       if(response.data.message){
       setLoginStatus(response.data.message);
     } else {

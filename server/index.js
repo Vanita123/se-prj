@@ -274,6 +274,7 @@ app.post("/login", (req, res) => {
           if (response) {
             req.session.user = result;
             console.log(req.session.user);
+            
             res.send(result);
           } else {
             res.send({ message: "Wrong username/password combination!" });
