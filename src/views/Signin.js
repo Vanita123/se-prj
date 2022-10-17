@@ -34,15 +34,13 @@ export function Signin(props){
         lname : profile.lname,
         email: profile.email,
         phone: profile.phno,
-        role: profile.role,
+        role: profile.role,//role_id?
         sq1: profile.sq1,
         sq2: profile.sq2,
         country: profile.country,
         state: profile.state,
         county: profile.county,
         password: profile.pswd
-
-
       }).then((response) => {
        console.log(response);
        console.log(response.data);
@@ -70,9 +68,9 @@ return (
       <input type="number"  maxLength={10} placeholder="Enter phone number" name="phno" value= {profile.phno} onChange = {handleChange}  required/>
       <br></br>
       <label htmlFor="role"><b>Role   </b></label>
-      <input type="radio" id="html" name="role" value="renter" checked = {profile.role === 'renter'} onChange = {handleChange} />
+      <input type="radio" id="html" name="role" value={1} onChange = {handleChange} />
 <label htmlFor="html">Renter</label>
-<input type="radio" id="css" name="role" value="owner" checked = {profile.role === 'owner'} onChange = {handleChange}/>
+<input type="radio" id="css" name="role" value={2} onChange = {handleChange}/>
 <label htmlFor="css">Owner</label><br></br>
       <br></br>
       <label htmlFor="phno"><b>Security question 1 - What would you name your pet?    </b></label>

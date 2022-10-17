@@ -13,8 +13,66 @@ export function Search(){
         other:[],
         searchQuery : ''
     });
+    const [results, setResults] = useState([
+        {'key':1,'key1':'val1','key2':'val2','key3':'val3'},
+        {'key':2,'key1':'val1','key2':'val2','key3':'val3'},
+        {'key':3,'key1':'val1','key2':'val2','key3':'val3'}]);
 
+//     const RenderResults = () => {
+//         console.log(results)
+//         const keys = Object.keys(results[0]);
+//         console.log(keys);
+//         return (
+//             <div>
+//         <table>
+//         <thead>
+//           <tr>
+//            {keys.map(heading => {
+//              return <th key={heading}>{heading}</th>
+//            })}
+//          </tr>
+//        </thead>
+//         <tbody>
+//         {results.map((row, index) => {
+//      return <tr key={index}>
+//         {keys.map((key, index) => {
+//      return (
+//                 <td key={row[key]}>{row[key]} <br/></td>
+//          )
+//    })}
+//       </tr>;
+//   })}
+//         </tbody>
+//     </table>
+//             </div>
+//         )
+//     };
 
+    const RenderResults = () => {
+        console.log(results)
+        const keys = Object.keys(results[0]);
+        console.log(keys);
+        return (
+            <div>
+        <table>
+        
+        <tbody>
+        {results.map((row, index) => {
+     return <tr key={index}>
+         <td key={index}> {
+             keys.map((key, index) => {
+                 return (
+                     <h5> {key} : {row[key]}<br/></h5>  
+                 )
+             })
+         }</td>
+      </tr>;
+  })}
+        </tbody>
+    </table>
+            </div>
+        )
+    };
 
     const handleChange = (event) => {
         console.log(filters);
@@ -33,8 +91,6 @@ export function Search(){
         }
         else
             setFilters({ ...filters, [name]:value });
-
-        
       };
 
       const handleSubmit = (event) => {
@@ -50,19 +106,17 @@ export function Search(){
               searchQuery: filters.searchQuery,
               other: filters.other,*/
             }).then((response) => {
-             console.log(response);
+             setResults(response.data);
             });
               // prevents the submit button from refreshing the page
               event.preventDefault();
 
             };
-      
-        //Check the filters output in the console to get the data
 
 
 return(
     <div>
-        <form class="nosubmit">
+        <form className="nosubmit">
   <input className="nosubmit" name="searchQuery" type="search" placeholder="Search..." onChange = {handleChange}/>
   <button type="submit" onClick={handleSubmit} className="button button-primary button-wide-mobile button-sm">Search</button>
 </form>
@@ -159,7 +213,9 @@ return(
         <label htmlFor='brown'>Vaccinated</label>
         <br></br>
     </div>
-    <div className='results'> <h3>Results section</h3></div>
+    <div className='results'> <h3>Results section</h3>
+    {results.length > 0 ? <RenderResults/> : <h3>Nothing there</h3> }
+    </div>
 </div>
     </div>
 )

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FormLabel from '../components/elements/FormLabel';
 import '../styles/form.css';
@@ -16,36 +16,36 @@ export function Login(){
       username: username,
       password: password,
     }).then((response) => {
+      console.log('response');
+      console.log(response);
       if(response.data.message){
-      setLoginStatus(response.data.message);
+      setLoginStatus('error');
     } else {
-      setLoginStatus(response.data[0].username);
+      setLoginStatus('');
+      //navigate('/view',{state:{ name: response.data[0].fname, view: response.data[0].roleid}});
     }
   });
+  navigate('/search');
 };
 
 useEffect(() => {
   axios.get("http://localhost:3000/login").then((response) => {
-    if (response.data.loggedIn === true) {
-      setLoginStatus(response.data.user[0].username);
-      console.log(loginStatus);
-    }
+   console.log(response);
   });
 }, []);
 
-    
-    //navigate("/search");
-  
-
-  /*const forgotPassword = ()=>{
-    alert('Forgot password - yet to implement')
-  }*/
+// const forgotPassword = ()=>{
+//     alert('Forgot password - yet to implement')
+//   }
 
 return (
     <div className='form-content'>
         <FormLabel children = {<h4>User login form</h4>}
   labelHidden = {false}
   id = {'login'}/>
+  {loginStatus == 'error' ? (<div className='form-element'>
+      <h4 htmlFor="error"><b>Invalid credentials. Please re-check the details or click on Forgot Password link below!  </b></h4>
+      </div>) : null}
         <form action="" method="post" >
       <div className='form-element'>
       <label htmlFor="uname" ><b>Username   </b></label>
@@ -61,7 +61,7 @@ return (
       <div className='form-element'>
       <input className="form-input" type="password" onChange={(e) => {setPassword(e.target.value);}}placeholder="Enter password" name="password" required/>
       </div>
-    
+      
       <div className='form-element'>
       <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={login}>Login</button>
       <a href="/forgotpassword" target="_blank">Forgot password?</a>

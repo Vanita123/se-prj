@@ -14,6 +14,7 @@ import Login from './views/Login';
 import Signin from './views/Signin';
 import Search from './views/Search';
 import GSignIn from './views/GSignIn';
+import View from './views/View';
 
 const App = () => {
 
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/signin" element={<AppRoute exact path="/" component={Signin} layout={LayoutCustom} />}  />
           <Route path="/gsignin" element={<AppRoute exact path="/" component={GSignIn} layout={LayoutCustom} />}  />
           <Route path="/search" element={<AppRoute exact path="/" component={Search} layout={LayoutCustom} />}  />
+          <Route path="/view" element={<AppRoute exact path="/" component={View} layout={LayoutCustom} />}  />
           </Routes>
   
       )} />
