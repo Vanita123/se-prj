@@ -31,10 +31,17 @@ CREATE TABLE pets(id int primary key auto_increment, name varchar(255) not null,
 INSERT
 
 --insert in to users example:
+
 INSERT INTO users(fname, lname, email, phno, password, address, role, roleid) VALUES('slash', 'G', 'slash@iu.edu', 3245423235, 'fewrewr','323 S','user', 3);
+
 --insert in to roles
-INSERT INTO Roles(roleid , role_name, role_desc) VALUES(1, 'Admin',  'Approves the item added for rent, accepts customer complaints and routes it to the appropriate renter, issues a refund to the renter');
+
+INSERT INTO Roles(roleid , role_name, role_desc) VALUES(1, 'Admin',  'Approves the item added for rent, accepts customer complaints and routes it to the appropriate renter, issues a refund to the renter'),
+    (2, 'Owner',  'The renter should be able to post the item for rent. View the information of the customer who rented the items/services.'),
+    (3, 'Renter',  'A customer can choose the item/place for rent make payments, cancel rental bookings, lodge complaints, apply for refund.');
+
 --insert in to security
+
 INSERT INTO Security(username, question, answer) VALUES('svasire',"What is your favourite animal?", "Dog");
 
 ---insert into pets table.
