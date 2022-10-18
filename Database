@@ -50,3 +50,16 @@ INSERT INTO Security(username, question, answer) VALUES('svasire',"What is your 
 	('Coonie', 'Ester', 'cat', 'm','2021-12-23', 1, 'Maine coon', 'large', 'friendly', 'blue', 'yes', 'None', 'No biting'),
 	('Buttercup', 'Adam', 'cat', 'f','2018-3-01', 4, 'Ragdoll', 'small', 'sociable', 'lilac', 'yes', 'None', 'Non-allergic'),
     	('Cooper', 'Max', 'dog', 'm','2020-3-2', 1, 'German Shephard', 'large', 'Courageous', 'Sable', 'yes', 'None', 'No biting');
+	
+-------------------------------------------------------------Vanita ----------------------------------------------------------------------
+
+CREATE TABLE pets(id int primary key auto_increment, name varchar(255) not null, owner varchar(255) not null,
+ pet varchar(255) not null, age int not null,  breed varchar(255) 
+ not null, size varchar(10) not null, temperment varchar(50) not null, color varchar(10) not null, other varchar(255));
+
+INSERT INTO pets (name, owner, pet, age, breed, size, temperment, color,other) VALUES
+	('Snowflake', 'Emma', 'Cat', 'Early age', 'Domestic Longhair', 'Medium', 'Active', 'White', 'No shedding'),
+	('Coonie', 'Ester', 'Cat', 'Early age', 'Maine Coon', 'Large', 'Active', 'Brown', 'No biting'),
+	('Buttercup', 'Adam','Cat', 'Early age', 'Siamese', 'Small', 'Passive', 'Black', 'Non-allergic'),
+	('Cooper', 'Max', 'Dog', 'Early age', 'German Shephard', 'Large', 'Active', 'White', 'No biting');
+--------------------------------------------------------------------------------------------------------------------------------
