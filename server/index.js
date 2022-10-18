@@ -328,20 +328,21 @@ app.post("/search", (req, res) => {
     console.log('age of the pet is', age);
     console.log('other criterias are', other);
     console.log('search Query is', searchQuery);*/
-
+    
      const filter=req.body.filter;
      console.log(filter);
 
 
      let query =
      "SELECT * FROM pets WHERE " +
-     "species IN (" + filter.pet.map(name => `'${name}'`).join() + ") " 
-     /*+ "AND species IN (" + filter.breed.map(species => `'${species}'`).join() + ") " +
+     "pet IN (" + filter.pet.map(name => `'${name}'`).join() + ") " +
      "AND age IN (" + filter.age.map(age => `'${age}'`).join() + ")" +
      "AND breed IN (" + filter.breed.map(breed => `'${breed}'`).join() + ")" +
      "AND size IN (" + filter.size.map(size => `'${size}'`).join() + ")" +
-     "AND temperment IN (" + filter.temp.map(temperment => `'${temperment}'`).join() + ")" +
-     "AND color IN (" + filter.color.map(color => `'${color}'`).join() + ")";*/
+     "AND temperment IN (" + filter.temp.map(temperment => `'${temperment}'`).join() + ")"+
+     "AND color IN (" + filter.color.map(color => `'${color}'`).join() + ")";
+     "AND other IN (" + filter.other.map(species => `'${species}'`).join() + ") ";
+
 
      console.log(query);
      db.query(query, (err, rows) => {
