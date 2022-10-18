@@ -13,43 +13,10 @@ export function Search(){
         other:[],
         searchQuery : ''
     });
-    const [results, setResults] = useState([
-        {'key':1,'key1':'val1','key2':'val2','key3':'val3'},
-        {'key':2,'key1':'val1','key2':'val2','key3':'val3'},
-        {'key':3,'key1':'val1','key2':'val2','key3':'val3'}]);
-
-//     const RenderResults = () => {
-//         console.log(results)
-//         const keys = Object.keys(results[0]);
-//         console.log(keys);
-//         return (
-//             <div>
-//         <table>
-//         <thead>
-//           <tr>
-//            {keys.map(heading => {
-//              return <th key={heading}>{heading}</th>
-//            })}
-//          </tr>
-//        </thead>
-//         <tbody>
-//         {results.map((row, index) => {
-//      return <tr key={index}>
-//         {keys.map((key, index) => {
-//      return (
-//                 <td key={row[key]}>{row[key]} <br/></td>
-//          )
-//    })}
-//       </tr>;
-//   })}
-//         </tbody>
-//     </table>
-//             </div>
-//         )
-//     };
+    const [results, setResults] = useState([]);
 
     const RenderResults = () => {
-        console.log(results)
+        
         const keys = Object.keys(results[0]);
         console.log(keys);
         return (
@@ -75,22 +42,23 @@ export function Search(){
     };
 
     const handleChange = (event) => {
-        console.log(filters);
+        
         const { name, value} = event.target;
 
-        const arr_filters = ['pet', 'size','breed','age','other','color']
-
-        if(arr_filters[name]!=-1){
+        const arr_filters = ['pet', 'size','breed','other','color']
+        console.log(event.target);
+        if(arr_filters.includes(name)){
             const {checked} = event.target;
             if(checked){
                 setFilters({ ...filters, [name]: [...filters[name], value] });
             }
             else{
-                setFilters({ ...filters, [name]: [name].filter((e)=> e!== value ) });
+                setFilters({ ...filters, [name]: filters[name].filter((e)=> e!== value ) });
             }
         }
         else
             setFilters({ ...filters, [name]:value });
+        // console.log(filters);
       };
 
       const handleSubmit = (event) => {
@@ -214,7 +182,7 @@ return(
         <br></br>
     </div>
     <div className='results'> <h3>Results section</h3>
-    {results.length > 0 ? <RenderResults/> : <h3>Nothing there</h3> }
+    {results.length > 0 ? <RenderResults/> : <h3>No results found! Please recheck the filters selected!</h3> }
     </div>
 </div>
     </div>
