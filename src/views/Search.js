@@ -9,7 +9,7 @@ export function Search(){
         temp : '',
         breed:[],
         color : [],
-        age:[],
+        age:'',
         other:[],
         searchQuery : ''
     });
