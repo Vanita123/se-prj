@@ -62,4 +62,8 @@ INSERT INTO pets (name, owner, pet, age, breed, size, temperment, color,other) V
 	('Coonie', 'Ester', 'Cat', 'Early age', 'Maine Coon', 'Large', 'Active', 'Brown', 'No biting'),
 	('Buttercup', 'Adam','Cat', 'Early age', 'Siamese', 'Small', 'Passive', 'Black', 'Non-allergic'),
 	('Cooper', 'Max', 'Dog', 'Early age', 'German Shephard', 'Large', 'Active', 'White', 'No biting');
+	('Blossom', 'Ellie', 'Cat', 'Middle Age', 'American Shorthair', 'Medium', 'Passive', 'White', 'No shedding'),
+	('Snoie', 'George', 'Dog', 'Old Age', 'Golden Retriever', 'Small', 'Active', 'Brown', 'Non-allergic'),
+	('Poodle', 'Alexa', 'Dog', 'Middle Age', 'French Bulldog', 'Medium', 'Active', 'Brown', 'No shedding'),
+	('Daisy', 'Lizy', 'Cat', 'Old Age', 'Domestic Longhair', 'Large', 'Passive', 'White', 'No shedding'),
 --------------------------------------------------------------------------------------------------------------------------------
