@@ -1,26 +1,49 @@
-import React from "react";
-import './App.css';
-import { Routes, Route } from "react-router-dom";
-import {Login} from './login';
-import {Signin} from './signin';
-import {Home} from './home';
-import {GoogleSignIn} from './gsignin';
+import React, { useRef, useEffect } from 'react';
+import { useLocation,Routes } from 'react-router-dom';
+import AppRoute from './utils/AppRoute';
+import ScrollReveal from './utils/ScrollReveal';
+import { Route } from 'react-router-dom';
 
+// Layouts
+import LayoutDefault from './layouts/LayoutDefault';
+import LayoutCustom from './layouts/LayoutCustom';
 
-function App() {
+// Views 
+import Home from './views/Home';
+import Login from './views/Login';
+import Signin from './views/Signin';
+import Search from './views/Search';
+import GSignIn from './views/GSignIn';
+import View from './views/View';
+
+const App = () => {
+
+  const childRef = useRef();
+  let location = useLocation();
+
+  useEffect(() => {
+    const page = location.pathname;
+    document.body.classList.add('is-loaded')
+    childRef.current.init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
+
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/gsignin" element={<GoogleSignIn />} />
-      </Routes>
-    </div>
-    
+    <ScrollReveal
+      ref={childRef}
+      children={() => (
+     
+        <Routes>
+          <Route path="/" element={<AppRoute exact path="/" component={Home} layout={LayoutDefault} />}  />
+          <Route path="/login" element={<AppRoute exact path="/" component={Login} layout={LayoutCustom} />}  />
+          <Route path="/signin" element={<AppRoute exact path="/" component={Signin} layout={LayoutCustom} />}  />
+          <Route path="/gsignin" element={<AppRoute exact path="/" component={GSignIn} layout={LayoutCustom} />}  />
+          <Route path="/search" element={<AppRoute exact path="/" component={Search} layout={LayoutCustom} />}  />
+          <Route path="/view" element={<AppRoute exact path="/" component={View} layout={LayoutCustom} />}  />
+          </Routes>
+  
+      )} />
   );
 }
-
-
 
 export default App;
