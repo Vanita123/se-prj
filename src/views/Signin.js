@@ -16,6 +16,7 @@ export function Signin(props){
             role : '',
             sq1 : '',
             sq2 : '',
+            adress: '',
             country: '',
             state: '',
             county: '',
@@ -37,6 +38,7 @@ export function Signin(props){
         role: profile.role,//role_id?
         sq1: profile.sq1,
         sq2: profile.sq2,
+        address: profile.adress,
         country: profile.country,
         state: profile.state,
         county: profile.county,
