@@ -342,7 +342,7 @@ app.post("/search", (req, res) => {
       query+= "AND size IN (" + filter.size.map(size => `'${size}'`).join() + ") " 
      }
      if (filter.temp.length > 0){
-      query+= "AND temp IN (" + filter.temp.map(temp => `'${temp}'`).join() + ") " 
+      query+= "AND temp='"+ filter.temp + "' " 
      }
      if (filter.breed.length > 0){
       query+= "AND breed IN (" + filter.breed.map(breed => `'${breed}'`).join() + ") " 
@@ -351,12 +351,11 @@ app.post("/search", (req, res) => {
       query+= "AND color IN (" + filter.color.map(color => `'${color}'`).join() + ") " 
      }
      if (filter.age.length > 0){
-      query+= "AND age IN (" + filter.age.map(age => `'${age}'`).join() + ") " 
+      query+= "AND age='"+ filter.age + "' " 
      }
      if (filter.other.length > 0){
       query+= "AND other IN (" + filter.other.map(other => `'${other}'`).join() + ") " 
      }
-    
     
 //      let query =
 //      "SELECT * FROM pets WHERE " +
