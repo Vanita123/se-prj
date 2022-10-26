@@ -16,13 +16,13 @@ export function Signin(props){
             role : '',
             sq1 : '',
             sq2 : '',
+            zipcode:'',
             adress: '',
             country: '',
             state: '',
             county: '',
-            pswd : ''
-
-
+            pswd : '',
+            pswd1 : ''
         }
     );
     const handleChange = (event) => {
@@ -38,6 +38,7 @@ export function Signin(props){
         role: profile.role,//role_id?
         sq1: profile.sq1,
         sq2: profile.sq2,
+        zipcode: profile.zipcode,
         address: profile.adress,
         country: profile.country,
         state: profile.state,
@@ -84,25 +85,30 @@ return (
       <input type="text"  maxLength={10} placeholder="Enter answer" name="sq2" value= {profile.sq2} onChange = {handleChange} required/>
       <br></br>
       
-      <label htmlFor="lname"><b>Address    </b></label>
+      <label htmlFor="address"><b>Address    </b></label>
       <input type="text"  placeholder="Enter address" name="adress" value= {profile.address} onChange = {handleChange} required/>
       <br></br>
-      <label htmlFor="lname"><b>Country    </b></label>
-      <input type="text"  placeholder="Enter country" name="country" value= {profile.country} onChange = {handleChange} required/>
-      <br></br>
-      <label htmlFor="lname"><b>State    </b></label>
-      <input type="text"  placeholder="Enter state" name="state" value= {profile.state} onChange = {handleChange} required/>
-      <br></br>
-      <label htmlFor="lname"><b>County    </b></label>
+      <label htmlFor="county"><b>County    </b></label>
       <input type="text"  placeholder="Enter county" name="county" value= {profile.county} onChange = {handleChange} required/>
       <br></br>
+      <label htmlFor="state"><b>State    </b></label>
+      <input type="text"  placeholder="Enter state" name="state" value= {profile.state} onChange = {handleChange} required/>
+      <br></br>
+      <label htmlFor="zipcode"><b>Zipcode    </b></label>
+      <input type="text"  placeholder="Enter zipcode" name="zipcode" value= {profile.zipcode} onChange = {handleChange} required/>
+      <br></br>
+      <label htmlFor="country"><b>Country    </b></label>
+      <input type="text"  placeholder="Enter country" name="country" value= {profile.country} onChange = {handleChange} required/>
+      <br></br>
+      
+      
       <label htmlFor="phno"><b>Enter password    </b></label>
       
       <input type="password"  minLength={5} placeholder="Enter password" name="pswd" value= {profile.pswd} onChange = {handleChange} required/>
       <br></br>
       <label htmlFor="phno"><b>Re-enter password    </b></label>
-      <input type="password"  minLength={5} placeholder="Enter password" name="pswd" value= {profile.pswd} onChange = {handleChange} required/>
-      
+      <input type="password"  minLength={5} placeholder="Enter password" name="pswd1" value= {profile.pswd1} onChange = {handleChange} required/>
+      {profile.pswd == profile.pswd1 || profile.pswd1 == ''?  null : <label> Passwords don't match!</label> }
     </form>
     <button type="submit" onClick={handleSubmit} className="button button-primary button-wide-mobile button-sm">Register user</button>
 </div>
