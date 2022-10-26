@@ -385,3 +385,16 @@ app.post("/search", (req, res) => {
 app.listen(3000, () => {
     console.log("running server");
 });
+
+
+// This is the code for search bar.
+   let query = "SELECT * FROM pets WHERE " +
+    " pet like '%"+ filter.pet + "%' "+
+    "OR age like '%"+ filter.age + "%' "+
+    "OR breed like '%"+ filter.breed + "%' "+
+    "OR size like '%"+ filter.size + "%' "+
+    "OR temp like '%"+ filter.temp + "%' "+
+    "OR other like '%"+ filter.other + "%' "+
+    "OR name like '%"+ filter.name + "%' "+
+    "OR owner like '%"+ filter.owner + "%' "+
+    "OR color like '%"+ filter.color + "%' ";
