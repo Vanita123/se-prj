@@ -14,7 +14,6 @@ CREATE TABLE Roles(roleid int NOT NULL PRIMARY KEY, role_name varchar(255) NOT N
 --4 for security questions
 CREATE TABLE Security(SQID int PRIMARY KEY NOT NULL AUTO_INCREMENT, username varchar(255) NOT NULL, sq1 varchar(255) NOT NULL, sq2 VARCHAR(255) NOT NULL, sq1_ans varchar(255) not null, sq2_ans varchar(255) not null);
 
-----------------------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE bookings(booking_id int auto_increment NOT NULL PRIMARY KEY, owner_name varchar(255) not null, renter_name varchar(255) not null, pet varchar(255) not null, booking_duration int not null, rating int, rent_price int not null, start_date datetime, end_date datetime,location varchar(255) not null, FOREIGN KEY (renter_name) REFERENCES users(username));
 
 CREATE TABLE payments(payment_id int primary key auto_increment, booking_id int not null, amount int not null, invoice_id int, status varchar(255) not null, payment_date datetime, FOREIGN KEY (booking_id) REFERENCES bookings (booking_id));
@@ -26,8 +25,10 @@ CREATE TABLE pets(id int primary key auto_increment, name varchar(255) not null,
  not null, size varchar(10) not null, temperment varchar(50) not null, color varchar(10) not null, vaccinated 
  char(10) not null, allergies varchar(255) not null, other varchar(255));
 
+create table Address(AddressID int NOT NULL AUTO_INCREMENT  PRIMARY KEY, CityID varchar(255) not null, AddressLine1 varchar(255) not null, AddressLine2 varchar(255) not null, Latitude varchar(255) not null, Longitude varchar(255) not null, username varchar(255) not null,  FOREIGN KEY (username) REFERENCES users(username));
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 INSERT
 
