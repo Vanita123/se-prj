@@ -24,14 +24,15 @@ CREATE TABLE pets(id int primary key auto_increment, name varchar(255) not null,
  pet varchar(255) not null, sex char(1) not null, DOB date not null, age int not null,  breed varchar(255) 
  not null, size varchar(10) not null, temperment varchar(50) not null, color varchar(10) not null, vaccinated 
  char(10) not null, allergies varchar(255) not null, other varchar(255));
-
-		     
 		     
 CREATE TABLE address(AddressID int NOT NULL AUTO_INCREMENT  PRIMARY KEY, Address varchar(255) not null,
  City VARCHAR(100) NOT NULL, State varchar(50) not null, Country varchar(50) not null, Zipcode varchar(10) not null, 
  username varchar(50) not null, foreign key(username) references users(username));
-
-
+		     
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Drop address column from users table.
+		     
+alter table users drop column address;
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 INSERT
