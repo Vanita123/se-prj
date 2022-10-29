@@ -139,6 +139,7 @@ app.listen(3000, () => {
     console.log("running server");
 });*/
 
+
 const express = require("express");
 const mysql = require("mysql");
 const app = express();
@@ -149,6 +150,9 @@ const session = require("express-session");
 const { generateFromEmail, generateUsername } = require("unique-username-generator");
 const { UNSAFE_NavigationContext } = require("react-router-dom");
 const bcrypt = require('bcrypt');
+const fetch = require('node-fetch');
+
+
 
 app.use(express.json());
 console.log('working');
@@ -191,6 +195,7 @@ db.connect((err) => {
     }
 });
   
+
 
 app.post("/signin", (req, res) => {
 
@@ -246,6 +251,61 @@ app.post("/signin", (req, res) => {
 
 });
 
+//let location = await getAddress('Via San Michele 162, Vasto');
+
+
+
+
+
+const key = 'AIzaSyA0d2IhHBfzj0PmYr3yguvOylcmJ4r4VWM';
+app.get('/', async (req, res, next) => {
+ try {
+  /*const address = req.body.address;
+  const country = req.body.country;
+  const state = req.body.state;
+  const county = req.body.county;
+   const neighborhood = 'chelsea'
+   const borough = 'manhattan'
+   const city = 'new+york+city'
+   const category = 'burgers'*/
+  
+  const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=chelsea+burgers+manhattan+new+york+city&type=restaurant&key=${key}`;
+  const fetch_response = await fetch(api_url);
+  const data = await fetch_response.json();
+   console.log('api data is',data);
+   res.json(data);
+   res.send(data);
+   } 
+ catch (err) {
+  next(err);
+}
+})
+
+
+// const key = 'AIzaSyA0d2IhHBfzj0PmYr3yguvOylcmJ4r4VWM';
+// app.post('/signin', async (req, res, next) => {
+//  try {
+//   const address = req.body.address;
+//   const country = req.body.country;
+//   const state = req.body.state;
+//   const county = req.body.county;
+//    /*const neighborhood = 'chelsea'
+//    const borough = 'manhattan'
+//    const city = 'new+york+city'
+//    const category = 'burgers'*/
+//    const {data} = await app.get(
+   
+// `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${address}+${county}+${state}+${country}&type=restaurant&key=${key}`
+//    );
+//    console.log('api data is',data);
+//    res.json(data);
+//    res.send(data);
+//    } 
+//  catch (err) {
+//   next(err);
+// }
+// })
+
 app.post("/signin", (req, res) => {
     
     if (req.session.user) {
@@ -287,7 +347,8 @@ app.post("/login", (req, res) => {
   );
 });
 
-app.post("/search", (req, res) => {
+app.post("/search", async(req, res) => {
+  //import fetch from 'node-fetch';
 
     /*const output = rows;
     const pet = req.body.pet;
@@ -342,7 +403,7 @@ app.post("/search", (req, res) => {
       query+= "AND size IN (" + filter.size.map(size => `'${size}'`).join() + ") " 
      }
      if (filter.temp.length > 0){
-      query+= "AND temp='"+ filter.temp + "' " 
+      query+= "AND temperment='"+ filter.temp + "' " 
      }
      if (filter.breed.length > 0){
       query+= "AND breed IN (" + filter.breed.map(breed => `'${breed}'`).join() + ") " 
@@ -377,7 +438,35 @@ app.post("/search", (req, res) => {
       console.log(rows);
       //setOutput(rows);
       res.send(rows);
+
     });
+
+    /*const getAddress = async(address) => {
+      return new Promise((resolve, reject) => {
+          const geocoder = new google.maps.Geocoder();
+          geocoder.geocode({address: address}, (results, status) => {
+              if (status === 'OK') {
+                  resolve(results[0].geometry.location);
+              } else {
+                  reject(status);
+              }    
+          });    
+      });
+    };
+    
+
+    let location = await getAddress('Via San Michele 162, Vasto');
+    console.log(location);*/
+  
+
+    const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=chelsea+burgers+manhattan+new+york+city&type=restaurant&key=${key}`;
+  const fetch_response = await fetch(api_url);
+  const data = await fetch_response.json();
+  api_data = data.results[0]["geometry"].location
+   console.log('api data is ',data.results[0]["geometry"].location);
+   //var concat_rows= Object.assign({}, api_data, rows);
+   //console.log(concat_rows);
+  
 
 });
 
@@ -388,7 +477,7 @@ app.listen(3000, () => {
 
 
 // This is the code for search bar.
-   let query = "SELECT * FROM pets WHERE " +
+   /*let query = "SELECT * FROM pets WHERE " +
     " pet like '%"+ filter.pet + "%' "+
     "OR age like '%"+ filter.age + "%' "+
     "OR breed like '%"+ filter.breed + "%' "+
@@ -397,4 +486,4 @@ app.listen(3000, () => {
     "OR other like '%"+ filter.other + "%' "+
     "OR name like '%"+ filter.name + "%' "+
     "OR owner like '%"+ filter.owner + "%' "+
-    "OR color like '%"+ filter.color + "%' ";
+    "OR color like '%"+ filter.color + "%' ";*/
