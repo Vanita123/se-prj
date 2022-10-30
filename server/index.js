@@ -393,7 +393,8 @@ app.post("/search", async(req, res) => {
 
 //  Newly added filter code.
 
-     let query = "SELECT * FROM pets WHERE " ;
+     let query = "SELECT * FROM pets as a inner join address as b on a.owner=b.username WHERE " ;
+
      if (filter.pet.length > 0) {
         query += "pet IN (" + filter.pet.map(pet => `'${pet}'`).join() + ") " 
      }
