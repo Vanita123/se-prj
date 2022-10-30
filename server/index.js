@@ -152,10 +152,8 @@ const { UNSAFE_NavigationContext } = require("react-router-dom");
 const bcrypt = require('bcrypt');
 const fetch = require('node-fetch');
 
-
-
 app.use(express.json());
-console.log('working');
+
 app.use(
     cors({
         origin: ["http://localhost:3000"],
@@ -164,11 +162,9 @@ app.use(
     })
 
 );
-console.log('working');
 //app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-console.log('working');
 app.use(
     session({
         key: "userId",
@@ -257,8 +253,7 @@ app.post("/signin", (req, res) => {
 
 
 
-const key = 'AIzaSyA0d2IhHBfzj0PmYr3yguvOylcmJ4r4VWM';
-app.get('/', async (req, res, next) => {
+/*app.get('/', async (req, res, next) => {
  try {
   /*const address = req.body.address;
   const country = req.body.country;
@@ -269,7 +264,7 @@ app.get('/', async (req, res, next) => {
    const city = 'new+york+city'
    const category = 'burgers'*/
   
-  const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=chelsea+burgers+manhattan+new+york+city&type=restaurant&key=${key}`;
+  /*const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=chelsea+burgers+manhattan+new+york+city&type=restaurant&key=${key}`;
   const fetch_response = await fetch(api_url);
   const data = await fetch_response.json();
    console.log('api data is',data);
@@ -279,7 +274,7 @@ app.get('/', async (req, res, next) => {
  catch (err) {
   next(err);
 }
-})
+})*/
 
 
 // const key = 'AIzaSyA0d2IhHBfzj0PmYr3yguvOylcmJ4r4VWM';
@@ -305,6 +300,7 @@ app.get('/', async (req, res, next) => {
 //   next(err);
 // }
 // })
+
 
 app.post("/signin", (req, res) => {
     
@@ -347,6 +343,8 @@ app.post("/login", (req, res) => {
   );
 });
 
+
+const key = 'AIzaSyA0d2IhHBfzj0PmYr3yguvOylcmJ4r4VWM';
 app.post("/search", async(req, res) => {
   //import fetch from 'node-fetch';
 
@@ -391,7 +389,7 @@ app.post("/search", async(req, res) => {
     console.log('search Query is', searchQuery);*/
     
      const filter=req.body.filter;
-     console.log(filter);
+     //console.log(filter);
 
 //  Newly added filter code.
 
@@ -428,6 +426,11 @@ app.post("/search", async(req, res) => {
 //      "AND color IN (" + filter.color.map(color => `'${color}'`).join() + ")";
 //      "AND other IN (" + filter.other.map(species => `'${species}'`).join() + ") ";
 
+const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=chelsea+burgers+manhattan+new+york+city&type=restaurant&key=${key}`;
+const fetch_response = await fetch(api_url);
+const data = await fetch_response.json();
+api_data = data.results[0]["geometry"].location
+ console.log('api data is ',data.results[0]["geometry"].location);
 
      console.log(query);
      db.query(query, (err, rows) => {
@@ -435,10 +438,13 @@ app.post("/search", async(req, res) => {
           console.log("internal error", err);
           return;
       }
-      console.log(rows);
-      //setOutput(rows);
-      res.send(rows);
 
+      console.log('row data is',rows);  
+      merged = Object.assign({},rows[0],api_data);
+      console.log('merged array is',merged);
+      
+      //res.send(rows);
+        res.send(merged);
     });
 
     /*const getAddress = async(address) => {
@@ -459,11 +465,11 @@ app.post("/search", async(req, res) => {
     console.log(location);*/
   
 
-    const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=chelsea+burgers+manhattan+new+york+city&type=restaurant&key=${key}`;
+    /*const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=chelsea+burgers+manhattan+new+york+city&type=restaurant&key=${key}`;
   const fetch_response = await fetch(api_url);
   const data = await fetch_response.json();
   api_data = data.results[0]["geometry"].location
-   console.log('api data is ',data.results[0]["geometry"].location);
+   console.log('api data is ',data.results[0]["geometry"].location);*/
    //var concat_rows= Object.assign({}, api_data, rows);
    //console.log(concat_rows);
   
