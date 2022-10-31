@@ -180,7 +180,7 @@ app.use(
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "projectse",
+    password: "password",
     database: "paw",
 });
 db.connect((err) => {
@@ -346,47 +346,7 @@ app.post("/login", (req, res) => {
 
 const key = 'AIzaSyA0d2IhHBfzj0PmYr3yguvOylcmJ4r4VWM';
 app.post("/search", async(req, res) => {
-  //import fetch from 'node-fetch';
-
-    /*const output = rows;
-    const pet = req.body.pet;
-    
-    const size = req.body.size;
-    const temp = req.body.temp;
-    const breed = req.body.breed;
-    const color = req.body.color;
-    const age = req.body.age;
-    const other = req.body.other;
-    const searchQuery = req.body.searchQuery;
-    console.log('other requirements are', other);
-    console.log('search query is', searchQuery);
-
-    let query =
-     "SELECT * FROM pets WHERE " +
-     "name IN (" + pet.map(name => `'${name}'`).join() + ") " +
-     "AND species IN (" + breed.map(species => `'${species}'`).join() + ") " +
-     "AND age IN (" + age.map(age => `'${age}'`).join() + ")" +
-     "AND breed IN (" + breed.map(breed => `'${bree.d}'`).join() + ")" +
-     "AND size IN (" + size.map(size => `'${size}'`).join() + ")" +
-     "AND temperment IN (" + temp.map(temperment => `'${temperment}'`).join() + ")" +
-     "AND color IN (" + color.map(color => `'${color}'`).join() + ")";
-
-     db.query(query, (err, rows) => {
-      if (err) {
-          console.log("internal error", err);
-          return;
-      }*/
-      //setOutput(rows);
   
-
-    /*console.log('pet is',pet);
-    console.log('size is',size);
-    console.log('temparment is',temp);
-    console.log('breed is', breed);
-    console.log('color is',color);
-    console.log('age of the pet is', age);
-    console.log('other criterias are', other);
-    console.log('search Query is', searchQuery);*/
     
      const filter=req.body.filter;
      //console.log(filter);
@@ -427,53 +387,55 @@ app.post("/search", async(req, res) => {
 //      "AND color IN (" + filter.color.map(color => `'${color}'`).join() + ")";
 //      "AND other IN (" + filter.other.map(species => `'${species}'`).join() + ") ";
 
-const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=chelsea+burgers+manhattan+new+york+city&type=restaurant&key=${key}`;
-const fetch_response = await fetch(api_url);
-const data = await fetch_response.json();
-api_data = data.results[0]["geometry"].location
- console.log('api data is ',data.results[0]["geometry"].location);
+// const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=chelsea+burgers+manhattan+new+york+city&type=restaurant&key=${key}`;
+// const fetch_response = await fetch(api_url);
+// const data = await fetch_response.json();
+// api_data = data.results[0]["geometry"].location
+//  console.log('api data is ',data.results[0]["geometry"].location);
 
      console.log(query);
-     db.query(query, (err, rows) => {
+     db.query(query, async (err, rows) => {
       if (err) {
           console.log("internal error", err);
           return;
       }
 
       console.log('row data is',rows);  
-      merged = Object.assign({},rows[0],api_data);
-      console.log('merged array is',merged);
+      // merged = Object.assign({},rows[0],api_data);
+      // console.log('merged array is',merged);
       
       //res.send(rows);
-        res.send(merged);
+  
+list_global=[];
+     
+      for(i=0;i<rows.length;i++){
+        address = rows[i].Address;
+        console.log("RESPONSE", rows[i].Address);
+        city = rows[i].City;
+        console.log("Response ", rows[i].City);
+        state = rows[i].State;
+        console.log("Response ", rows[i].State);
+        country = rows[i].Country;
+        console.log("Response ", rows[i].Country);
+        const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${address}+${city}+${state}+${country}&type=restaurant&key=${key}`;
+        const fetch_response = await fetch(api_url);
+        const data = await fetch_response.json();
+        api_data = data.results[0]["geometry"].location
+        console.log('api data is ',data.results[0]["geometry"].location);
+console.log("api data",api_data);
+
+ merged = Object.assign({},rows[i],api_data);
+ 
+console.log('merged array is',merged);
+list_global.push(merged);
+        }
+console.log("LIST GLOBAL ++++++++++++++++++++++++++++++++++++++++++++",list_global);
+res.send(list_global);
+
+   
     });
 
-    /*const getAddress = async(address) => {
-      return new Promise((resolve, reject) => {
-          const geocoder = new google.maps.Geocoder();
-          geocoder.geocode({address: address}, (results, status) => {
-              if (status === 'OK') {
-                  resolve(results[0].geometry.location);
-              } else {
-                  reject(status);
-              }    
-          });    
-      });
-    };
-    
-
-    let location = await getAddress('Via San Michele 162, Vasto');
-    console.log(location);*/
-  
-
-    /*const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=chelsea+burgers+manhattan+new+york+city&type=restaurant&key=${key}`;
-  const fetch_response = await fetch(api_url);
-  const data = await fetch_response.json();
-  api_data = data.results[0]["geometry"].location
-   console.log('api data is ',data.results[0]["geometry"].location);*/
-   //var concat_rows= Object.assign({}, api_data, rows);
-   //console.log(concat_rows);
-  
+   
 
 });
 
