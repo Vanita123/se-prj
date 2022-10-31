@@ -211,8 +211,12 @@ app.post("/signin", (req, res) => {
     const address = req.body.address;
     const country = req.body.country;
     const state = req.body.state;
+    const city=req.body.county;
+    const zipcode=req.body.zipcode;
     const county = req.body.county;
-    const roleid = 1
+    const roleid=1;
+  
+
     console.log(country);
     console.log(state);
     console.log(county);
@@ -223,14 +227,24 @@ app.post("/signin", (req, res) => {
      console.log("hashed password -> ", password);
      db.query(
 
-          "INSERT INTO Users (username, fname, lname, email, phno, password, address, role, roleid) VALUES (?,?,?,?,?,?,?,?,?)",
-          [username, fname, lname, email, phone, password, address, role, roleid],
+          "INSERT INTO Users (username, fname, lname, email, phno, password, role, roleid) VALUES (?,?,?,?,?,?,?,?)",
+          [username, fname, lname, email, phone, password, role, roleid],
 
           (err, result) => {
               console.log(err,result);
               //res.send(result);
           }
       );
+      db.query(
+        "INSERT INTO address (Address, City, State, Country, Zipcode, username) VALUES (?,?,?,?,?,?)",
+        [address,city,state,country,zipcode,username],
+
+       
+
+        (err, result) => {
+            console.log(err,result);
+            //res.send(result);
+        });
 
       db.query(
 
