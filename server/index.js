@@ -76,8 +76,8 @@ app.post("/signin", (req, res) => {
 
     db.query(
 
-        "INSERT INTO Users (username, fname, lname, email, phno, password, address, role, roleid) VALUES (?,?,?,?,?,?,?,?,?)",
-        [username, fname, lname, email, phone, password, address, role, roleid],
+        "INSERT INTO Users (username, fname, lname, email, phno, password, role, roleid) VALUES (?,?,?,?,?,?,?,?)",
+        [username, fname, lname, email, phone, password, role, roleid],
 
         (err, result) => {
             console.log(err,result);
