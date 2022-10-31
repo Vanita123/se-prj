@@ -396,25 +396,25 @@ app.post("/search", async(req, res) => {
      let query = "SELECT * FROM pets as a inner join address as b on a.owner=b.username WHERE " ;
 
      if (filter.pet.length > 0) {
-        query += "pet IN (" + filter.pet.map(pet => `'${pet}'`).join() + ") " 
+        query += "a.pet IN (" + filter.pet.map(pet => `'${pet}'`).join() + ") " 
      }
      if (filter.size.length > 0){
-      query+= "AND size IN (" + filter.size.map(size => `'${size}'`).join() + ") " 
+      query+= "AND a.size IN (" + filter.size.map(size => `'${size}'`).join() + ") " 
      }
      if (filter.temp.length > 0){
-      query+= "AND temperment='"+ filter.temp + "' " 
+      query+= "AND a.temperment='"+ filter.temp + "' " 
      }
      if (filter.breed.length > 0){
-      query+= "AND breed IN (" + filter.breed.map(breed => `'${breed}'`).join() + ") " 
+      query+= "AND a.breed IN (" + filter.breed.map(breed => `'${breed}'`).join() + ") " 
      }
      if (filter.color.length > 0){
-      query+= "AND color IN (" + filter.color.map(color => `'${color}'`).join() + ") " 
+      query+= "AND a.color IN (" + filter.color.map(color => `'${color}'`).join() + ") " 
      }
      if (filter.age.length > 0){
-      query+= "AND age='"+ filter.age + "' " 
+      query+= "AND a.age='"+ filter.age + "' " 
      }
      if (filter.other.length > 0){
-      query+= "AND other IN (" + filter.other.map(other => `'${other}'`).join() + ") " 
+      query+= "AND a.other IN (" + filter.other.map(other => `'${other}'`).join() + ") " 
      }
     
 //      let query =
