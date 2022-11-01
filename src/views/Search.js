@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import '../styles/form.css';
-
+// import 'mapbox-gl/dist/mapbox-gl.css';
+import mapboxgl from 'mapbox-gl';
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ2x0ZWphc3dpIiwiYSI6ImNsOXc1cDNwYjB3czczb256NTd2c2JuemIifQ.b-VwjCpfeG3aR2A8yux1zQ';
 
 export function Search(){
     const [filters,setFilters] = useState({
@@ -15,9 +17,33 @@ export function Search(){
         searchQuery : ''
     });
     const [results, setResults] = useState([]);
+    const mapContainer = useRef(null);
+    const map = useRef(null);
+    const [lng, setLng] = useState(-70.9);
+    const [lat, setLat] = useState(42.35);
+    const [zoom, setZoom] = useState(9);
 
-    const RenderResults = () => {
+    useEffect(() => {
+        if (map.current) return; // initialize map only once
+        map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [lng, lat],
+        zoom: zoom
+        });
+        });
+
+    useEffect(() => {
+            if (!map.current) return; // wait for map to initialize
+            map.current.on('move', () => {
+            setLng(map.current.getCenter().lng.toFixed(4));
+            setLat(map.current.getCenter().lat.toFixed(4));
+            setZoom(map.current.getZoom().toFixed(2));
+            });
+            });
         
+    const RenderResults = () => {
+        // results = [{key1:'val1',key2:'val2'}];
         const keys = Object.keys(results[0]);
         console.log(keys);
         return (
@@ -40,7 +66,20 @@ export function Search(){
     </table>
             </div>
         )
-    };
+//         return (
+//             <div >
+//             {results.map((row, index) => { return <div className="card" id ={index}>
+                
+//     <h4><b>{row['name']}</b></h4> 
+//     <p>Age - {row['age']}</p>
+//     <p>Breed - {row['breed']}</p> 
+//     <br></br>
+//    </div>
+            
+//          } )}
+
+// </div>)
+};
 
     const handleChange = (event) => {
         
@@ -64,7 +103,7 @@ export function Search(){
 
       const handleSubmit = (event) => {
             console.log(filters);
-            axios.post("/search", {
+            axios.post("http://localhost:3000/search", {
                 filter : filters
               /*pet: filters.pet,
               size : filters.size,
@@ -185,6 +224,12 @@ return(
     <div className='results'> <h3>Results section</h3>
     {results.length > 0 ? <RenderResults/> : <h3>No results found! Please recheck the filters selected!</h3> }
     </div>
+    <div>
+{/* <div className="sidebar">
+Longitude: {lng} | Latitude: {lat}
+</div> */}
+<div ref={mapContainer} className="map-container" />
+</div>
 </div>
     </div>
 )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import FormLabel from '../components/elements/FormLabel';
 import '../styles/form.css';
@@ -11,7 +11,8 @@ export function Login(){
 
   const navigate = useNavigate();
   
-  const login = () => {
+  const handleSubmit = (event) => {
+    console.log("Here in login")
     axios.post("http://localhost:3000/login", {
       username: username,
       password: password,
@@ -22,17 +23,18 @@ export function Login(){
       setLoginStatus('error');
     } else {
       setLoginStatus('');
-      //navigate('/view',{state:{ name: response.data[0].fname, view: response.data[0].roleid}});
+      navigate('/view',{state:{ name: response.data[0].fname, view: response.data[0].roleid}});
     }
   });
-  navigate('/search');
+  event.preventDefault();
+  // navigate('/search');
 };
 
-useEffect(() => {
-  axios.get("http://localhost:3000/login").then((response) => {
-   console.log(response);
-  });
-}, []);
+// useEffect(() => {
+//   axios.get("http://localhost:3000/login").then((response) => {
+//    console.log(response);
+//   });
+// }, []);
 
 // const forgotPassword = ()=>{
 //     alert('Forgot password - yet to implement')
@@ -46,7 +48,7 @@ return (
   {loginStatus == 'error' ? (<div className='form-element'>
       <h4 htmlFor="error"><b>Invalid credentials. Please re-check the details or click on Forgot Password link below!  </b></h4>
       </div>) : null}
-        <form action="" method="post" >
+        <form  action="/login" method="POST" encType="multipart/form-date"  onSubmit={handleSubmit}>
       <div className='form-element'>
       <label htmlFor="uname" ><b>Username   </b></label>
       </div>
@@ -61,9 +63,9 @@ return (
       <div className='form-element'>
       <input className="form-input" type="password" onChange={(e) => {setPassword(e.target.value);}}placeholder="Enter password" name="password" required/>
       </div>
-      
+     
       <div className='form-element'>
-      <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={login}>Login</button>
+      <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleSubmit} >Login</button>
       <a href="/forgotpassword" target="_blank">Forgot password?</a>
       </div>
 
