@@ -45,7 +45,7 @@ export function Search(){
             return (
                 <div key={index} className='result'>
                <div>
-                {index.image!='' ? <img src='/'></img> : '<Pet picture missing>'}
+                {index.image!='' ? <img src='/'></img> : '<Pet picture>'}
                </div>
                <div>
                {keys.map((k)=> {
@@ -196,7 +196,7 @@ return(
         <input type="checkbox" name="other" value="no_biting" onChange = {handleChange}/>
         <label htmlFor='black'>No biting</label>
         <br></br>
-        <input type="checkbox" name="other" value="non-allergic" onChange = {handleChange}/>
+        <input type="checkbox" name="other" value="non_allergic" onChange = {handleChange}/>
         <label htmlFor='brown'>Non-allergic</label>
         <br></br>
         <input type="checkbox" name="other" value="vaccinated" onChange = {handleChange}/>

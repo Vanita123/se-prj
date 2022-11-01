@@ -6,26 +6,25 @@ import { useNavigate } from "react-router-dom";
 
 export function UserRegistration(props){
     const navigate = useNavigate();
+    const emptyState = {
+      fname : props.givenName || '',
+      lname : props.familyName || '',
+      email : props.email || '',
+      phno : '',
+      role : '',
+      sq1 : '',
+      sq2 : '',
+      zipcode:'',
+      adress: '',
+      country: '',
+      state: '',
+      county: '',
+      pswd : '',
+      pswd1 : '',
+      username : ''
+  };
     
-    const [ profile, setProfile ] = useState(
-        {
-            fname : props.givenName || '',
-            lname : props.familyName || '',
-            email : props.email || '',
-            phno : '',
-            role : '',
-            sq1 : '',
-            sq2 : '',
-            zipcode:'',
-            adress: '',
-            country: '',
-            state: '',
-            county: '',
-            pswd : '',
-            pswd1 : '',
-            username : ''
-        }
-    );
+    const [ profile, setProfile ] = useState(emptyState);
 
     const [errorMsg, setErrorMessage] = useState('');
 
@@ -59,8 +58,9 @@ export function UserRegistration(props){
        }
        else if (response.data.errno){
         var msg = 'Error ' + response.data.errno + ' - '+ response.data.sqlMessage;
-        setErrorMessage(msg);
-        alert(errorMsg);
+        console.log(msg);
+        alert(msg);
+        setProfile(emptyState);
        }
        
       });
@@ -73,9 +73,6 @@ export function UserRegistration(props){
 return (
     <div className='form-content'>
    {props ? <Link to='/gsignin'><button type="submit" className="button button-primary button-wide-mobile button-sm">Import profile from Google</button></Link> : null}
-   {errorMsg == '' ? (<div className='form-element'>
-      <h4 htmlFor="error"><b> {errorMsg} </b></h4>
-      </div>) : null}
    <form action="/signin" method='POST' encType="multipart/form-date" onSubmit = {handleSubmit}>
     <label htmlFor="fname"><b>First name    </b></label>
       <input type="text"  placeholder="Enter first name" name="fname" value= {profile.fname} onChange = {handleChange} required/>

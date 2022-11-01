@@ -95,8 +95,10 @@ app.post("/signin", (req, res) => {
           [username, fname, lname, email, phone, password, role, roleid],
 
           (err, result) => {
-              console.log(err,result);
-              res.send(result);
+              if(err){
+                res.send(err);
+              }
+              else res.send(result)
           }
       );
       db.query(
@@ -106,18 +108,22 @@ app.post("/signin", (req, res) => {
        
 
         (err, result) => {
-            console.log(err,result);
-            //res.send(result);
-        });
+          if(err){
+            res.send(err);
+          }
+          else res.send(result)
+      });
 
       db.query(
 
         "INSERT INTO Security (username, sq1, sq2, sq1_ans, sq2_ans) VALUES (?,?,?,?,?)",
           [username, sec_ques1, sec_ques2, sq1, sq2],
 
-        (err, result) => {
-            console.log(err,result);
-            //res.send(result);
+          (err, result) => {
+            if(err){
+              res.send(err);
+            }
+            else res.send(result)
         }
     );
     });  
