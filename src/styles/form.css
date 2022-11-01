@@ -96,19 +96,16 @@ a{
   cursor: pointer;
 }
 
-.map-container {
-  height: 400px;
+ .map-container {
+  height: 300px;
+  width: 300px;
 }
 
-.sidebar {
-  background-color: rgba(35, 55, 75, 0.9);
-  color: #fff;
-  padding: 6px 12px;
-  font-family: monospace;
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 12px;
-  border-radius: 4px;
+.result{
+  display: flex;
+  padding: 8px;
+  border-bottom: 4px solid whitesmoke;
+}
+.result>*{
+  flex: 0 0 33.3333%;
 }

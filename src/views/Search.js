@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import '../styles/form.css';
-// import 'mapbox-gl/dist/mapbox-gl.css';
-import mapboxgl from 'mapbox-gl';
-mapboxgl.accessToken = 'pk.eyJ1IjoiZ2x0ZWphc3dpIiwiYSI6ImNsOXc1cDNwYjB3czczb256NTd2c2JuemIifQ.b-VwjCpfeG3aR2A8yux1zQ';
+import MapRender from "./Map";
 
 export function Search(){
     const [filters,setFilters] = useState({
@@ -17,69 +15,61 @@ export function Search(){
         searchQuery : ''
     });
     const [results, setResults] = useState([]);
-    const mapContainer = useRef(null);
-    const map = useRef(null);
-    const [lng, setLng] = useState(-70.9);
-    const [lat, setLat] = useState(42.35);
-    const [zoom, setZoom] = useState(9);
+  
+    const handleResults = () => {
+        const a = results;
+        const cleanedResults = [];
+          for(var i=0;i<a.length;i++){
+            cleanedResults[i]= {
+                'image':'',
+                'petDetails':{
+                    'Pet name':a[i].name,
+                    'Pet owner':a[i].owner,
+                    'Pet age':a[i].age,
+                    'Pet breed':a[i].breed
+                },
+                'map':{'lat':a[i].lat,'lng':a[i].lng}
+            }
+          }
+          console.log('CleanedResults');
+          console.log(cleanedResults);
+          return cleanedResults;
+    }
 
-    useEffect(() => {
-        if (map.current) return; // initialize map only once
-        map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [lng, lat],
-        zoom: zoom
-        });
-        });
-
-    useEffect(() => {
-            if (!map.current) return; // wait for map to initialize
-            map.current.on('move', () => {
-            setLng(map.current.getCenter().lng.toFixed(4));
-            setLat(map.current.getCenter().lat.toFixed(4));
-            setZoom(map.current.getZoom().toFixed(2));
-            });
-            });
-        
     const RenderResults = () => {
-        // results = [{key1:'val1',key2:'val2'}];
-        const keys = Object.keys(results[0]);
-        console.log(keys);
-        return (
-            <div>
-        <table>
-        
-        <tbody>
-        {results.map((row, index) => {
-     return <tr key={index}>
-         <td key={index}> {
-             keys.map((key, index) => {
-                 return (
-                     <h5> {key} : {row[key]}<br/></h5>  
-                 )
-             })
-         }</td>
-      </tr>;
-  })}
-        </tbody>
-    </table>
-            </div>
-        )
-//         return (
-//             <div >
-//             {results.map((row, index) => { return <div className="card" id ={index}>
-                
-//     <h4><b>{row['name']}</b></h4> 
-//     <p>Age - {row['age']}</p>
-//     <p>Breed - {row['breed']}</p> 
-//     <br></br>
-//    </div>
-            
-//          } )}
+        const res = handleResults();
+        const keys = Object.keys(res[0].petDetails);
+       return (
+        <div>  
+        {res.map((index)=>{
+            return (
+                <div key={index} className='result'>
+               <div>
+                {index.image!='' ? <img src='/'></img> : '<Pet picture missing>'}
+               </div>
+               <div>
+               {keys.map((k)=> {
+                return (
+           
+                                            <div key={k}>
+                                             <h5> {k} : {index.petDetails[k]}<br/></h5> </div>
+                )
+               })
 
-// </div>)
-};
+               }
+              </div>
+              <div>
+                <MapRender lng={index.map.lng} lat={index.map.lat}></MapRender>
+              </div>
+              <br/>
+              </div>
+              
+            )
+        })}
+        </div>
+       )
+
+    }
 
     const handleChange = (event) => {
         
@@ -105,14 +95,6 @@ export function Search(){
             console.log(filters);
             axios.post("http://localhost:3000/search", {
                 filter : filters
-              /*pet: filters.pet,
-              size : filters.size,
-              temp: filters.temp,
-              breed: filters.breed,
-              color: filters.color,
-              age: filters.age,
-              searchQuery: filters.searchQuery,
-              other: filters.other,*/
             }).then((response) => {
              setResults(response.data);
             });
@@ -225,11 +207,7 @@ return(
     {results.length > 0 ? <RenderResults/> : <h3>No results found! Please recheck the filters selected!</h3> }
     </div>
     <div>
-{/* <div className="sidebar">
-Longitude: {lng} | Latitude: {lat}
-</div> */}
-<div ref={mapContainer} className="map-container" />
-</div>
+</div> 
 </div>
     </div>
 )

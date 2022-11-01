@@ -18,7 +18,7 @@ const LayoutCustom = ({ children }) => (
     </li>
     </ul>
     </div>
-   
+
     <main className="site-content">
       {children}
     </main>
