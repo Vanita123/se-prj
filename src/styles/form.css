@@ -82,3 +82,30 @@ form.nosubmit {
 a{
     padding-left: 8px;
 }
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+  background-color: white;
+  padding: 2px 16px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.6);
+  cursor: pointer;
+}
+
+ .map-container {
+  height: 300px;
+  width: 300px;
+}
+
+.result{
+  display: flex;
+  padding: 8px;
+  border-bottom: 4px solid whitesmoke;
+}
+.result>*{
+  flex: 0 0 33.3333%;
+}

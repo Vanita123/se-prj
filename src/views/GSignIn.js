@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
-import {Signin} from './Signin';
+import {UserRegistration} from './UserRegistration';
 import { useNavigate } from "react-router-dom";
 
 export function GoogleSignIn() {
@@ -37,7 +37,7 @@ export function GoogleSignIn() {
         <div>
             {profile ? (
                 <div>  
-                    <Signin givenName = {profile.givenName} familyName = {profile.familyName} email = {profile.email}/>
+                    <UserRegistration givenName = {profile.givenName} familyName = {profile.familyName} email = {profile.email}/>
                     <GoogleLogout clientId={clientId} buttonText="Remove google profile import" onLogoutSuccess={logOut} />
        
                 </div>

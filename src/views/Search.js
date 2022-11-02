@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import '../styles/form.css';
+import MapRender from "./Map";
 
 export function Search(){
     const [filters,setFilters] = useState({
@@ -14,32 +15,61 @@ export function Search(){
         searchQuery : ''
     });
     const [results, setResults] = useState([]);
+  
+    const handleResults = () => {
+        const a = results;
+        const cleanedResults = [];
+          for(var i=0;i<a.length;i++){
+            cleanedResults[i]= {
+                'image':'',
+                'petDetails':{
+                    'Pet name':a[i].name,
+                    'Pet owner':a[i].owner,
+                    'Pet age':a[i].age,
+                    'Pet breed':a[i].breed
+                },
+                'map':{'lat':a[i].lat,'lng':a[i].lng}
+            }
+          }
+          console.log('CleanedResults');
+          console.log(cleanedResults);
+          return cleanedResults;
+    }
 
     const RenderResults = () => {
-        
-        const keys = Object.keys(results[0]);
-        console.log(keys);
-        return (
-            <div>
-        <table>
-        
-        <tbody>
-        {results.map((row, index) => {
-     return <tr key={index}>
-         <td key={index}> {
-             keys.map((key, index) => {
-                 return (
-                     <h5> {key} : {row[key]}<br/></h5>  
-                 )
-             })
-         }</td>
-      </tr>;
-  })}
-        </tbody>
-    </table>
-            </div>
-        )
-    };
+        const res = handleResults();
+        const keys = Object.keys(res[0].petDetails);
+       return (
+        <div>  
+        {res.map((index)=>{
+            return (
+                <div key={index} className='result'>
+               <div>
+                {index.image!='' ? <img src='/'></img> : '<Pet picture>'}
+               </div>
+               <div>
+               {keys.map((k)=> {
+                return (
+           
+                                            <div key={k}>
+                                             <h5> {k} : {index.petDetails[k]}<br/></h5> </div>
+                )
+               })
+
+               }
+              </div>
+              <div>
+                <MapRender lng={index.map.lng} lat={index.map.lat}></MapRender>
+              </div>
+              <br/>
+              </div>
+              
+            )
+        })}
+        </div>
+       )
+
+    }
 
     const handleChange = (event) => {
         
@@ -63,16 +93,8 @@ export function Search(){
 
       const handleSubmit = (event) => {
             console.log(filters);
-            axios.post("/search", {
+            axios.post("http://localhost:3000/search", {
                 filter : filters
-              /*pet: filters.pet,
-              size : filters.size,
-              temp: filters.temp,
-              breed: filters.breed,
-              color: filters.color,
-              age: filters.age,
-              searchQuery: filters.searchQuery,
-              other: filters.other,*/
             }).then((response) => {
              setResults(response.data);
             });
@@ -174,7 +196,7 @@ return(
         <input type="checkbox" name="other" value="no_biting" onChange = {handleChange}/>
         <label htmlFor='black'>No biting</label>
         <br></br>
-        <input type="checkbox" name="other" value="non-allergic" onChange = {handleChange}/>
+        <input type="checkbox" name="other" value="non_allergic" onChange = {handleChange}/>
         <label htmlFor='brown'>Non-allergic</label>
         <br></br>
         <input type="checkbox" name="other" value="vaccinated" onChange = {handleChange}/>
@@ -184,6 +206,8 @@ return(
     <div className='results'> <h3>Results section</h3>
     {results.length > 0 ? <RenderResults/> : <h3>No results found! Please recheck the filters selected!</h3> }
     </div>
+    <div>
+</div> 
 </div>
     </div>
 )

@@ -1,3 +1,13 @@
+Role id changes:
+ALTER TABLE users DROP FOREIGN KEY users_ibfk_1;
+CREATE TABLE Roles(roleid int NOT NULL PRIMARY KEY, role varchar(255) NOT NULL, role_desc VARCHAR(255) NOT NULL);
+INSERT INTO Roles(roleid , role, role_desc) VALUES(3, 'Admin',  'Approves the item added for rent, accepts customer complaints and routes it to the appropriate renter, issues a refund to the renter'),
+    (2, 'Owner',  'The renter should be able to post the item for rent. View the information of the customer who rented the items/services.'),
+    (1, 'Renter',  'A customer can choose the item/place for rent make payments, cancel rental bookings, lodge complaints, apply for refund.');
+    
+ALTER TABLE users
+ADD FOREIGN KEY (roleid) REFERENCES roles(roleid);
+
 Create:
 
 
@@ -10,7 +20,7 @@ use paw;
   FOREIGN KEY (roleid) REFERENCES Roles(roleid);
  
 --3 for roles table
-CREATE TABLE Roles(roleid int NOT NULL PRIMARY KEY, role_name varchar(255) NOT NULL, role_desc VARCHAR(255) NOT NULL);
+CREATE TABLE Roles(roleid int NOT NULL PRIMARY KEY, role varchar(255) NOT NULL, role_desc VARCHAR(255) NOT NULL);
 --4 for security questions
 CREATE TABLE Security(SQID int PRIMARY KEY NOT NULL AUTO_INCREMENT, username varchar(255) NOT NULL, sq1 varchar(255) NOT NULL, sq2 VARCHAR(255) NOT NULL, sq1_ans varchar(255) not null, sq2_ans varchar(255) not null);
 
@@ -21,17 +31,18 @@ CREATE TABLE payments(payment_id int primary key auto_increment, booking_id int 
 CREATE TABLE  approval(booking_id int not null, renter_name varchar(255) not null, owner_details varchar(255) not null,pet varchar(255), foreign key (booking_id) references bookings(booking_id));
 
 CREATE TABLE pets(id int primary key auto_increment, name varchar(255) not null, owner varchar(255) not null,
- pet varchar(255) not null, sex char(1) not null, DOB date not null, age int not null,  breed varchar(255) 
- not null, size varchar(10) not null, temperment varchar(50) not null, color varchar(10) not null, vaccinated 
+ pet varchar(255) not null, sex char(1) not null, DOB date not null, age varchar(100) not null,  breed varchar(255) 
+ not null, size varchar(10) not null, temp varchar(50) not null, color varchar(10) not null, vaccinated 
  char(10) not null, allergies varchar(255) not null, other varchar(255));
-
-		     
 		     
 CREATE TABLE address(AddressID int NOT NULL AUTO_INCREMENT  PRIMARY KEY, Address varchar(255) not null,
  City VARCHAR(100) NOT NULL, State varchar(50) not null, Country varchar(50) not null, Zipcode varchar(10) not null, 
  username varchar(50) not null, foreign key(username) references users(username));
-
-
+		     
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Drop address column from users table.
+		     
+alter table users drop column address;
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 INSERT
