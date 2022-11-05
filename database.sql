@@ -17,7 +17,7 @@ CREATE TABLE Security(SQID int PRIMARY KEY NOT NULL AUTO_INCREMENT, username var
  FOREIGN KEY (username) REFERENCES users(username));
 		     
 --5 Booking table		     
-CREATE TABLE bookings(booking_id int auto_increment NOT NULL PRIMARY KEY, owner_name varchar(255) not null, renter_name varchar(255) not null, pet varchar(255) not null, booking_duration int not null, rating int, rent_price int not null, start_date datetime, end_date datetime,location varchar(255) not null, FOREIGN KEY (renter_name) REFERENCES users(username));
+CREATE TABLE bookings(booking_id int auto_increment NOT NULL PRIMARY KEY, owner_name varchar(255) not null, renter_name varchar(255) not null, pet varchar(255) not null, booking_duration int not null, rating int, rent_price int not null, booking_date datetime, FOREIGN KEY (renter_name) REFERENCES users(username));
 
 --6 payments table		     
 		     
@@ -30,16 +30,29 @@ CREATE TABLE  approval(booking_id int not null, renter_name varchar(255) not nul
 --8 pets table		     
 		     
 		     
-CREATE TABLE pets(id int primary key auto_increment, name varchar(255) not null, owner varchar(255) not null,
- pet varchar(255) not null, sex char(1) not null, DOB date not null, age varchar(100) not null,  breed varchar(255) 
- not null, size varchar(10) not null, temp varchar(50) not null, color varchar(10) not null, vaccinated 
- char(10) not null, allergies varchar(255) not null, other varchar(255));
-
+create table pets(id int PRIMARY KEY NOT NULL AUTO_INCREMENT, name varchar(255) not null, owner varchar(255) not null, pet varchar(255) not null, age varchar(255) not null, breed varchar(255) not null, size varchar(255) not null, temp varchar(255) not null,
+color varchar(255) not null, no_shedding boolean, no_biting boolean, non_allergic boolean, vaccinated boolean);
+		     
+---OR alter the existing pets table:
+		     
+alter table pets add no_shedding boolean;
+alter table pets add no_biting boolean;
+alter table pets add non_allergic boolean;
+alter table pets add vaccinated boolean;
+alter table pets add images varchar(1000);
+		     
+		     
+		     
 --address table
 		     
 CREATE TABLE address(AddressID int NOT NULL AUTO_INCREMENT  PRIMARY KEY, Address varchar(255) not null,
  City VARCHAR(100) NOT NULL, State varchar(50) not null, Country varchar(50) not null, Zipcode varchar(10) not null, 
  username varchar(50) not null, foreign key(username) references users(username));
+		     
+		     
+-----create images table
+create table images(image int PRIMARY KEY NOT NULL AUTO_INCREMENT, username varchar(255) not null, img varchar(1000) 
+		    not null, FOREIGN KEY (username) REFERENCES users(username));
 		     
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Drop address column from users table.
