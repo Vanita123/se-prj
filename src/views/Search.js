@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import '../styles/form.css';
 import MapRender from "./Map";
+import {  useNavigate } from "react-router-dom";
 
 export function Search(){
     const [filters,setFilters] = useState({
@@ -15,6 +16,7 @@ export function Search(){
         searchQuery : ''
     });
     const [results, setResults] = useState([]);
+    const navigate = useNavigate();
   
     const handleResults = () => {
         const a = results;
@@ -26,14 +28,22 @@ export function Search(){
                     'Pet name':a[i].name,
                     'Pet owner':a[i].owner,
                     'Pet age':a[i].age,
-                    'Pet breed':a[i].breed
+                    'Pet breed':a[i].breed,
+                    'Pet price':a[i].price
                 },
-                'map':{'lat':a[i].lat,'lng':a[i].lng}
+                'map':{'lat':a[i].lat,'lng':a[i].lng},
+                'id':a[i].pet_id
             }
           }
           console.log('CleanedResults');
           console.log(cleanedResults);
           return cleanedResults;
+    }
+
+    const handleRentPet = (details) => {
+        
+        console.log(details);
+        navigate('/payment',{state:{ petid: details.id, view: details.roleid}});
     }
 
     const RenderResults = () => {
@@ -43,16 +53,16 @@ export function Search(){
         <div>  
         {res.map((index)=>{
             return (
-                <div key={index} className='result'>
+                <div key={index} className='result-container'>
+                <div className='result'>
                <div>
                 {index.image!='' ? <img src='/'></img> : '<Pet picture>'}
                </div>
                <div>
                {keys.map((k)=> {
                 return (
-           
-                                            <div key={k}>
-                                             <h5> {k} : {index.petDetails[k]}<br/></h5> </div>
+                <div key={k}>
+                <h5> {k} : {index.petDetails[k]}<br/></h5> </div>
                 )
                })
 
@@ -62,6 +72,9 @@ export function Search(){
                 <MapRender lng={index.map.lng} lat={index.map.lat}></MapRender>
               </div>
               <br/>
+              <br/>
+              </div>
+              <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleRentPet(index)}>Rent the pet</button>
               </div>
               
             )

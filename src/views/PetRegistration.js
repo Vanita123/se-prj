@@ -117,6 +117,8 @@ return (
         <h4>Pet picture</h4>
         <input type="file" id="pet_image" name="pet_image"></input>
         <br/>
+        <h4>Pet price(per hour)</h4>
+        <input type="text" id="pet_price" name="pet_price" placeholder="Enter USD per hour"></input>
         <br/>
     </form>
 

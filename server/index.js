@@ -98,7 +98,6 @@ app.post("/signin", (req, res) => {
               if(err){
                 res.send(err);
               }
-              else res.send(result)
           }
       );
       db.query(
@@ -111,7 +110,6 @@ app.post("/signin", (req, res) => {
           if(err){
             res.send(err);
           }
-          else res.send(result)
       });
 
       db.query(
