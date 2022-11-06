@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import '../styles/form.css';
 import MapRender from "./Map";
-import {  useNavigate } from "react-router-dom";
+// import {  useNavigate } from "react-router-dom";
 
 export function Search(){
     const [filters,setFilters] = useState({
@@ -12,11 +12,14 @@ export function Search(){
         breed:[],
         color : [],
         age:'',
-        other:[],
+        no_shedding:false,
+        no_biting:false,
+        non_allergic:false,
+        vaccinated : false,
         searchQuery : ''
     });
     const [results, setResults] = useState([]);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
   
     const handleResults = () => {
         const a = results;
@@ -39,13 +42,11 @@ export function Search(){
           console.log(cleanedResults);
           return cleanedResults;
     }
-
-    const handleRentPet = (details) => {
+//    const handleRentPet = (details) => {
         
-        console.log(details);
-        navigate('/payment',{state:{ petid: details.id, view: details.roleid}});
-    }
-
+//     console.log(details);
+//     navigate('/payment',{state:{ petid: details.id, view: details.roleid}});
+// }
     const RenderResults = () => {
         const res = handleResults();
         const keys = Object.keys(res[0].petDetails);
@@ -74,7 +75,7 @@ export function Search(){
               <br/>
               <br/>
               </div>
-              <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleRentPet(index)}>Rent the pet</button>
+              {/* <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleRentPet(index)}>Rent the pet</button> */}
               </div>
               
             )
@@ -88,7 +89,7 @@ export function Search(){
         
         const { name, value} = event.target;
 
-        const arr_filters = ['pet', 'size','breed','other','color']
+        const arr_filters = ['pet', 'size','breed','color']
         console.log(event.target);
         if(arr_filters.includes(name)){
             const {checked} = event.target;
@@ -203,16 +204,16 @@ return(
 <input type="radio" name="age" value="old age" onChange = {handleChange}/>
   <label htmlFor="old">Old age</label><br/>
         <h4>Other</h4>
-        <input type="checkbox" name="other" value="no_shedding" onChange = {handleChange}/>
+        <input type="checkbox" name="no_shedding"  value={(e)=>{return e.checked}} onChange = {handleChange}/>
         <label htmlFor='white'>No shedding</label>
         <br></br>
-        <input type="checkbox" name="other" value="no_biting" onChange = {handleChange}/>
+        <input type="checkbox" name="no_biting" value={(e)=>{return e.checked}} onChange = {handleChange}/>
         <label htmlFor='black'>No biting</label>
         <br></br>
-        <input type="checkbox" name="other" value="non_allergic" onChange = {handleChange}/>
+        <input type="checkbox" name="non_allergic" value={(e)=>{return e.checked}} onChange = {handleChange}/>
         <label htmlFor='brown'>Non-allergic</label>
         <br></br>
-        <input type="checkbox" name="other" value="vaccinated" onChange = {handleChange}/>
+        <input type="checkbox"name="vaccinated" value={(e)=>{return e.checked}} onChange = {handleChange}/>
         <label htmlFor='brown'>Vaccinated</label>
         <br></br>
     </div>

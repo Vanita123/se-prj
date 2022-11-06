@@ -18,7 +18,9 @@ export function PetRegistration(){
             no_biting:false,
             non_allergic:false,
             vaccinated : false,
-            name:''
+            name:'',
+            color:'',
+            age:''
         }
     );
     const handleChange = (event) => {
@@ -69,7 +71,7 @@ return (
   <label htmlFor="passive">Passive</label><br/>
 <h4>Pet breed</h4>
 <h6>Please select the pet type to load the breed options.</h6>
-{petDetails.type=='dog' ? <select name="breed" id="breed">
+{petDetails.type=='dog' ? <select name="breed" id="breed" onChange = {handleChange}>
     <option value="Labrador Retriever">Labrador Retriever</option>
   <option value="French Bulldog">French Bulldog</option>
   <option value="Golden Retriever">Golden Retriever</option>
@@ -77,7 +79,7 @@ return (
   <option value="Poodle">Poodle</option>
 </select> : null}
 
-{petDetails.type=='cat' ? <select name="breed" id="breed">
+{petDetails.type=='cat' ? <select name="breed" id="breed" onChange = {handleChange}>
     <option value="Domestic Shorthair">Domestic Shorthair</option>
   <option value="American Shorthair">American Shorthair</option>
   <option value="Domestic Longhair">Domestic Longhair</option>
@@ -87,14 +89,14 @@ return (
 
 <br/>
 <h4>Pet color</h4>
-<select name="color" id="color">
+<select name="color" id="color" onChange = {handleChange}>
     <option value="White">White</option>
   <option value="Black">Black</option>
   <option value="Brown">Brown</option>
 </select>
 <br/>
 <h4>Pet age</h4>
-<select name="age" id="age">
+<select name="age" id="age" onChange = {handleChange}>
     <option value="early age">Early age</option>
   <option value="middle age">Middle age</option>
   <option value="old age">Old age</option>
