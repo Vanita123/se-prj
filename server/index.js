@@ -86,45 +86,82 @@ app.post("/signin", (req, res) => {
 
     password = req.body.password;
 
-    bcrypt.hash(req.body.password, 10, function(err, hash) {
-     password = hash;
-     console.log("hashed password -> ", password);
-     db.query(
 
-          "INSERT INTO Users (username, fname, lname, email, phno, password, role, roleid) VALUES (?,?,?,?,?,?,?,?)",
-          [username, fname, lname, email, phone, password, role, roleid],
+    db.query(
 
-          (err, result) => {
-              if(err){
-                res.send(err);
-              }
-          }
-      );
-      db.query(
-        "INSERT INTO address (Address, City, State, Country, Zipcode, username) VALUES (?,?,?,?,?,?)",
-        [address,city,state,country,zipcode,username],
+      "INSERT INTO Users (username, fname, lname, email, phno, password, role, roleid) VALUES (?,?,?,?,?,?,?,?)",
+      [username, fname, lname, email, phone, password, role, roleid],
 
-       
-
-        (err, result) => {
+      (err, result) => {
           if(err){
             res.send(err);
           }
-      });
+      }
+  );
+  db.query(
+    "INSERT INTO address (Address, City, State, Country, Zipcode, username) VALUES (?,?,?,?,?,?)",
+    [address,city,state,country,zipcode,username],
 
-      db.query(
+   
 
-        "INSERT INTO Security (username, sq1, sq2, sq1_ans, sq2_ans) VALUES (?,?,?,?,?)",
-          [username, sec_ques1, sec_ques2, sq1, sq2],
+    (err, result) => {
+      if(err){
+        res.send(err);
+      }
+  });
 
-          (err, result) => {
-            if(err){
-              res.send(err);
-            }
-            else res.send(result)
+  db.query(
+
+    "INSERT INTO Security (username, sq1, sq2, sq1_ans, sq2_ans) VALUES (?,?,?,?,?)",
+      [username, sec_ques1, sec_ques2, sq1, sq2],
+
+      (err, result) => {
+        if(err){
+          res.send(err);
         }
-    );
-    });  
+        else res.send(result)
+    }
+);
+
+    // bcrypt.hash(req.body.password, 10, function(err, hash) {
+    //  password = hash;
+    //  console.log("hashed password -> ", password);
+    //  db.query(
+
+    //       "INSERT INTO Users (username, fname, lname, email, phno, password, role, roleid) VALUES (?,?,?,?,?,?,?,?)",
+    //       [username, fname, lname, email, phone, password, role, roleid],
+
+    //       (err, result) => {
+    //           if(err){
+    //             res.send(err);
+    //           }
+    //       }
+    //   );
+    //   db.query(
+    //     "INSERT INTO address (Address, City, State, Country, Zipcode, username) VALUES (?,?,?,?,?,?)",
+    //     [address,city,state,country,zipcode,username],
+
+       
+
+    //     (err, result) => {
+    //       if(err){
+    //         res.send(err);
+    //       }
+    //   });
+
+    //   db.query(
+
+    //     "INSERT INTO Security (username, sq1, sq2, sq1_ans, sq2_ans) VALUES (?,?,?,?,?)",
+    //       [username, sec_ques1, sec_ques2, sq1, sq2],
+
+    //       (err, result) => {
+    //         if(err){
+    //           res.send(err);
+    //         }
+    //         else res.send(result)
+    //     }
+    // );
+    // });  
 
 
 });
@@ -207,17 +244,27 @@ app.post("/login", (req, res) => {
       if (result.length > 0) {
         console.log(result[0].password);
 
-        bcrypt.compare(password, result[0].password, (error, response) => {
-          console.log(response);
-          if (response) {
-            req.session.user = result;
-            console.log(req.session.user);
+        // bcrypt.compare(password, result[0].password, (error, response) => {
+        //   console.log(response);
+        //   if (response) {
+        //     req.session.user = result;
+        //     console.log(req.session.user);
             
-            res.send(result);
-          } else {
-            res.send({ message: "Wrong username/password combination!" });
-          }
-        });
+        //     res.send(result);
+        //   } else {
+        //     res.send({ message: "Wrong username/password combination!" });
+        //   }
+        // });
+        if (result[0].password==password){
+
+          req.session.user = result;
+          console.log(req.session.user);
+          
+          res.send(result);
+        } else {
+          res.send({ message: "Wrong username/password combination!" });
+        }
+
       } else {
         res.send({ message: "User doesn't exist" });
       }
