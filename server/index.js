@@ -280,13 +280,31 @@ app.post("/search", async(req, res) => {
      const filter=req.body.filter;
      //console.log(filter);
 
-//  Newly added filter code.
+  let query = "SELECT * FROM pets as a inner join address as b on a.owner=b.username WHERE " ;
 
-     let query = "SELECT * FROM pets as a inner join address as b on a.owner=b.username WHERE " ;
+     if (filter.searchQuery.length > 0){
+      query+="( "
+      query+= "pet like '%"+ filter.searchQuery + "%' "+
+      "OR age like '%"+ filter.searchQuery + "%' "+
+      "OR breed like '%"+ filter.searchQuery + "%' "+
+      "OR size like '%"+ filter.searchQuery + "%' "+
+      "OR temp like '%"+ filter.searchQuery + "%' "+
+      "OR no_shedding like '%"+ filter.searchQuery + "%' "+
+      "OR no_biting like '%"+ filter.searchQuery + "%' "+
+      "OR vaccinated like '%"+ filter.searchQuery + "%' "+
+      "OR non_allergic like '%"+ filter.searchQuery + "%' "+
+      "OR name like '%"+ filter.searchQuery + "%' "+
+      "OR owner like '%"+ filter.searchQuery + "%' "+
+      "OR color like '%"+ filter.searchQuery + "%' ";
+      query+=" ) "
+     }
 
-     if (filter.pet.length > 0) {
+     if (filter.pet.length > 0 && filter.searchQuery==0) {
         query += "a.pet IN (" + filter.pet.map(pet => `'${pet}'`).join() + ") " 
      }
+     if (filter.pet.length > 0  && filter.searchQuery>0) {
+      query += " AND a.pet IN (" + filter.pet.map(pet => `'${pet}'`).join() + ") " 
+   }
      if (filter.size.length > 0){
       query+= "AND a.size IN (" + filter.size.map(size => `'${size}'`).join() + ") " 
      }
@@ -302,26 +320,19 @@ app.post("/search", async(req, res) => {
      if (filter.age.length > 0){
       query+= "AND a.age='"+ filter.age + "' " 
      }
-     if (filter.other.length > 0){
-      query+= "AND a.other IN (" + filter.other.map(other => `'${other}'`).join() + ") " 
+     if (filter.no_shedding.length > 0){
+      query+= "AND a.no_shedding='"+ filter.no_shedding + "' " 
      }
-    
-//      let query =
-//      "SELECT * FROM pets WHERE " +
-//      "pet IN (" + filter.pet.map(name => `'${name}'`).join() + ") " +
-//      "AND age IN (" + filter.age.map(age => `'${age}'`).join() + ")" +
-//      "AND breed IN (" + filter.breed.map(breed => `'${breed}'`).join() + ")" +
-//      "AND size IN (" + filter.size.map(size => `'${size}'`).join() + ")" +
-//      "AND temperment IN (" + filter.temp.map(temperment => `'${temperment}'`).join() + ")"+
-//      "AND color IN (" + filter.color.map(color => `'${color}'`).join() + ")";
-//      "AND other IN (" + filter.other.map(species => `'${species}'`).join() + ") ";
-
-// const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=chelsea+burgers+manhattan+new+york+city&type=restaurant&key=${key}`;
-// const fetch_response = await fetch(api_url);
-// const data = await fetch_response.json();
-// api_data = data.results[0]["geometry"].location
-//  console.log('api data is ',data.results[0]["geometry"].location);
-
+     if (filter.no_biting.length > 0){
+      query+= "AND a.no_biting='"+ filter.no_biting + "' " 
+     }
+     if (filter.non_allergic.length > 0){
+      query+= "AND a.non_allergic='"+ filter.non_allergic + "' " 
+     }
+     if (filter.vaccinated.length > 0){
+      query+= "AND a.vaccinated='"+ filter.vaccinated + "' " 
+     }
+  
      console.log(query);
      db.query(query, async (err, rows) => {
       if (err) {
@@ -330,10 +341,7 @@ app.post("/search", async(req, res) => {
       }
 
       console.log('row data is',rows);  
-      // merged = Object.assign({},rows[0],api_data);
-      // console.log('merged array is',merged);
-      
-      //res.send(rows);
+    
   
 list_global=[];
      
@@ -374,14 +382,3 @@ app.listen(3000, () => {
 });
 
 
-// This is the code for search bar.
-   /*let query = "SELECT * FROM pets WHERE " +
-    " pet like '%"+ filter.pet + "%' "+
-    "OR age like '%"+ filter.age + "%' "+
-    "OR breed like '%"+ filter.breed + "%' "+
-    "OR size like '%"+ filter.size + "%' "+
-    "OR temp like '%"+ filter.temp + "%' "+
-    "OR other like '%"+ filter.other + "%' "+
-    "OR name like '%"+ filter.name + "%' "+
-    "OR owner like '%"+ filter.owner + "%' "+
-    "OR color like '%"+ filter.color + "%' ";*/
