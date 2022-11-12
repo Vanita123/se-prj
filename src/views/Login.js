@@ -23,7 +23,10 @@ export function Login(){
       setLoginStatus('error');
     } else {
       setLoginStatus('');
-      navigate('/view',{state:{ name: response.data[0].fname, view: response.data[0].roleid}});
+      const { fname, roleid} = response.data[0];
+      localStorage.setItem("username", JSON.stringify(username));
+       localStorage.setItem("roleid", JSON.stringify(roleid));
+      navigate('/view',{state:{ name: fname, view: roleid}});
     }
   });
   event.preventDefault();

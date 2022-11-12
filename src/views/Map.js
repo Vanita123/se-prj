@@ -17,6 +17,15 @@ export default function MapRender(props) {
         });
         setMap(map);
       }
+
+      if(map){
+  const marker = new mapboxgl.Marker({
+    color: "#FF0000"
+}).setLngLat([props.lng || 0, props.lat || 0])
+  .addTo(map);
+      }
+
+
     }, [ref, map]);
     return <div className="map-container" ref={ref} />;
   }

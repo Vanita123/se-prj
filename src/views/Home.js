@@ -5,6 +5,7 @@ import FeaturesSplit from '../components/sections/FeaturesSplit';
 
 
 const Home = () => {
+  localStorage.clear();
 
   return (
     <>

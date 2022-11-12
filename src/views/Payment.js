@@ -7,13 +7,15 @@ export default function Payment(){
     const location = useLocation();
     console.log('location');
     console.log(location);
+    const username = JSON.parse(localStorage.getItem('username'));
+    const [hours,setHrs] = useState(1);
+    const {price,petid} = location.state;
     const [paymentDetails,setPaymentDetails] = useState({
         date: '',
-        hours:1,//dropdown 1 - 5 hrs
-        amount:location.state.price,//rate * number_of_hours
-        petId:location.state.petid,//props
-        username:location.state.username,//props
-        orderId:location.state.petid+location.state.username,//petid+username from props or session
+        amount:price*hours,//rate * number_of_hours
+        petId:petid,//props
+        username:username,//props
+        orderId:petid+username,//petid+username from props or session
         cname:'',
         ccnum:'',
         expmonth:'',
@@ -21,6 +23,7 @@ export default function Payment(){
         cvv:'',
         orderComplete:false
     });
+
     
     const handleChange = (event)=>{
         setPaymentDetails({ ...paymentDetails, [event.target.name]: event.target.value })
@@ -48,6 +51,11 @@ export default function Payment(){
         console.log(paymentDetails);
     }
 
+    const handleAmountChange = (event)=>{
+        setHrs(event.target.value);
+        setPaymentDetails({...paymentDetails, amount: price * event.target.value })
+    }
+
     return (
         <div>
         {
@@ -56,7 +64,7 @@ export default function Payment(){
         :
         <div>
         <h4>Select number of hours</h4>
-<select name="hours" id="hours" onChange = {handleChange}>
+<select name="hours" id="hours" onChange = {handleAmountChange}>
     <option value={1}>1 hr</option>
   <option value={2}>2 hrs</option>
   <option value={3}>3 hrs</option>
@@ -69,7 +77,7 @@ export default function Payment(){
             <br/>
             <label for='amount'>Payment amount - {`$`+paymentDetails.amount}</label>
             <br/>
-            <label for='date'>Date to reserve the pet </label>
+            <label for='date'>Date to reserve the pet - </label>
             <input type="date" id="date" name="date"
        min="2022-10-10" max="20223-10-10" onChange={handleChange}></input>
        <br/>

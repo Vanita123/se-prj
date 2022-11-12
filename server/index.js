@@ -121,15 +121,6 @@ app.post("/signin", (req, res) => {
 res.send({username,fname,roleid})
 });
 
-// app.post("/signin", (req, res) => {
-    
-//     if (req.session.user) {
-//         res.send({ loggedIn: true, user: req.session.user });
-//     } else {
-//         res.send({ loggedIn: false });
-//     }
-// });
-
 app.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
