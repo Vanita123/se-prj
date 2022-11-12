@@ -9,6 +9,20 @@ const { generateFromEmail, generateUsername } = require("unique-username-generat
 const { UNSAFE_NavigationContext } = require("react-router-dom");
 const bcrypt = require('bcrypt');
 const fetch = require('node-fetch');
+const multer = require('multer');
+//const { memoryStorage } = require("multer");
+/*const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '/src/assets/pet-images');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now()+ path.extname(file.originalname));
+  }
+});
+console.log(filename);*/
+
+const upload = multer({storage:multer.memoryStorage()});
+
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -44,7 +58,7 @@ app.use(
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "password",
+    password: "projectse",
     database: "paw",
 });
 db.connect((err) => {
@@ -244,12 +258,193 @@ list_global.push(merged);
 console.log("LIST GLOBAL ++++++++++++++++++++++++++++++++++++++++++++",list_global);
 res.send(list_global);
 
-   
+    });
+});
+
+app.get("/search", (req, res) => {
+
+  const id = 1;
+  const sqlInsert = "SELECT + FROM images WHERE id = ?;"
+  
+  connection.query(sqlInsert, [id] , (err, result) => {
+  
+  if (err) {
+  console. log(err)
+  res.send({
+  msg: err
+  })
+}
+  
+  if(result){
+    res.send({
+      image: result [0]. image,
+    });
+  }
+});
+
+})
+
+app.post("/petRegistration",upload.single('pet_image'), (req, res) =>{
+ //upload.single('image'), (req, res, err) => {
+    
+    const name =req.body.name;
+    const breed = req.body.breed;
+    const fname = req.body.fname;
+    const size = req.body.size;
+    const temperament = req.body.temperament;
+    const no_shedding = req.body.no_shedding;
+    var no_biting = req.body.no_biting;
+    const non_allergic = req.body.non_allergic;
+    const type = req.body.type;
+    const vaccinated = req.body.non_vaccinated;
+    const color = req.body.color;
+    const age =req.body.age;
+    const image =req.file;
+    other = '';
+    console.log(image);
+
+    console.log('pet breed is',breed);
+    console.log('pet name is',fname);
+    console.log('pet size is',size);
+    console.log('pet temperment is',temperament);
+    console.log('the pet sheds or not',no_shedding);
+    console.log('the pet bits or not',no_biting);
+    console.log('the pet is non allergic',non_allergic);
+    console.log('the type of the pet is',type);
+    console.log('the pet is vaccinates',vaccinated);
+    console.log('the color of the pet is',color);
+    console.log('the age of the pet is',age);
+    
+    if(no_biting == null){
+      no_biting = true;
+    }
+    if(non_allergic == null){
+      non_allergic = true;
+    }
+    if(no_shedding == null){
+      no_shedding = true;
+    }
+    if(vaccinated == null){
+      vaccinated = true;
+    }
+    db.query(
+      "INSERT INTO Pets (name,owner,pet,age,breed,size,temperment,color,no_shedding,no_biting,non_allergic,vaccinated) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+      [name,fname,type,age,breed,size,temperament,color,no_shedding,no_biting,non_allergic,vaccinated,image],
+
+      (err, result) => {
+          if(err){
+            res.send(err);
+          }
+          if (result.length > 0) {
+            console.log(result[0]);
+          }
+      }
+  );
+
+    //const image = req.file.filename; 
+
+    if (!image) {
+      console.log("No file upload");
+  } else {
+      //console.log(req.file.filename)
+      var imgsrc = 'http://127.0.0.1:3000/images/' + image
+      var insertData = "INSERT INTO iamges(imagesrc,fname,image)VALUES(?,?,?)"
+      db.query(insertData, [imgsrc], (err, result) => {
+          if (err) throw err
+          console.log("file uploaded")
+      })
+  }
+});
+    /*if (!reg.file.originalname.match(/\.(jpg|JPG|jpeg JPEG png|PNG|gif|GIF)$/)) {
+      res.send({ msg: 'Only image files (jpg, jpeg, png) are allowed!'})
+      }
+    else {
+      
+      const id = 1;
+      const sqlInsert = "UPDATE images SET 'image' = ? WHERE id = ?;"
+      
+      connection.query(sqlInsert, (image, id) , (err, result) => {
+      if (err) {
+      console.log(err) 
+      res.send({
+      msg: err
+        })
+      }
+      db.query(
+
+        "INSERT INTO Images (image,username,img) VALUES (?,?,?)",
+        [username, fname, lname, email, phone, password, role, roleid],
+
+        (err, result) => {
+            if(err){
+              res.send(err);
+            }
+        }
+    );
+      
+      if(result) {
+      res.send({
+      data: result,
+      msg: "Your image has been updated!"
+              });
+            }
+      }
     });
 
-   
+        
+/*if (!reg.file.originalname.match(/\.(jpg|JPG|jpeg JPEG png|PNG|gif|GIF)$/)) {
+res.send({ msg: 'Only image files (jpg, jpeg, png) are allowed!'})
+}else {
+const image = req.file.filename; 
+const id = 1;
+const sqlInsert = "UPDATE images SET 'image' = ? WHERE id = ?;"
 
+connection.query(sqlInsert, (image, id) , (err, result) => {
+if (err) {
+console.log(err) 
+res.send({
+msg: err
+  })
+}
+
+if(result) {
+res.send({
+data: result,
+msg: "Your image has been updated!"
+        });
+      }
+    });
+  }
 });
+
+
+app.get("/api/image", (req, res) => {
+
+  const id = 1;
+  const sqlInsert = "SELECT + FROM images WHERE id = ?;"
+  
+  connection.query(sqlInsert, [id] , (err, result) => {
+  
+  if (err) {
+  console. log(err)
+  res.send({
+  msg: err
+  })
+}
+  
+  if(result){
+    res.send({
+      image: result [0]. image,
+    });
+  }
+
+  });
+
+})*/
+
+  
+
+
 
 
 app.listen(3000, () => {

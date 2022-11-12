@@ -1,5 +1,6 @@
-import React, { useState} from "react";
-
+//import React, { useState} from "react";
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 //import axios from "axios";
 import '../styles/form.css';
 //import { useNavigate } from "react-router-dom";
@@ -9,34 +10,55 @@ export function PetRegistration(){
     
     const [ petDetails, setPetDetails ] = useState(
         {
-            breed:'',
             fname:'',//username of the owner
+            name:'',
             type:'',
             size:'',
             temperament:'',
-            no_shedding:false,
-            no_biting:false,
-            non_allergic:false,
-            vaccinated : false,
-            name:'',
+            breed:'',
             color:'',
-            age:''
+            age:'',
+            no_shedding: false,
+            no_biting: false,
+            non_allergic: false,
+            vaccinated : false,
+  
         }
     );
     const handleChange = (event) => {
-    
       setPetDetails({ ...petDetails, [event.target.name]: event.target.value });
       console.log(petDetails);
       };
 
     const handleSubmit = (event) => {
+      axios.post("http://localhost:3000/petRegistration", {
+        breed: petDetails.breed,
+        fname:petDetails.fname,//username of the owner
+        type:petDetails.type,
+        size: petDetails.size,
+        temperament: petDetails.temperament,
+        no_shedding: petDetails.no_shedding,
+        no_biting: petDetails.no_biting,
+        non_allergic: petDetails.non_allergic,
+        vaccinated : petDetails.vaccinated,
+        name: petDetails.name,
+        color :petDetails.color,
+        age:petDetails.age,
+        //image : petDetails.image
+            }).then((response) => {
+              console.log(petDetails)
+             setPetDetails(response.data);
+            });
+              // prevents the submit button from refreshing the page
+              event.preventDefault();
+          
       //need to handle
       event.preventDefault();
       };
 
 return (
     <div className='form-content'>
-   <form action="/petRegistration" method='POST' onSubmit = {handleSubmit}>
+   <form action="/petRegistration" enctype="multipart/formdata" method='POST' onSubmit = {handleSubmit}>
     <h3>Pet registration form</h3>
     <h4>Pet owner's username  </h4>
       <input type="text"  placeholder="Enter username" name="fname" onChange = {handleChange} required/>
@@ -117,7 +139,7 @@ return (
         <br></br>
         <br/>
         <h4>Pet picture</h4>
-        <input type="file" id="pet_image" name="pet_image"></input>
+        <input type="file" id="image" accept="image/*" name="pet_image"></input>
         <br/>
         <h4>Pet price(per hour)</h4>
         <input type="text" id="pet_price" name="pet_price" placeholder="Enter USD per hour"></input>
