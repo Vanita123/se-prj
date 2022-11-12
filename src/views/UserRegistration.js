@@ -55,7 +55,10 @@ export function UserRegistration(props){
        console.log(response);
        console.log(response.data);
        profile.username = response.data.username;
+       
        if(profile.username){
+        localStorage.setItem("username", JSON.stringify(profile.username));
+       localStorage.setItem("roleid", JSON.stringify(profile.roleid));
         navigate('/view',{state:{ name: profile.fname, view: profile.roleid, username: profile.username}});
        }
        else if (response.data.errno){

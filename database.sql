@@ -30,7 +30,7 @@ CREATE TABLE  approval(booking_id int not null, renter_name varchar(255) not nul
 -- 8 pets table		     
 		     
 		     
-create table pets(id int PRIMARY KEY NOT NULL AUTO_INCREMENT, name varchar(255) not null, owner varchar(255) not null, pet varchar(255) not null, age varchar(255) not null, breed varchar(255) not null, size varchar(255) not null, temp varchar(255) not null,
+create table pets(id int PRIMARY KEY NOT NULL AUTO_INCREMENT, name varchar(255) not null, owner varchar(255), pet varchar(255) not null, age varchar(255) not null, breed varchar(255) not null, size varchar(255) not null, temp varchar(255) not null,
 color varchar(255) not null, no_shedding boolean, no_biting boolean, non_allergic boolean, vaccinated boolean, images varchar(1000));
 		     
 -- ---OR alter the existing pets table:
@@ -63,7 +63,7 @@ create table images(image int PRIMARY KEY NOT NULL AUTO_INCREMENT, username varc
 
 -- insert in to users example:
 
-INSERT INTO users(fname, lname, email, phno, password, role, roleid) VALUES('slash', 'G', 'slash@iu.edu', 3245423235, 'fewrewr','user', 3);
+-- INSERT INTO users(fname, lname, email, phno, password, role, roleid) VALUES('slash', 'G', 'slash@iu.edu', 3245423235, 'fewrewr','user', 3);
 
 -- insert in to roles
 
@@ -72,16 +72,16 @@ INSERT INTO Roles(roleid , role, role_desc) VALUES(3, 'Admin',  'Approves the it
     (1, 'Renter',  'A customer can choose the item/place for rent make payments, cancel rental bookings, lodge complaints, apply for refund.');
 
 -- insert in to security
-INSERT INTO Security (username, sq1, sq2, sq1_ans, sq2_ans) VALUES('EmmaSmith1944','What would you name your pet?','What would you name your pet home?','Olie','home');
+-- INSERT INTO Security (username, sq1, sq2, sq1_ans, sq2_ans) VALUES('EmmaSmith1944','What would you name your pet?','What would you name your pet home?','Olie','home');
 
 -- -insert into pets table.
-INSERT INTO pets (name, owner, pet, sex, DOB, age, breed, size, temperment, color, vaccinated, allergies,other) VALUES
-('Snowflake', 'Emma', 'cat', 'f','2020-11-12', 2, 'persian cat', 'medium', 'calm', 'cream', 'yes', 'None', 'No shedding'),
-('Coonie', 'Ester', 'cat', 'm','2021-12-23', 1, 'Maine coon', 'large', 'friendly', 'blue', 'yes', 'None', 'No biting'),
-('Buttercup', 'Adam', 'cat', 'f','2018-3-01', 4, 'Ragdoll', 'small', 'sociable', 'lilac', 'yes', 'None', 'Non-allergic'),
-('Cooper', 'Max', 'dog', 'm','2020-3-2', 1, 'German Shephard', 'large', 'Courageous', 'Sable', 'yes', 'None', 'No biting');
+-- INSERT INTO pets (name, owner, pet, sex, DOB, age, breed, size, temperment, color, vaccinated, allergies,other) VALUES
+-- ('Snowflake', 'Emma', 'cat', 'f','2020-11-12', 2, 'persian cat', 'medium', 'calm', 'cream', 'yes', 'None', 'No shedding'),
+-- ('Coonie', 'Ester', 'cat', 'm','2021-12-23', 1, 'Maine coon', 'large', 'friendly', 'blue', 'yes', 'None', 'No biting'),
+-- ('Buttercup', 'Adam', 'cat', 'f','2018-3-01', 4, 'Ragdoll', 'small', 'sociable', 'lilac', 'yes', 'None', 'Non-allergic'),
+-- ('Cooper', 'Max', 'dog', 'm','2020-3-2', 1, 'German Shephard', 'large', 'Courageous', 'Sable', 'yes', 'None', 'No biting');
 		     
---------------------- insert into users
+-- insert into users
 INSERT INTO `users` (`username`,`fname`,`lname`,`email`,`phno`,`password`,`role`,`roleid`) VALUES ('alse7656','ew','eqwe','alse@gmail.com','4233123490','passcode12','Renter',1);
 INSERT INTO `users` (`username`,`fname`,`lname`,`email`,`phno`,`password`,`role`,`roleid`) VALUES ('Brown7612','Adam','Brown','Brown@gmail.com','3123245292','encrypt123','Owner',2);
 INSERT INTO `users` (`username`,`fname`,`lname`,`email`,`phno`,`password`,`role`,`roleid`) VALUES ('DanielR8186','Daniel','Ricardo','DanielR@gmail.com','3213023329','random323','Owner',2);
@@ -123,6 +123,7 @@ INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color
 INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`images`) VALUES (7,'Poodle','Alexa','Dog','Middle Age','French Bulldog','Medium','Active','Brown',NULL,NULL,NULL,NULL,NULL);
 INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`images`) VALUES (8,'Daisy','Lizy','Cat','Old Age','Domestic Longhair','Large','Passive','White',NULL,NULL,NULL,NULL,NULL);
 
+update pets a set owner=(select b.username from users b where a.owner=b.fname);
 -- Role id changes:
 -- ALTER TABLE users DROP FOREIGN KEY users_ibfk_1;
 -- CREATE TABLE Roles(roleid int NOT NULL PRIMARY KEY, role varchar(255) NOT NULL, role_desc VARCHAR(255) NOT NULL);
