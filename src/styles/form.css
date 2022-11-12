@@ -49,11 +49,12 @@ form.nosubmit {
     padding: 0;
     display: flex;
       justify-content: center;
+      padding: 16px;
   }
   
   input.nosubmit {
       
-      height: 36px;
+      height: 48px;
       border-radius: 4px;
     width: 260px;
     border: 1px solid #555;
@@ -64,6 +65,12 @@ form.nosubmit {
   .search-area{
       display: flex;
       flex-direction: row;
+      border-top: whitesmoke;
+      border-top-style: solid;
+
+      border-bottom: whitesmoke;
+      border-bottom-style: solid;
+      padding: 4px;
 }
 
   .filters{
@@ -76,7 +83,7 @@ form.nosubmit {
 
 .results{
     padding:0 8px ;
-    width: 75%;
+    width: 95%;
 }
 
 a{
@@ -108,4 +115,9 @@ a{
 }
 .result>*{
   flex: 0 0 33.3333%;
+}
+
+.view-buttongroup{
+  display: flex;
+  flex-direction: column;
 }

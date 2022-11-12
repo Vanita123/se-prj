@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import '../styles/form.css';
 import MapRender from "./Map";
-// import {  useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 export function Search(){
     const [filters,setFilters] = useState({
@@ -19,7 +19,7 @@ export function Search(){
         searchQuery : ''
     });
     const [results, setResults] = useState([]);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
   
     const handleResults = () => {
         const a = results;
@@ -42,11 +42,13 @@ export function Search(){
           console.log(cleanedResults);
           return cleanedResults;
     }
-//    const handleRentPet = (details) => {
+   function handleRentPet(details) {
         
-//     console.log(details);
-//     navigate('/payment',{state:{ petid: details.id, view: details.roleid}});
-// }
+    console.log('in handler');
+    console.log(details);
+    //get the current loggedin username, petid, price 
+    navigate('/payment',{state:{ petid: '123', username: 'test',price:'20'}});
+}
     const RenderResults = () => {
         const res = handleResults();
         const keys = Object.keys(res[0].petDetails);
@@ -71,11 +73,14 @@ export function Search(){
               </div>
               <div>
                 <MapRender lng={index.map.lng} lat={index.map.lat}></MapRender>
+                <br/>
+                <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={() => handleRentPet(index)}>Rent the pet</button>
               </div>
               <br/>
               <br/>
+              
               </div>
-              {/* <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleRentPet(index)}>Rent the pet</button> */}
+              
               </div>
               
             )
@@ -122,7 +127,7 @@ return(
     <div>
         <form className="nosubmit">
   <input className="nosubmit" name="searchQuery" type="search" placeholder="Search..." onChange = {handleChange}/>
-  <button type="submit" onClick={handleSubmit} className="button button-primary button-wide-mobile button-sm">Search</button>
+  <button type="submit" onClick={handleSubmit} className="button button-primary button-wide-mobile button-md">Search</button>
 </form>
 <div className='search-area'>
     <div className='filters'>

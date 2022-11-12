@@ -78,11 +78,7 @@ app.post("/signin", (req, res) => {
     const city=req.body.city;
     const zipcode=req.body.zipcode;
    
-    const roleid=1;
-  
-
-    console.log(country);
-    console.log(state);
+    const roleid=req.body.roleid;
 
     password = req.body.password;
 
@@ -92,143 +88,33 @@ app.post("/signin", (req, res) => {
       "INSERT INTO Users (username, fname, lname, email, phno, password, role, roleid) VALUES (?,?,?,?,?,?,?,?)",
       [username, fname, lname, email, phone, password, role, roleid],
 
-      (err, result) => {
-          if(err){
-            res.send(err);
-          }
+      () => {
       }
   );
   db.query(
     "INSERT INTO address (Address, City, State, Country, Zipcode, username) VALUES (?,?,?,?,?,?)",
     [address,city,state,country,zipcode,username],
-
-   
-
-    (err, result) => {
-      if(err){
-        res.send(err);
-      }
-  });
+    () => {});
 
   db.query(
 
     "INSERT INTO Security (username, sq1, sq2, sq1_ans, sq2_ans) VALUES (?,?,?,?,?)",
       [username, sec_ques1, sec_ques2, sq1, sq2],
-
-      (err, result) => {
-        if(err){
-          res.send(err);
-        }
-        else res.send(result)
-    }
+      () => {
+      }
 );
 
-    // bcrypt.hash(req.body.password, 10, function(err, hash) {
-    //  password = hash;
-    //  console.log("hashed password -> ", password);
-    //  db.query(
-
-    //       "INSERT INTO Users (username, fname, lname, email, phno, password, role, roleid) VALUES (?,?,?,?,?,?,?,?)",
-    //       [username, fname, lname, email, phone, password, role, roleid],
-
-    //       (err, result) => {
-    //           if(err){
-    //             res.send(err);
-    //           }
-    //       }
-    //   );
-    //   db.query(
-    //     "INSERT INTO address (Address, City, State, Country, Zipcode, username) VALUES (?,?,?,?,?,?)",
-    //     [address,city,state,country,zipcode,username],
-
-       
-
-    //     (err, result) => {
-    //       if(err){
-    //         res.send(err);
-    //       }
-    //   });
-
-    //   db.query(
-
-    //     "INSERT INTO Security (username, sq1, sq2, sq1_ans, sq2_ans) VALUES (?,?,?,?,?)",
-    //       [username, sec_ques1, sec_ques2, sq1, sq2],
-
-    //       (err, result) => {
-    //         if(err){
-    //           res.send(err);
-    //         }
-    //         else res.send(result)
-    //     }
-    // );
-    // });  
-
-
+res.send({username,fname,roleid})
 });
 
-//let location = await getAddress('Via San Michele 162, Vasto');
-
-
-
-
-
-/*app.get('/', async (req, res, next) => {
- try {
-  /*const address = req.body.address;
-  const country = req.body.country;
-  const state = req.body.state;
-  const county = req.body.county;
-   const neighborhood = 'chelsea'
-   const borough = 'manhattan'
-   const city = 'new+york+city'
-   const category = 'burgers'*/
-  
-  /*const api_url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=chelsea+burgers+manhattan+new+york+city&type=restaurant&key=${key}`;
-  const fetch_response = await fetch(api_url);
-  const data = await fetch_response.json();
-   console.log('api data is',data);
-   res.json(data);
-   res.send(data);
-   } 
- catch (err) {
-  next(err);
-}
-})*/
-
-
-// const key = 'AIzaSyA0d2IhHBfzj0PmYr3yguvOylcmJ4r4VWM';
-// app.post('/signin', async (req, res, next) => {
-//  try {
-//   const address = req.body.address;
-//   const country = req.body.country;
-//   const state = req.body.state;
-//   const county = req.body.county;
-//    /*const neighborhood = 'chelsea'
-//    const borough = 'manhattan'
-//    const city = 'new+york+city'
-//    const category = 'burgers'*/
-//    const {data} = await app.get(
-   
-// `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${address}+${county}+${state}+${country}&type=restaurant&key=${key}`
-//    );
-//    console.log('api data is',data);
-//    res.json(data);
-//    res.send(data);
-//    } 
-//  catch (err) {
-//   next(err);
-// }
-// })
-
-
-app.post("/signin", (req, res) => {
+// app.post("/signin", (req, res) => {
     
-    if (req.session.user) {
-        res.send({ loggedIn: true, user: req.session.user });
-    } else {
-        res.send({ loggedIn: false });
-    }
-});
+//     if (req.session.user) {
+//         res.send({ loggedIn: true, user: req.session.user });
+//     } else {
+//         res.send({ loggedIn: false });
+//     }
+// });
 
 app.post("/login", (req, res) => {
   const username = req.body.username;
@@ -244,17 +130,6 @@ app.post("/login", (req, res) => {
       if (result.length > 0) {
         console.log(result[0].password);
 
-        // bcrypt.compare(password, result[0].password, (error, response) => {
-        //   console.log(response);
-        //   if (response) {
-        //     req.session.user = result;
-        //     console.log(req.session.user);
-            
-        //     res.send(result);
-        //   } else {
-        //     res.send({ message: "Wrong username/password combination!" });
-        //   }
-        // });
         if (result[0].password==password){
 
           req.session.user = result;
