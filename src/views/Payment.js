@@ -27,7 +27,24 @@ export default function Payment(){
     }
 
     const handleOrder = ()=>{
-        //post
+        axios.post("http://localhost:3000/payment", {
+            date: paymentDetails.date,
+            hours:paymentDetails.hours,
+            amount:paymentDetails.amount,
+            petId:paymentDetails.petId,
+            username:paymentDetails.username,//props
+            orderId:paymentDetails.orderId,//petid+username from props or session
+            cname:paymentDetails.ccname,
+            ccnum:paymentDetails.ccnum,
+            expmonth:paymentDetails.expmonth,
+            expyear:paymentDetails.expyear,
+            cvv:paymentDetails.cvv,
+            orderComplete:paymentDetails.orderComplete
+            
+                }).then((response) => {
+                  console.log(paymentDetails)
+                 setPaymentDetails(response.data);
+                });
         console.log(paymentDetails);
     }
 

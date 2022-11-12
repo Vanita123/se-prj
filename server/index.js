@@ -355,6 +355,48 @@ app.post("/petRegistration",upload.single('pet_image'), (req, res) =>{
       })
   }
 });
+
+app.post("/payment", (req, res) => {
+ 
+    const date =req.body.date;
+    const hours = req.body.hours;
+    const petId = req.body. petId;
+    const username = req.body.username;
+    const orderId = req.body.orderId;
+    const cname = req.body.cname;
+    var ccnum = req.body.ccnum;
+    const expmonth = req.body.expmonth;
+    const expyear = req.body.expyear;
+    const cvv = req.body.cvv;
+    const orderComplete = req.body.orderComplete;
+
+    console.log(date);
+    console.log(hours);
+    console.log(petId);
+    console.log(username);
+    console.log(orderId);
+    console.log(cname);
+    console.log(ccnum);
+    console.log(expmonth);
+    console.log(expyear);
+    console.log(cvv);
+    console.log(orderComplete);   
+ 
+  db.query(
+    "SELECT * FROM Users WHERE username = ?;",
+    [username],
+    (err, result) => {
+      console.log(result);
+      if (err) {
+        res.send({ err: err });
+      }
+      if (result.length > 0) {
+        console.log(result[0].password);
+
+      }
+  });
+});
+
     /*if (!reg.file.originalname.match(/\.(jpg|JPG|jpeg JPEG png|PNG|gif|GIF)$/)) {
       res.send({ msg: 'Only image files (jpg, jpeg, png) are allowed!'})
       }
