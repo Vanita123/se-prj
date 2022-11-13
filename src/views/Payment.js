@@ -82,18 +82,11 @@ export default function Payment(){
        min="2022-10-10" max="20223-10-10" onChange={handleChange}></input>
        <br/>
        <h3>Payment</h3>
-            {/* <label for="fname">Accepted Cards</label>
-            <div class="icon-container">
-              <i className="fa fa-cc-visa" style={{color:'navy'}}></i>
-              <i className="fa fa-cc-amex" style={{color:'blue'}}></i>
-              <i className="fa fa-cc-mastercard" style={{color:'red'}}></i>
-              <i className="fa fa-cc-discover" style={{color:'orange'}}></i>
-            </div> */}
        <label for="cname">Name on Card</label>
-            <input type="text" id="cname" name="cardname" placeholder="Name on your card" onChange={handleChange}/>
+            <input type="text" id="cname" name="cname" placeholder="Name on your card" onChange={handleChange}/>
             <br/>
             <label for="ccnum">Credit card number</label>
-            <input type="text" id="ccnum" name="cardnumber" placeholder="Card number" onChange={handleChange}/>
+            <input type="text" id="ccnum" name="ccnum" placeholder="Card number" onChange={handleChange}/>
             <br/>
             <label for="expmonth">Expiry Month</label>
             <input type="text" id="expmonth" name="expmonth" placeholder="Month" onChange={handleChange}/>

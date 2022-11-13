@@ -7,10 +7,10 @@ import '../styles/form.css';
 
 export function PetRegistration(){
     //const navigate = useNavigate();
-    
+  
     const [ petDetails, setPetDetails ] = useState(
         {
-            fname:'',//username of the owner
+            fname:JSON.parse(localStorage.getItem('username')),//username of the owner
             name:'',
             type:'',
             size:'',
@@ -21,11 +21,38 @@ export function PetRegistration(){
             no_shedding: false,
             no_biting: false,
             non_allergic: false,
-            vaccinated : false
-  
+            vaccinated : false,
+            image:null,
+            pet_price:''
         }
     );
+    
+
+    const convertToBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+  
+        fileReader.onload = () => {
+          resolve(fileReader.result);
+        };
+        fileReader.onerror = () => {
+          reject('error');
+        };
+      });
+    };
+  
+    const handleImage = async (e) => {
+      const file = e.target.files[0];
+      const base64 = await convertToBase64(file);
+      console.log('base64');
+      console.log(base64);
+    
+      setPetDetails({ ...petDetails, image:base64});
+    };
+
     const handleChange = (event) => {
+      console.log(event.target);
       setPetDetails({ ...petDetails, [event.target.name]: event.target.value });
       console.log(petDetails);
       };
@@ -44,7 +71,7 @@ export function PetRegistration(){
         name: petDetails.name,
         color :petDetails.color,
         age:petDetails.age,
-        //image : petDetails.image
+        image : petDetails.image
             }).then((response) => {
               console.log(petDetails)
              setPetDetails(response.data);
@@ -61,7 +88,7 @@ return (
    <form action="/petRegistration" enctype="multipart/formdata" method='POST' onSubmit = {handleSubmit}>
     <h3>Pet registration form</h3>
     <h4>Pet owner's username  </h4>
-      <input type="text"  placeholder="Enter username" name="fname" onChange = {handleChange} required/>
+      <input type="text" value={petDetails.fname} required readOnly/>
       <br></br>
       <h4>Pet name</h4>
       <input type="text"  placeholder="Enter pet name" name="name" onChange = {handleChange} required/>
@@ -94,6 +121,7 @@ return (
 <h4>Pet breed</h4>
 <h6>Please select the pet type to load the breed options.</h6>
 {petDetails.type=='dog' ? <select name="breed" id="breed" onChange = {handleChange}>
+<option value="">-- None --</option>
     <option value="Labrador Retriever">Labrador Retriever</option>
   <option value="French Bulldog">French Bulldog</option>
   <option value="Golden Retriever">Golden Retriever</option>
@@ -102,6 +130,7 @@ return (
 </select> : null}
 
 {petDetails.type=='cat' ? <select name="breed" id="breed" onChange = {handleChange}>
+<option value="">-- None --</option>
     <option value="Domestic Shorthair">Domestic Shorthair</option>
   <option value="American Shorthair">American Shorthair</option>
   <option value="Domestic Longhair">Domestic Longhair</option>
@@ -112,6 +141,7 @@ return (
 <br/>
 <h4>Pet color</h4>
 <select name="color" id="color" onChange = {handleChange}>
+<option value="">-- None --</option>
     <option value="White">White</option>
   <option value="Black">Black</option>
   <option value="Brown">Brown</option>
@@ -119,30 +149,31 @@ return (
 <br/>
 <h4>Pet age</h4>
 <select name="age" id="age" onChange = {handleChange}>
+<option value="">-- None --</option>
     <option value="early age">Early age</option>
   <option value="middle age">Middle age</option>
   <option value="old age">Old age</option>
 </select>
 <br/>
 <br/>
-<input type="checkbox" name="no_shedding" value={(e)=>{return e.checked}} onChange = {handleChange}/>
+<input type="checkbox" name="no_shedding" checked={petDetails.no_shedding} onChange={(e)=>{setPetDetails({ ...petDetails, [e.target.name]: !petDetails.no_shedding });}} />
         <label htmlFor='white'>No shedding</label>
         <br></br>
-        <input type="checkbox" name="no_biting" value={(e)=>{return e.checked}} onChange = {handleChange}/>
+        <input type="checkbox" name="no_biting" checked={petDetails.no_biting} onChange={(e)=>{setPetDetails({ ...petDetails, [e.target.name]: !petDetails.no_biting });}}/>
         <label htmlFor='black'>No biting</label>
         <br></br>
-        <input type="checkbox" name="non_allergic" value={(e)=>{return e.checked}} onChange = {handleChange}/>
+        <input type="checkbox" name="non_allergic" checked={petDetails.non_allergic} onChange={(e)=>{setPetDetails({ ...petDetails, [e.target.name]: !petDetails.non_allergic});}} />
         <label htmlFor='brown'>Non-allergic</label>
         <br></br>
-        <input type="checkbox" name="vaccinated" value={(e)=>{return e.checked}} onChange = {handleChange}/>
+        <input type="checkbox" name="vaccinated" checked={petDetails.vaccinated} onChange={(e)=>{setPetDetails({ ...petDetails, [e.target.name]: !petDetails.vaccinated });}}/>
         <label htmlFor='brown'>Vaccinated</label>
         <br></br>
         <br/>
         <h4>Pet picture</h4>
-        <input type="file" id="image" accept="image/*" name="image"></input>
+        <input type="file" id="image" accept="image/*" name="pet_image"></input>
         <br/>
-        <h4>Pet price(per hour)</h4>
-        <input type="text" id="pet_price" name="pet_price" placeholder="Enter USD per hour"></input>
+        <h4>Pet price (per hour)</h4>
+        <input type="text" id="pet_price" name="pet_price" placeholder="Enter USD per hour" onChange = {handleChange}></input>
         <br/>
     </form>
 

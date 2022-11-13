@@ -6,10 +6,15 @@ const bodyParser = require("body-parser");
 //const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const { generateFromEmail, generateUsername } = require("unique-username-generator");
-const { UNSAFE_NavigationContext } = require("react-router-dom");
+// const { UNSAFE_NavigationContext } = require("react-router-dom");
 const bcrypt = require('bcrypt');
 const fetch = require('node-fetch');
-const multer = require('multer');
+// const multer = require('multer');
+
+app.use(express.json({limit: '5mb'}));
+app.use(express.urlencoded({limit: '5mb'}));
+// app.use(bodyParser.json({limit: '5mb'}));
+// app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 //const { memoryStorage } = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -22,7 +27,7 @@ const storage = multer.diskStorage({
 });
 
 
-const upload = multer({storage:multer.memoryStorage()});
+// const upload = multer({storage:multer.memoryStorage()});
 
 
 app.use(function(req, res, next) {
@@ -276,7 +281,7 @@ app.get("/search", (req, res) => {
 
 })
 
-app.post("/petRegistration",upload.single('image'), (req, res) =>{
+app.post("/petRegistration",(req, res) =>{
  //upload.single('image'), (req, res, err) => {
     
     const name =req.body.name;
@@ -284,15 +289,15 @@ app.post("/petRegistration",upload.single('image'), (req, res) =>{
     const fname = req.body.fname;
     const size = req.body.size;
     const temperament = req.body.temperament;
-    var no_shedding_global = req.body.no_shedding;
-    var no_biting_global = req.body.no_biting;
-    var non_allergic_global = req.body.non_allergic;
+    const no_shedding = req.body.no_shedding;
+    const no_biting = req.body.no_biting;
+    const non_allergic = req.body.non_allergic;
     const type = req.body.type;
-    var vaccinated = req.body.non_vaccinated;
+    const vaccinated = req.body.vaccinated;
     const color = req.body.color;
     const age =req.body.age;
-    const image =req.file;
-    other = '';
+    const image =req.body.image;
+   
     console.log(image);
 
     console.log('pet breed is',breed);
@@ -307,22 +312,22 @@ app.post("/petRegistration",upload.single('image'), (req, res) =>{
     console.log('the color of the pet is',color);
     console.log('the age of the pet is',age);
     
-    if(no_biting_global == ''){
-      no_biting_global = true;
-    }
-    console.log('no_biting is',no_biting_global);
-    if(non_allergic_global == ''){
-      non_allergic_global = true;
-    }
-    console.log('non_allergic is',non_allergic_global);
-    //console.log(no_shedding);
-    if(no_shedding_global == ''){
-      no_shedding_global = true;
-    }
-    console.log('no_shedding is',no_shedding_global);
-    if(vaccinated == null){
-      vaccinated = true;
-    }
+    // if(no_biting_global == ''){
+    //   no_biting_global = true;
+    // }
+    // console.log('no_biting is',no_biting_global);
+    // if(non_allergic_global == ''){
+    //   non_allergic_global = true;
+    // }
+    // console.log('non_allergic is',non_allergic_global);
+    // //console.log(no_shedding);
+    // if(no_shedding_global == ''){
+    //   no_shedding_global = true;
+    // }
+    // console.log('no_shedding is',no_shedding_global);
+    // if(vaccinated == null){
+    //   vaccinated = true;
+    // }
     console.log('vaccinated is',vaccinated);
     db.query(
       "INSERT INTO Pets (name,owner,pet,age,breed,size,temperment,color,no_shedding,no_biting,non_allergic,vaccinated) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
@@ -352,48 +357,6 @@ app.post("/petRegistration",upload.single('image'), (req, res) =>{
       })
   }
 });
-
-app.post("/payment", (req, res) => {
- 
-    const date =req.body.date;
-    const hours = req.body.hours;
-    const petId = req.body. petId;
-    const username = req.body.username;
-    const orderId = req.body.orderId;
-    const cname = req.body.cname;
-    var ccnum = req.body.ccnum;
-    const expmonth = req.body.expmonth;
-    const expyear = req.body.expyear;
-    const cvv = req.body.cvv;
-    const orderComplete = req.body.orderComplete;
-
-    console.log(date);
-    console.log(hours);
-    console.log(petId);
-    console.log(username);
-    console.log(orderId);
-    console.log(cname);
-    console.log(ccnum);
-    console.log(expmonth);
-    console.log(expyear);
-    console.log(cvv);
-    console.log(orderComplete);   
- 
-  db.query(
-    "SELECT * FROM Users WHERE username = ?;",
-    [username],
-    (err, result) => {
-      console.log(result);
-      if (err) {
-        res.send({ err: err });
-      }
-      if (result.length > 0) {
-        console.log(result[0].password);
-
-      }
-  });
-});
-
     /*if (!reg.file.originalname.match(/\.(jpg|JPG|jpeg JPEG png|PNG|gif|GIF)$/)) {
       res.send({ msg: 'Only image files (jpg, jpeg, png) are allowed!'})
       }
