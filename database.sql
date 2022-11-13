@@ -40,7 +40,9 @@ color varchar(255) not null, no_shedding boolean, no_biting boolean, non_allergi
 -- alter table pets add non_allergic boolean;
 -- alter table pets add vaccinated boolean;
 -- alter table pets add images varchar(1000);
-		     
+
+ALTER TABLE pets
+ADD amount int;
 		     
 		     
 -- address table
