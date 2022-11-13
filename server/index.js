@@ -11,15 +11,16 @@ const bcrypt = require('bcrypt');
 const fetch = require('node-fetch');
 const multer = require('multer');
 //const { memoryStorage } = require("multer");
-/*const storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, '/src/assets/pet-images');
   },
   filename: function (req, file, cb) {
+    console.log(file);
     cb(null, file.fieldname + '-' + Date.now()+ path.extname(file.originalname));
   }
 });
-console.log(filename);*/
+
 
 const upload = multer({storage:multer.memoryStorage()});
 
@@ -275,7 +276,7 @@ app.get("/search", (req, res) => {
 
 })
 
-app.post("/petRegistration",upload.single('pet_image'), (req, res) =>{
+app.post("/petRegistration",upload.single('image'), (req, res) =>{
  //upload.single('image'), (req, res, err) => {
     
     const name =req.body.name;
@@ -283,11 +284,11 @@ app.post("/petRegistration",upload.single('pet_image'), (req, res) =>{
     const fname = req.body.fname;
     const size = req.body.size;
     const temperament = req.body.temperament;
-    const no_shedding = req.body.no_shedding;
-    var no_biting = req.body.no_biting;
-    const non_allergic = req.body.non_allergic;
+    var no_shedding_global = req.body.no_shedding;
+    var no_biting_global = req.body.no_biting;
+    var non_allergic_global = req.body.non_allergic;
     const type = req.body.type;
-    const vaccinated = req.body.non_vaccinated;
+    var vaccinated = req.body.non_vaccinated;
     const color = req.body.color;
     const age =req.body.age;
     const image =req.file;
@@ -298,29 +299,34 @@ app.post("/petRegistration",upload.single('pet_image'), (req, res) =>{
     console.log('pet name is',fname);
     console.log('pet size is',size);
     console.log('pet temperment is',temperament);
-    console.log('the pet sheds or not',no_shedding);
-    console.log('the pet bits or not',no_biting);
-    console.log('the pet is non allergic',non_allergic);
+    console.log('the pet sheds or not',no_shedding_global);
+    console.log('the pet bits or not',no_biting_global);
+    console.log('the pet is non allergic',non_allergic_global);
     console.log('the type of the pet is',type);
     console.log('the pet is vaccinates',vaccinated);
     console.log('the color of the pet is',color);
     console.log('the age of the pet is',age);
     
-    if(no_biting == null){
-      no_biting = true;
+    if(no_biting_global == ''){
+      no_biting_global = true;
     }
-    if(non_allergic == null){
-      non_allergic = true;
+    console.log('no_biting is',no_biting_global);
+    if(non_allergic_global == ''){
+      non_allergic_global = true;
     }
-    if(no_shedding == null){
-      no_shedding = true;
+    console.log('non_allergic is',non_allergic_global);
+    //console.log(no_shedding);
+    if(no_shedding_global == ''){
+      no_shedding_global = true;
     }
+    console.log('no_shedding is',no_shedding_global);
     if(vaccinated == null){
       vaccinated = true;
     }
+    console.log('vaccinated is',vaccinated);
     db.query(
       "INSERT INTO Pets (name,owner,pet,age,breed,size,temperment,color,no_shedding,no_biting,non_allergic,vaccinated) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
-      [name,fname,type,age,breed,size,temperament,color,no_shedding,no_biting,non_allergic,vaccinated,image],
+      [name,fname,type,age,breed,size,temperament,color,no_shedding_global,no_biting_global,non_allergic_global,vaccinated,image],
 
       (err, result) => {
           if(err){

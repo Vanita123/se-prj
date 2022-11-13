@@ -21,7 +21,7 @@ export function PetRegistration(){
             no_shedding: false,
             no_biting: false,
             non_allergic: false,
-            vaccinated : false,
+            vaccinated : false
   
         }
     );
@@ -139,7 +139,7 @@ return (
         <br></br>
         <br/>
         <h4>Pet picture</h4>
-        <input type="file" id="image" accept="image/*" name="pet_image"></input>
+        <input type="file" id="image" accept="image/*" name="image"></input>
         <br/>
         <h4>Pet price(per hour)</h4>
         <input type="text" id="pet_price" name="pet_price" placeholder="Enter USD per hour"></input>
