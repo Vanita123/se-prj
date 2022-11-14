@@ -26,16 +26,16 @@ export function Search(){
         const cleanedResults = [];
           for(var i=0;i<a.length;i++){
             cleanedResults[i]= {
-                'image':'',
+                'image':a[i].image,
                 'petDetails':{
                     'Pet name':a[i].name,
                     'Pet owner':a[i].owner,
                     'Pet age':a[i].age,
                     'Pet breed':a[i].breed,
-                    'Pet price':a[i].price
+                    'Pet price':a[i].amount
                 },
                 'map':{'lat':a[i].lat,'lng':a[i].lng},
-                'id':a[i].pet_id
+                'id':a[i].id
             }
           }
           console.log('CleanedResults');
@@ -47,7 +47,7 @@ export function Search(){
     console.log('in handler');
     console.log(details);
     //get the current loggedin username, petid, price 
-    navigate('/payment',{state:{ petid: details.pet_id, price:details.petDetails['Pet price']}});
+    navigate('/payment',{state:{ petid: details.id, price:details.petDetails['Pet price']}});
 }
     const RenderResults = () => {
         const res = handleResults();
@@ -59,7 +59,9 @@ export function Search(){
                 <div key={index} className='result-container'>
                 <div className='result'>
                <div>
-                {index.image!='' ? <img src='/'></img> : '<Pet picture>'}
+             
+                {index.image ? <img src= {URL.createObjectURL(index.image)} style={{height:'80%', width:'90%', padding:'30px' }}></img> : '<Pet picture>'}
+                {/* <img src={require('../assets/images/pets-pic.jpeg')} style={{height:'80%', width:'90%', padding:'30px' }}></img> */}
                </div>
                <div>
                {keys.map((k)=> {

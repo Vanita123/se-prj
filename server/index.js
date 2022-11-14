@@ -318,7 +318,7 @@ app.post("/petRegistration",(req, res) =>{
     console.log('vaccinated is',vaccinated);
     db.query(
       
-      "INSERT INTO pets (name,owner,pet,age,breed,size,temp,color,no_shedding,no_biting,non_allergic,vaccinated,images,amount) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+      "INSERT INTO pets (name,owner,pet,age,breed,size,temp,color,no_shedding,no_biting,non_allergic,vaccinated,image,amount) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
         [ name,fname,type,age,breed,size,temperament,color,no_shedding,no_biting,non_allergic,vaccinated,image,amount],
         (err, result) => {
           console.log(err,result);
@@ -452,7 +452,7 @@ transporter.sendMail(mailOptions, function(error, info){
 
 
 app.listen(3000, () => {
-    console.log("running server");
+    console.log("running server on port 3000" );
 });
 
 

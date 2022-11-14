@@ -106,6 +106,7 @@ a{
  .map-container {
   height: 300px;
   width: 300px;
+  padding: 30px;
 }
 
 .result{

@@ -71,7 +71,8 @@ export function PetRegistration(){
         name: petDetails.name,
         color :petDetails.color,
         age:petDetails.age,
-        image : petDetails.image
+        image : petDetails.image,
+        pet_price: petDetails.pet_price
             }).then((response) => {
               console.log(petDetails)
              setPetDetails(response.data);
@@ -169,10 +170,10 @@ return (
         <label htmlFor='brown'>Vaccinated</label>
         <br></br>
         <br/>
-        <h4>Pet picture</h4>
-        <input type="file" id="image" accept="image/*" name="pet_image"></input>
+        <h4>Pet picture (max size - 1MB)</h4>
+        <input type="file" id="image" accept="image/*" name="pet_image" onChange={handleImage}></input>
         <br/>
-        <h4>Pet price (per hour)</h4>
+        <h4>Pet price (USD per hour)</h4>
         <input type="text" id="pet_price" name="pet_price" placeholder="Enter USD per hour" onChange = {handleChange}></input>
         <br/>
     </form>

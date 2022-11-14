@@ -5,14 +5,13 @@ import {useLocation} from 'react-router-dom';
 
 export default function Payment(){
     const location = useLocation();
-    console.log('location');
-    console.log(location);
+   
     const username = JSON.parse(localStorage.getItem('username'));
     const [hours,setHrs] = useState(1);
     const {price,petid} = location.state;
     const [paymentDetails,setPaymentDetails] = useState({
         date: '',
-        amount:price*hours,//rate * number_of_hours
+        amount:JSON.stringify(price*hours),//rate * number_of_hours
         petId:petid,//props
         username:username,//props
         orderId:petid+username,//petid+username from props or session
@@ -26,13 +25,14 @@ export default function Payment(){
 
     
     const handleChange = (event)=>{
-        setPaymentDetails({ ...paymentDetails, [event.target.name]: event.target.value })
+        setPaymentDetails({ ...paymentDetails, [event.target.name]: event.target.value });
+        console.log(paymentDetails);
     }
 
     const handleOrder = ()=>{
         axios.post("http://localhost:3000/payment", {
             date: paymentDetails.date,
-            hours:paymentDetails.hours,
+            hours:hours,
             amount:paymentDetails.amount,
             petId:paymentDetails.petId,
             username:paymentDetails.username,//props
@@ -100,9 +100,6 @@ export default function Payment(){
         <button type="submit" onClick={handleOrder} className="button button-primary button-wide-mobile button-sm">Confirm order</button>
         </div>
     }
-    
-
-
 </div>
 )
 }
