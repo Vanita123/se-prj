@@ -9,22 +9,22 @@ const { generateFromEmail, generateUsername } = require("unique-username-generat
 // const { UNSAFE_NavigationContext } = require("react-router-dom");
 const bcrypt = require('bcrypt');
 const fetch = require('node-fetch');
-// const multer = require('multer');
+//  const multer = require('multer');
 
 app.use(express.json({limit: '5mb'}));
 app.use(express.urlencoded({limit: '5mb'}));
 // app.use(bodyParser.json({limit: '5mb'}));
 // app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 //const { memoryStorage } = require("multer");
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, '/src/assets/pet-images');
-  },
-  filename: function (req, file, cb) {
-    console.log(file);
-    cb(null, file.fieldname + '-' + Date.now()+ path.extname(file.originalname));
-  }
-});
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, '/src/assets/pet-images');
+//   },
+//   filename: function (req, file, cb) {
+//     console.log(file);
+//     cb(null, file.fieldname + '-' + Date.now()+ path.extname(file.originalname));
+//   }
+// });
 
 
 // const upload = multer({storage:multer.memoryStorage()});
@@ -64,7 +64,7 @@ app.use(
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "projectse",
+    password: "password",
     database: "paw",
 });
 db.connect((err) => {
@@ -297,16 +297,16 @@ app.post("/petRegistration",(req, res) =>{
     const color = req.body.color;
     const age =req.body.age;
     const image =req.body.image;
-   
+   const amount=10;
     console.log(image);
 
     console.log('pet breed is',breed);
     console.log('pet name is',fname);
     console.log('pet size is',size);
     console.log('pet temperment is',temperament);
-    console.log('the pet sheds or not',no_shedding_global);
-    console.log('the pet bits or not',no_biting_global);
-    console.log('the pet is non allergic',non_allergic_global);
+    console.log('the pet sheds or not',no_shedding);
+    console.log('the pet bits or not',no_biting);
+    console.log('the pet is non allergic',non_allergic);
     console.log('the type of the pet is',type);
     console.log('the pet is vaccinates',vaccinated);
     console.log('the color of the pet is',color);
@@ -330,16 +330,19 @@ app.post("/petRegistration",(req, res) =>{
     // }
     console.log('vaccinated is',vaccinated);
     db.query(
-      "INSERT INTO Pets (name,owner,pet,age,breed,size,temperment,color,no_shedding,no_biting,non_allergic,vaccinated) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
-      [name,fname,type,age,breed,size,temperament,color,no_shedding_global,no_biting_global,non_allergic_global,vaccinated,image],
-
-      (err, result) => {
+      
+      "INSERT INTO pets (name,owner,pet,age,breed,size,temp,color,no_shedding,no_biting,non_allergic,vaccinated,images,amount) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [ name,fname,type,age,breed,size,temperament,color,no_shedding,no_biting,non_allergic,vaccinated,image,amount],
+        (err, result) => {
+          console.log(err,result);
+      
           if(err){
             res.send(err);
           }
-          if (result.length > 0) {
-            console.log(result[0]);
-          }
+          // if (result.length > 0) {
+          //   console.log(result[0]);
+          // }
+          console.log(result);
       }
   );
 
@@ -347,16 +350,60 @@ app.post("/petRegistration",(req, res) =>{
 
     if (!image) {
       console.log("No file upload");
-  } else {
-      //console.log(req.file.filename)
-      var imgsrc = 'http://127.0.0.1:3000/images/' + image
-      var insertData = "INSERT INTO iamges(imagesrc,fname,image)VALUES(?,?,?)"
-      db.query(insertData, [imgsrc], (err, result) => {
-          if (err) throw err
-          console.log("file uploaded")
-      })
   }
+  //  else {
+  //     //console.log(req.file.filename)
+  //     var imgsrc = 'http://127.0.0.1:3000/images/' + image
+  //     var insertData = "INSERT INTO images(imagesrc,fname,image)VALUES(?,?,?)"
+  //     db.query(insertData, [imgsrc], (err, result) => {
+  //         if (err) throw err
+  //         console.log("file uploaded")
+  //     })
+  // }
 });
+
+app.post("/payment", (req, res) => {
+
+  const date =req.body.date;
+  const hours = req.body.hours;
+  const petId = req.body. petId;
+  const username = req.body.username;
+  const orderId = req.body.orderId;
+  const cname = req.body.cname;
+  var ccnum = req.body.ccnum;
+  const expmonth = req.body.expmonth;
+  const expyear = req.body.expyear;
+  const cvv = req.body.cvv;
+  const orderComplete = req.body.orderComplete;
+
+  console.log(date);
+  console.log(hours);
+  console.log(petId);
+  console.log(username);
+  console.log(orderId);
+  console.log(cname);
+  console.log(ccnum);
+  console.log(expmonth);
+  console.log(expyear);
+  console.log(cvv);
+  console.log(orderComplete);   
+
+db.query(
+  "SELECT * FROM Users WHERE username = ?;",
+  [username],
+  (err, result) => {
+    console.log(result);
+    if (err) {
+      res.send({ err: err });
+    }
+    if (result.length > 0) {
+      console.log(result[0].password);
+
+    }
+});
+});
+
+
     /*if (!reg.file.originalname.match(/\.(jpg|JPG|jpeg JPEG png|PNG|gif|GIF)$/)) {
       res.send({ msg: 'Only image files (jpg, jpeg, png) are allowed!'})
       }
