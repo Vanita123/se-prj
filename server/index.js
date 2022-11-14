@@ -9,6 +9,7 @@ const { generateFromEmail, generateUsername } = require("unique-username-generat
 // const { UNSAFE_NavigationContext } = require("react-router-dom");
 const bcrypt = require('bcrypt');
 const fetch = require('node-fetch');
+var nodemailer = require("nodemailer");
 //  const multer = require('multer');
 
 app.use(express.json({limit: '5mb'}));
@@ -297,7 +298,7 @@ app.post("/petRegistration",(req, res) =>{
     const color = req.body.color;
     const age =req.body.age;
     const image =req.body.image;
-   const amount=10;
+   const amount=req.body.pet_price;
     console.log(image);
 
     console.log('pet breed is',breed);
@@ -310,24 +311,10 @@ app.post("/petRegistration",(req, res) =>{
     console.log('the type of the pet is',type);
     console.log('the pet is vaccinates',vaccinated);
     console.log('the color of the pet is',color);
+  
     console.log('the age of the pet is',age);
     
-    // if(no_biting_global == ''){
-    //   no_biting_global = true;
-    // }
-    // console.log('no_biting is',no_biting_global);
-    // if(non_allergic_global == ''){
-    //   non_allergic_global = true;
-    // }
-    // console.log('non_allergic is',non_allergic_global);
-    // //console.log(no_shedding);
-    // if(no_shedding_global == ''){
-    //   no_shedding_global = true;
-    // }
-    // console.log('no_shedding is',no_shedding_global);
-    // if(vaccinated == null){
-    //   vaccinated = true;
-    // }
+
     console.log('vaccinated is',vaccinated);
     db.query(
       
@@ -365,8 +352,8 @@ app.post("/petRegistration",(req, res) =>{
 app.post("/payment", (req, res) => {
 
   const date =req.body.date;
-  const hours = req.body.hours;
-  const petId = req.body. petId;
+  // const hours = req.body.hours;
+  // const petId = req.body. petId;
   const username = req.body.username;
   const orderId = req.body.orderId;
   const cname = req.body.cname;
@@ -375,10 +362,13 @@ app.post("/payment", (req, res) => {
   const expyear = req.body.expyear;
   const cvv = req.body.cvv;
   const orderComplete = req.body.orderComplete;
+  const amount=22;
+  const id =req.body.id;
+  const hours=11;
 
   console.log(date);
   console.log(hours);
-  console.log(petId);
+  // console.log(petId);
   console.log(username);
   console.log(orderId);
   console.log(cname);
@@ -387,6 +377,7 @@ app.post("/payment", (req, res) => {
   console.log(expyear);
   console.log(cvv);
   console.log(orderComplete);   
+  console.log(amount);   
 
 db.query(
   "SELECT * FROM Users WHERE username = ?;",
@@ -401,97 +392,61 @@ db.query(
 
     }
 });
-});
 
-
-    /*if (!reg.file.originalname.match(/\.(jpg|JPG|jpeg JPEG png|PNG|gif|GIF)$/)) {
-      res.send({ msg: 'Only image files (jpg, jpeg, png) are allowed!'})
-      }
-    else {
+db.query(
       
-      const id = 1;
-      const sqlInsert = "UPDATE images SET 'image' = ? WHERE id = ?;"
-      
-      connection.query(sqlInsert, (image, id) , (err, result) => {
-      if (err) {
-      console.log(err) 
-      res.send({
-      msg: err
-        })
+  "INSERT INTO payments (orderid,payment_amount,booking_hours,date,owner,status) VALUES (?,?,?,?,?,?)",
+    [ orderId,amount,hours,date,username,orderComplete],
+    (err, result) => {
+      console.log(err,result);
+  
+      if(err){
+        res.send(err);
       }
-      db.query(
+    
+      console.log(result);
+  }
+);
+var from = req.body.from;
+var to = req.body.to;
+var subject = req.body.subject;
+var message = req.body.message;
 
-        "INSERT INTO Images (image,username,img) VALUES (?,?,?)",
-        [username, fname, lname, email, phone, password, role, roleid],
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'seproject101@gmail.com',
+      pass: 'wfrnwjjzgcbbgbst'
+    }
+})
+//  console.log("+++++++++++++++++++++++++++++hi hi",email);
 
-        (err, result) => {
-            if(err){
-              res.send(err);
-            }
-        }
-    );
-      
-      if(result) {
-      res.send({
-      data: result,
-      msg: "Your image has been updated!"
-              });
-            }
-      }
-    });
-
-        
-/*if (!reg.file.originalname.match(/\.(jpg|JPG|jpeg JPEG png|PNG|gif|GIF)$/)) {
-res.send({ msg: 'Only image files (jpg, jpeg, png) are allowed!'})
-}else {
-const image = req.file.filename; 
-const id = 1;
-const sqlInsert = "UPDATE images SET 'image' = ? WHERE id = ?;"
-
-connection.query(sqlInsert, (image, id) , (err, result) => {
-if (err) {
-console.log(err) 
-res.send({
-msg: err
-  })
+var mailOptions = {
+    from: 'seproject101@gmail.com',
+    to:'seproject101@gmail.com',
+    subject:"Pet payment confirmation.",
+    text:"Your payment for pet is successful."
 }
 
-if(result) {
-res.send({
-data: result,
-msg: "Your image has been updated!"
-        });
-      }
-    });
-  }
+transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+        console.log(error);
+    } else {
+        console.log("Email Sent: " + info.response);
+    }
+    response.redirect("/");
+})
+
+
+
+
+
+
+
+
+
 });
 
-
-app.get("/api/image", (req, res) => {
-
-  const id = 1;
-  const sqlInsert = "SELECT + FROM images WHERE id = ?;"
-  
-  connection.query(sqlInsert, [id] , (err, result) => {
-  
-  if (err) {
-  console. log(err)
-  res.send({
-  msg: err
-  })
-}
-  
-  if(result){
-    res.send({
-      image: result [0]. image,
-    });
-  }
-
-  });
-
-})*/
-
-  
 
 
 
