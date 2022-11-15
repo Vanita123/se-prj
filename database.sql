@@ -21,8 +21,7 @@ CREATE TABLE bookings(booking_id int auto_increment NOT NULL PRIMARY KEY, owner_
 
 -- 6 payments table		     
 		     
-CREATE TABLE payments(payment_id int primary key auto_increment, booking_id int not null, amount int not null, invoice_id int, status varchar(255) not null, payment_date datetime, FOREIGN KEY (booking_id) REFERENCES bookings (booking_id));
-
+create table payments(orderid varchar(255) not null,payment_amount varchar(255) not null,booking_hours int not null,date datetime not null,owner varchar(255) not null,status varchar(255) not null);
 -- 7 approval table		     
 		     
 CREATE TABLE  approval(booking_id int not null, renter_name varchar(255) not null, owner_details varchar(255) not null,pet varchar(255), foreign key (booking_id) references bookings(booking_id));
