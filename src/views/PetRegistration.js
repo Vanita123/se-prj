@@ -1,5 +1,5 @@
 //import React, { useState} from "react";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 //import axios from "axios";
 import '../styles/form.css';
@@ -26,6 +26,8 @@ export function PetRegistration(){
             pet_price:''
         }
     );
+
+    const [registrationDone, setRegistrationDone] = useState(false);
     
 
     const convertToBase64 = (file) => {
@@ -74,8 +76,11 @@ export function PetRegistration(){
         image : petDetails.image,
         pet_price: petDetails.pet_price
             }).then((response) => {
-              console.log(petDetails)
-             setPetDetails(response.data);
+              console.log(response);
+              if(response.data){
+                setRegistrationDone(true);
+              }
+            
             });
               // prevents the submit button from refreshing the page
               event.preventDefault();
@@ -85,6 +90,8 @@ export function PetRegistration(){
       };
 
 return (
+  <div style={{padding:'8px'}}>
+  {registrationDone ? <h3 > {petDetails.fname}, your pet registration was successful! We'll inform you whenever an order for your pet is made.</h3> :
     <div className='form-content'>
    <form action="/petRegistration" enctype="multipart/formdata" method='POST' onSubmit = {handleSubmit}>
     <h3>Pet registration form</h3>
@@ -171,7 +178,7 @@ return (
         <br></br>
         <br/>
         <h4>Pet picture (max size - 1MB)</h4>
-        <input type="file" id="image" accept="image/*" name="pet_image" onChange={handleImage}></input>
+        <input type="file" id="image" accept=".jpeg, .png, .jpg" name="pet_image" onChange={handleImage}></input>
         <br/>
         <h4>Pet price (USD per hour)</h4>
         <input type="text" id="pet_price" name="pet_price" placeholder="Enter USD per hour" onChange = {handleChange}></input>
@@ -180,6 +187,7 @@ return (
 
 
     <button type="submit" onClick={handleSubmit} className="button button-primary button-wide-mobile button-sm">Register pet</button>
+</div>}
 </div>
 )
 }

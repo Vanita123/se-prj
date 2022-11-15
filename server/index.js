@@ -247,7 +247,9 @@ list_global=[];
         api_data = data.results[0]["geometry"].location
         console.log('api data is ',data.results[0]["geometry"].location);
 console.log("api data",api_data);
-
+if(rows[i].image){
+  rows[i].image.data = rows[i].image.toString('base64');
+}
  merged = Object.assign({},rows[i],api_data);
  
 console.log('merged array is',merged);
@@ -329,7 +331,7 @@ app.post("/petRegistration",(req, res) =>{
           // if (result.length > 0) {
           //   console.log(result[0]);
           // }
-          console.log(result);
+          res.send(result);
       }
   );
 
@@ -352,8 +354,6 @@ app.post("/petRegistration",(req, res) =>{
 app.post("/payment", (req, res) => {
 
   const date =req.body.date;
-  // const hours = req.body.hours;
-  // const petId = req.body. petId;
   const username = req.body.username;
   const orderId = req.body.orderId;
   const cname = req.body.cname;
@@ -361,10 +361,9 @@ app.post("/payment", (req, res) => {
   const expmonth = req.body.expmonth;
   const expyear = req.body.expyear;
   const cvv = req.body.cvv;
-  const orderComplete = req.body.orderComplete;
-  const amount=22;
-  const id =req.body.id;
-  const hours=11;
+  const orderComplete = 'booked';
+  const amount=req.body.amount;
+  const hours=req.body.hours;
 
   console.log(date);
   console.log(hours);
@@ -395,7 +394,7 @@ db.query(
 
 db.query(
       
-  "INSERT INTO payments (orderid,payment_amount,booking_hours,date,owner,status) VALUES (?,?,?,?,?,?)",
+  "INSERT INTO payments (orderid,amount,booking_hours,date,owner,status) VALUES (?,?,?,?,?,?)",
     [ orderId,amount,hours,date,username,orderComplete],
     (err, result) => {
       console.log(err,result);
@@ -405,6 +404,7 @@ db.query(
       }
     
       console.log(result);
+      res.send(result);
   }
 );
 var from = req.body.from;

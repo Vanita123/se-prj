@@ -45,8 +45,10 @@ export default function Payment(){
             orderComplete:paymentDetails.orderComplete
             
                 }).then((response) => {
-                  console.log(paymentDetails)
-                 setPaymentDetails(response.data);
+                 if(response.data){
+                    setPaymentDetails({...paymentDetails, orderComplete:true });
+                 }
+                
                 });
         console.log(paymentDetails);
     }
@@ -60,10 +62,13 @@ export default function Payment(){
         <div>
         {
         paymentDetails && paymentDetails.orderComplete
-        ? (<div><h4>Order successful! We, the team of Pawsome hope you'll have a great time with the pet!</h4></div>) 
+        ? (<div><h4>Order successful, confirmation email sent! We, the team of Pawsome hope you'll have a great time with the pet!</h4></div>) 
         :
-        <div>
-        <h4>Select number of hours</h4>
+        <div className='form-content'>
+        
+        <form>
+        <h3>Order Details</h3>
+        <label for='no_hrs'>Select number of hours - </label>
 <select name="hours" id="hours" onChange = {handleAmountChange}>
     <option value={1}>1 hr</option>
   <option value={2}>2 hrs</option>
@@ -71,12 +76,15 @@ export default function Payment(){
   <option value={3}>4 hrs</option>
   <option value={3}>5 hrs</option>
 </select>
-        <form>
+<br/>
+<label for='amount'>Payment amount - {`$`+paymentDetails.amount}</label>
+            <br/>
+       
         <h3>Order Summary</h3>
             <label for='payment_id'>Order ID - {paymentDetails.orderId}</label>
             <br/>
-            <label for='amount'>Payment amount - {`$`+paymentDetails.amount}</label>
-            <br/>
+            
+            
             <label for='date'>Date to reserve the pet - </label>
             <input type="date" id="date" name="date"
        min="2022-10-10" max="20223-10-10" onChange={handleChange}></input>

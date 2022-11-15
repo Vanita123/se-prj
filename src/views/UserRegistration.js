@@ -22,7 +22,7 @@ export function UserRegistration(props){
       pswd : '',
       pswd1 : '',
       username : '',
-      roleid: profile.role == 'Renter' ? 1 : 2
+      roleid: ''
   };
     
     const [ profile, setProfile ] = useState(emptyState);
