@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import '../styles/form.css';
 import MapRender from "./Map";
+import {  useNavigate } from "react-router-dom";
 
 export function Search(){
     const [filters,setFilters] = useState({
@@ -11,31 +12,56 @@ export function Search(){
         breed:[],
         color : [],
         age:'',
-        other:[],
+        no_shedding:false,
+        no_biting:false,
+        non_allergic:false,
+        vaccinated : false,
         searchQuery : ''
     });
     const [results, setResults] = useState([]);
+    const navigate = useNavigate();
+
+// function arrayBufferToBase64( buffer ) {
+// 	var binary = '';
+// 	var bytes = new Uint8Array( buffer );
+// 	var len = bytes.byteLength;
+// 	for (var i = 0; i < len; i++) {
+// 		binary += String.fromCharCode( bytes[ i ] );
+// 	}
+// 	return window.btoa( binary );
+// }
   
     const handleResults = () => {
         const a = results;
         const cleanedResults = [];
+        console.log(a);
           for(var i=0;i<a.length;i++){
+            // const base64String = a[i].image ? a[i].image.data : '';
+            // console.log('base64String');
             cleanedResults[i]= {
-                'image':'',
+                'image':a[i].image,
                 'petDetails':{
                     'Pet name':a[i].name,
                     'Pet owner':a[i].owner,
                     'Pet age':a[i].age,
-                    'Pet breed':a[i].breed
+                    'Pet breed':a[i].breed,
+                    'Pet price':a[i].amount
                 },
-                'map':{'lat':a[i].lat,'lng':a[i].lng}
+                'map':{'lat':a[i].lat,'lng':a[i].lng},
+                'id':a[i].id
             }
           }
           console.log('CleanedResults');
           console.log(cleanedResults);
           return cleanedResults;
     }
-
+   function handleRentPet(details) {
+        
+    console.log('in handler');
+    console.log(details);
+    //get the current loggedin username, petid, price 
+    navigate('/payment',{state:{ petid: details.id, price:details.petDetails['Pet price']}});
+}
     const RenderResults = () => {
         const res = handleResults();
         const keys = Object.keys(res[0].petDetails);
@@ -43,16 +69,18 @@ export function Search(){
         <div>  
         {res.map((index)=>{
             return (
-                <div key={index} className='result'>
+                <div key={index} className='result-container'>
+                <div className='result'>
                <div>
-                {index.image!='' ? <img src='/'></img> : '<Pet picture>'}
+             
+                {index.image ? <img src={URL.createObjectURL(new Blob(index.image.data, { type: 'image/jpeg' }))} style={{height:'80%', width:'90%', padding:'30px' }}/> : <img src={require('../assets/images/pet-holder-dog.jpeg')} style={{height:'80%', width:'90%', padding:'30px' }}></img>}
+                {/* <img src={require('../assets/images/pets-pic.jpeg')} style={{height:'80%', width:'90%', padding:'30px' }}></img> */}
                </div>
                <div>
                {keys.map((k)=> {
                 return (
-           
-                                            <div key={k}>
-                                             <h5> {k} : {index.petDetails[k]}<br/></h5> </div>
+                <div key={k}>
+                <h5> {k} : {index.petDetails[k]}<br/></h5> </div>
                 )
                })
 
@@ -60,8 +88,14 @@ export function Search(){
               </div>
               <div>
                 <MapRender lng={index.map.lng} lat={index.map.lat}></MapRender>
+                <br/>
+                <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={() => handleRentPet(index)}>Rent the pet</button>
               </div>
               <br/>
+              <br/>
+              
+              </div>
+              
               </div>
               
             )
@@ -75,7 +109,7 @@ export function Search(){
         
         const { name, value} = event.target;
 
-        const arr_filters = ['pet', 'size','breed','other','color']
+        const arr_filters = ['pet', 'size','breed','color']
         console.log(event.target);
         if(arr_filters.includes(name)){
             const {checked} = event.target;
@@ -108,7 +142,7 @@ return(
     <div>
         <form className="nosubmit">
   <input className="nosubmit" name="searchQuery" type="search" placeholder="Search..." onChange = {handleChange}/>
-  <button type="submit" onClick={handleSubmit} className="button button-primary button-wide-mobile button-sm">Search</button>
+  <button type="submit" onClick={handleSubmit} className="button button-primary button-wide-mobile button-md">Search</button>
 </form>
 <div className='search-area'>
     <div className='filters'>
@@ -190,16 +224,16 @@ return(
 <input type="radio" name="age" value="old age" onChange = {handleChange}/>
   <label htmlFor="old">Old age</label><br/>
         <h4>Other</h4>
-        <input type="checkbox" name="other" value="no_shedding" onChange = {handleChange}/>
+        <input type="checkbox" name="no_shedding"  value={(e)=>{return e.checked}} onChange = {handleChange}/>
         <label htmlFor='white'>No shedding</label>
         <br></br>
-        <input type="checkbox" name="other" value="no_biting" onChange = {handleChange}/>
+        <input type="checkbox" name="no_biting" value={(e)=>{return e.checked}} onChange = {handleChange}/>
         <label htmlFor='black'>No biting</label>
         <br></br>
-        <input type="checkbox" name="other" value="non_allergic" onChange = {handleChange}/>
+        <input type="checkbox" name="non_allergic" value={(e)=>{return e.checked}} onChange = {handleChange}/>
         <label htmlFor='brown'>Non-allergic</label>
         <br></br>
-        <input type="checkbox" name="other" value="vaccinated" onChange = {handleChange}/>
+        <input type="checkbox"name="vaccinated" value={(e)=>{return e.checked}} onChange = {handleChange}/>
         <label htmlFor='brown'>Vaccinated</label>
         <br></br>
     </div>

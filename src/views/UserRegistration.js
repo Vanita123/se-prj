@@ -21,7 +21,8 @@ export function UserRegistration(props){
       county: '',
       pswd : '',
       pswd1 : '',
-      username : ''
+      username : '',
+      roleid: ''
   };
     
     const [ profile, setProfile ] = useState(emptyState);
@@ -47,14 +48,18 @@ export function UserRegistration(props){
         country: profile.country,
         city:profile.city,
         state: profile.state,
-        password: profile.pswd
+        password: profile.pswd,
+        roleid: profile.role == 'Renter' ? 1 : 2
       }).then((response) => {
       console.log('response')
        console.log(response);
        console.log(response.data);
        profile.username = response.data.username;
+       
        if(profile.username){
-        navigate('/view',{state:{ name: profile.fname, view: profile.role, username: profile.username}});
+        localStorage.setItem("username", JSON.stringify(profile.username));
+       localStorage.setItem("roleid", JSON.stringify(profile.roleid));
+        navigate('/view',{state:{ name: profile.fname, view: profile.roleid, username: profile.username}});
        }
        else if (response.data.errno){
         var msg = 'Error ' + response.data.errno + ' - '+ response.data.sqlMessage;
@@ -87,9 +92,9 @@ return (
       <input type="number"  maxLength={10} placeholder="Enter phone number" name="phno" value= {profile.phno} onChange = {handleChange}  required/>
       <br></br>
       <label htmlFor="role_details"><b>Role   </b></label>
-      <input type="radio" id="html" name="role" value={1} onChange = {handleChange} />
+      <input type="radio" id="html" name="role" value='Renter' onChange = {handleChange} />
 <label htmlFor="renter">Renter</label>
-<input type="radio" id="css" name="role" value={2} onChange = {handleChange}/>
+<input type="radio" id="css" name="role" value='Owner' onChange = {handleChange}/>
 <label htmlFor="owner">Owner</label><br></br>
       <br></br>
       <label htmlFor="phno"><b>Security question 1 - What would you name your pet?    </b></label>
