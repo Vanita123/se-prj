@@ -7,6 +7,7 @@ import { Route } from 'react-router-dom';
 // Layouts
 import LayoutDefault from './layouts/LayoutDefault';
 import LayoutCustom from './layouts/LayoutCustom';
+import LayoutUser from './layouts/LayoutUser';
 
 // Views 
 import Home from './views/Home';
@@ -20,6 +21,10 @@ import Payment from './views/Payment';
 import Reservations from './views/Reservations';
 import Approval from './views/Approval';
 import Complaints from './views/Complaints';
+import ForgotPassword from './views/ForgotPassword';
+import { Recommendation } from './views/Recommendation';
+import Rating from './views/Rating';
+import Refund from './views/Refund';
 
 const App = () => {
 
@@ -40,7 +45,7 @@ const App = () => {
      
         <Routes>
           <Route path="/" element={<AppRoute exact path="/" component={Home} layout={LayoutDefault} />}  />
-          <Route path="/login" element={<AppRoute exact path="/login" component={Login} layout={LayoutCustom} />}  />
+          <Route path="/login" element={<AppRoute exact path="/login" component={Login} layout={LayoutUser} />}  />
           <Route path="/signin" element={<AppRoute exact path="/signin" component={UserRegistration} layout={LayoutCustom} />}  />
           <Route path="/gsignin" element={<AppRoute exact path="/gsignin" component={GSignIn} layout={LayoutCustom} />}  />
           <Route path="/search" element={<AppRoute exact path="/search" component={Search} layout={LayoutCustom} />}  />
@@ -50,6 +55,10 @@ const App = () => {
           <Route path="/payment" element={<AppRoute exact path="/payment" component={Payment} layout={LayoutCustom} />}  />
           <Route path="/approvals" element={<AppRoute exact path="/approvals" component={Approval} layout={LayoutCustom} />}  />
           <Route path="/complaints" element={<AppRoute exact path="/complaints" component={Complaints} layout={LayoutCustom} />}  />
+          <Route path="/forgotpassword" element={<AppRoute exact path="/forgotpassword" component={ForgotPassword} layout={LayoutCustom} />}  />
+          <Route path="/recommendation" element={<AppRoute exact path="/recommendation" component={Recommendation} layout={LayoutCustom} />}  />
+          <Route path="/ratings" element={<AppRoute exact path="/rating" component={Rating} layout={LayoutCustom} />}  />
+          <Route path="/refund" element={<AppRoute exact path="/refund" component={Refund} layout={LayoutCustom} />}  />
           </Routes>
   
       )} />

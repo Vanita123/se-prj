@@ -4,7 +4,8 @@ export default function Approval(){
     const [approvals, setApprovals] = useState();
 
     useEffect(()=>{
-        //get reservations of the logged in user
+        //get all pet reservations that have approved feild as False - give an Approve button to admin - onclick set Approved field to True
+        //Have 2 sections - to Approve & approved 
         setApprovals();
         console.log(approvals);
     })

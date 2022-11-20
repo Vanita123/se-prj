@@ -1,8 +1,10 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import { Link} from "react-router-dom";
 import axios from "axios";
 import '../styles/form.css';
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from 'react-google-login';
+import { gapi } from 'gapi-script';
 
 export function UserRegistration(props){
     const navigate = useNavigate();
@@ -24,7 +26,30 @@ export function UserRegistration(props){
       username : '',
       roleid: ''
   };
-    
+  const clientId = '890549661282-mkp51pljhc04u5cmpk85hv67ho8upvaq.apps.googleusercontent.com';
+  useEffect(() => {
+      const initClient = () => {
+          gapi.client.init({
+              clientId: clientId,
+              scope: ''
+          });
+      };
+      gapi.load('client:auth2', initClient);
+  });
+
+  const onSuccess = (res) => {
+    setProfile(res.profileObj);
+};
+
+const onFailure = (err) => {
+    console.log('failed', err);
+};
+
+const logOut = () => {
+    setProfile(null);
+    navigate("/signin"); 
+};
+
     const [ profile, setProfile ] = useState(emptyState);
 
     const [errorMsg, setErrorMessage] = useState('');
@@ -77,7 +102,14 @@ export function UserRegistration(props){
 
 return (
     <div className='form-content'>
-   {props ? <Link to='/gsignin'><button type="submit" className="button button-primary button-wide-mobile button-sm">Import profile from Google</button></Link> : null}
+   <GoogleLogin
+                    clientId={clientId}
+                    buttonText="Sign in with Google"
+                    onSuccess={onSuccess}
+                    onFailure={onFailure}
+                    cookiePolicy={'single_host_origin'}
+                    isSignedIn={true}
+                />
    <form action="/signin" method='POST' encType="multipart/form-date" onSubmit = {handleSubmit}>
     <label htmlFor="fname"><b>First name    </b></label>
       <input type="text"  placeholder="Enter first name" name="fname" value= {profile.fname} onChange = {handleChange} required/>

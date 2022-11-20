@@ -46,11 +46,9 @@ export function PetRegistration(){
   
     const handleImage = async (e) => {
       const file = e.target.files[0];
-      const base64 = await convertToBase64(file);
-      console.log('base64');
-      console.log(base64);
-    
-      setPetDetails({ ...petDetails, image:base64});
+      console.log('URL');
+      console.log(URL.createObjectURL(file));
+      setPetDetails({ ...petDetails, image:URL.createObjectURL(file)});
     };
 
     const handleChange = (event) => {
@@ -93,7 +91,7 @@ return (
   <div style={{padding:'8px'}}>
   {registrationDone ? <h3 > {petDetails.fname}, your pet registration was successful! We'll inform you whenever an order for your pet is made.</h3> :
     <div className='form-content'>
-   <form action="/petRegistration" enctype="multipart/formdata" method='POST' onSubmit = {handleSubmit}>
+   <form action="/petRegistration" encType="multipart/formdata" method='POST' onSubmit = {handleSubmit}>
     <h3>Pet registration form</h3>
     <h4>Pet owner's username  </h4>
       <input type="text" value={petDetails.fname} required readOnly/>

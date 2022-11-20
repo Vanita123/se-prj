@@ -4,7 +4,7 @@ export default function Reservations(){
     const [reservations, setReservations] = useState();
 
     useEffect(()=>{
-        //get reservations of the logged in user
+        //get reservations of the logged in user - renter can - Rate experience, Complaint, Refund request
         setReservations();
         console.log(reservations);
     })

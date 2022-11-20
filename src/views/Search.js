@@ -20,6 +20,7 @@ export function Search(){
     });
     const [results, setResults] = useState([]);
     const navigate = useNavigate();
+    
 
 // function arrayBufferToBase64( buffer ) {
 // 	var binary = '';
@@ -73,7 +74,7 @@ export function Search(){
                 <div className='result'>
                <div>
              
-                {index.image ? <img src={URL.createObjectURL(new Blob(index.image.data, { type: 'image/jpeg' }))} style={{height:'80%', width:'90%', padding:'30px' }}/> : <img src={require('../assets/images/pet-holder-dog.jpeg')} style={{height:'80%', width:'90%', padding:'30px' }}></img>}
+                {index.image ? <img src={index.image} style={{height:'80%', width:'90%', padding:'30px' }}/> : <img src={require('../assets/images/pet-holder-dog.jpeg')} style={{height:'80%', width:'90%', padding:'30px' }}></img>}
                 {/* <img src={require('../assets/images/pets-pic.jpeg')} style={{height:'80%', width:'90%', padding:'30px' }}></img> */}
                </div>
                <div>
