@@ -43,7 +43,10 @@ color varchar(255) not null, no_shedding boolean, no_biting boolean, non_allergi
 ALTER TABLE pets
 ADD amount int;
 		     
-		     
+DELETE FROM pets WHERE image IS NOT NULL;
+alter table pets
+modify image varchar(100);
+
 -- address table
 		     
 CREATE TABLE address(AddressID int NOT NULL AUTO_INCREMENT  PRIMARY KEY, Address varchar(255) not null,
