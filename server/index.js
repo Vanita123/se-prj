@@ -47,7 +47,6 @@ app.use(
     })
 
 );
-//app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
@@ -65,7 +64,7 @@ app.use(
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "password",
+    password: "projectse",
     database: "paw",
 });
 db.connect((err) => {
@@ -328,9 +327,6 @@ app.post("/petRegistration",(req, res) =>{
           if(err){
             res.send(err);
           }
-          // if (result.length > 0) {
-          //   console.log(result[0]);
-          // }
           res.send(result);
       }
   );
@@ -367,7 +363,6 @@ app.post("/payment", (req, res) => {
 
   console.log(date);
   console.log(hours);
-  // console.log(petId);
   console.log(username);
   console.log(orderId);
   console.log(cname);
@@ -436,19 +431,23 @@ transporter.sendMail(mailOptions, function(error, info){
     }
     response.redirect("/");
 })
-
-
-
-
-
-
-
-
-
 });
 
 
+app.post("/approval", async(req, res) => {
+let query = "SELECT * FROM pets" ;
+  console.log(query);
+  db.query(query, async (err, rows) => {
+   if (err) {
+       console.log("internal error", err);
+       return;
+   }
+   console.log('row data is',rows);  
+ 
+res.send(rows);
 
+ });
+});
 
 
 app.listen(3000, () => {
