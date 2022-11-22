@@ -68,7 +68,7 @@ return (
       </div>
      
       <div className='form-element'>
-      <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleSubmit} >Login</button>
+      <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleSubmit}>Login</button>
       <a href="/forgotpassword" target="_blank">Forgot password?</a>
       </div>
 
