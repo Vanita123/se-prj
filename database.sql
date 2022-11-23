@@ -16,15 +16,18 @@ CREATE TABLE Security(SQID int PRIMARY KEY NOT NULL AUTO_INCREMENT, username var
  sq1 varchar(255) NOT NULL, sq2 VARCHAR(255) NOT NULL, sq1_ans varchar(255) not null, sq2_ans varchar(255) not null,
  FOREIGN KEY (username) REFERENCES users(username));
 		     
--- 5 Booking table		     
-CREATE TABLE bookings(booking_id int auto_increment NOT NULL PRIMARY KEY, owner_name varchar(255) not null, renter_name varchar(255) not null, pet varchar(255) not null, booking_duration int not null, rating int, rent_price int not null, booking_date datetime, FOREIGN KEY (renter_name) REFERENCES users(username));
+-- 5 Booking table		
 
--- 6 payments table		     
+ CREATE TABLE bookings(booking_id varchar(255) NOT NULL PRIMARY KEY, owner_name varchar(255) not null, renter_name varchar(255) not null, pet varchar(255) not null, booking_duration int not null, rating int, rent_price int not null, booking_date datetime, FOREIGN KEY (renter_name) REFERENCES users(username));
+
+-- 6 payments table
+
+ create table payments(booking_id varchar(255) not null primary key,payment_amount varchar(255) not null,booking_hours int not null,date datetime not null,owner varchar(255) not null,status varchar(255) not null);
+
 		     
-create table payments(orderid varchar(255) not null,payment_amount varchar(255) not null,booking_hours int not null,date datetime not null,owner varchar(255) not null,status varchar(255) not null);
 -- 7 approval table		     
 		     
-CREATE TABLE  approval(booking_id int not null, renter_name varchar(255) not null, owner_details varchar(255) not null,pet varchar(255), foreign key (booking_id) references bookings(booking_id));
+ CREATE TABLE  approval(booking_id varchar(255) not null, renter_name varchar(255) not null, owner_details varchar(255) not null,pet varchar(255), foreign key (booking_id) references bookings(booking_id));
 
 -- 8 pets table		     
 		     
@@ -39,6 +42,19 @@ color varchar(255) not null, no_shedding boolean, no_biting boolean, non_allergi
 -- alter table pets add non_allergic boolean;
 -- alter table pets add vaccinated boolean;
 -- alter table pets add image varchar(1000);
+
+ --  9 Ratings table
+ 
+ create table ratings(id int auto_increment primary key, booking_id varchar(255), rating int not null, foreign key (booking_id) references bookings(booking_id));
+
+---  10 Refunds table
+
+create table refunds(refund_id int auto_increment primary key not null, booking_id varchar(255)  not null, refund_reason varchar(1000),  foreign key (booking_id) references bookings(booking_id));
+
+--- aproval column in pets table 
+
+alter table pets add column approval varchar(6);
+update pets set approval='False' where approval is null;
 
 ALTER TABLE pets
 ADD amount int;
@@ -57,6 +73,13 @@ CREATE TABLE address(AddressID int NOT NULL AUTO_INCREMENT  PRIMARY KEY, Address
 ----- create images table
 create table images(image int PRIMARY KEY NOT NULL AUTO_INCREMENT, username varchar(255) not null, img varchar(1000) 
 		    not null, FOREIGN KEY (username) REFERENCES users(username));
+		    
+		    
+		    
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---- create table complaints 
+ create table complaints(booking_id varchar(255) not null primary key, pet varchar(255) not null, owner_name varchar(255) not null, renter_name varchar(255) not null, issue varchar(1000) not null);
+
 		     
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Drop address column from users table.
