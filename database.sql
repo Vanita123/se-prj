@@ -162,3 +162,17 @@ update pets a set owner=(select b.username from users b where a.owner=b.fname);
 -- ADD FOREIGN KEY (roleid) REFERENCES roles(roleid);
 
 -- Create:
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`)
+ VALUES ('Brown7612','30',3,'2022-09-09 00:00:00','Brown7612','Approved');
+INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`)
+ VALUES ('9sainz45','30',3,'2022-10-09 00:00:00','sainz8714','Approved');
+INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`)
+ VALUES ('8lghanta355','4',4,'2022-08-12 00:00:00','lghanta355','Approved');
+INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`)
+ VALUES ('Muser6601','40',4,'2022-03-22 00:00:00','Muser6601','Approved');
+ INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`)
+ VALUES ('DanielR8186','10',1,'2022-11-19 00:00:00','DanielR8186','Approved');
+
