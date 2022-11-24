@@ -1,9 +1,7 @@
 import React from 'react';
 import Footer from '../components/layout/Footer';
-import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useNavigate } from "react-router-dom";
-import Select from 'react-select'
 
 export function LayoutUser({ children }){
   const navigate = useNavigate();
@@ -28,19 +26,14 @@ export function LayoutUser({ children }){
 
     <select name="options" id="options" onChange={handleChange} style={{width:'175px',padding:'5px'}}>
       {roleid == 1? <><option id='action' value="">Action center ⎈</option>
-    <option id='profile' value="/profile">My profile ✯</option>
-    <option id='rent' value="/search">Rent a pet ♞</option>
+    <option id='rent' value="/search">Search for pet ♞</option>
     <option id='order' value="/reservations">Order history ♾</option>
-    <option id='rating' value="/ratings">Pet ratings 🀐</option>
-    <option id='complaint' value="/complaints">Complaints ⚉</option>
-    <option id='order' value="/refunds">Refunds ♾</option>
     <option id='chat' value="/chat">Chat section ⍩</option>
   <option id='logout' value="/">Logout ☹︎</option></> : null}
 
   {roleid == 2? <><option id='action' value="">Action center ⎈</option>
-    <option id='profile' value="/profile">My profile ✯</option>
-    <option id='register' value="/petRegistration">Register a pet ♞</option>
-    <option id='order' value="/reservations">Order history ♾</option>
+    <option id='register' value="/petRegistration">Register pet ♞</option>
+    <option id='order' value="/reservations">Pet bookings ♾</option>
     <option id='rating' value="/ratings">Pet ratings 🀐</option>
     <option id='complaint' value="/complaints">Complaints ⚉</option>
     <option id='order' value="/refunds">Refunds ♾</option>
@@ -48,10 +41,9 @@ export function LayoutUser({ children }){
   <option id='logout' value="/">Logout ☹︎</option></> : null}
 
   {roleid == 3? <><option id='profile' value="">Action center ⎈</option>
-    <option id='profile' value="/profile">Admin profile ✯</option>
-    <option id='approval' value="/approvals">Approvals ♾</option>
+    <option id='approval' value="/approvals">To do - Approvals ♾</option>
     <option id='rent' value="/complaints">Customer complaints ♞</option>
-    <option id='order' value="/refunds">Refunds ♾</option>
+    <option id='order' value="/refunds">Refund requests ♾</option>
     <option id='chat' value="/chat">Chat section ⍩</option>
   <option id='logout' value="/">Logout ☹︎</option></> : null}
     

@@ -64,7 +64,7 @@ app.use(
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "projectse",
+    password: "password",
     database: "paw",
 });
 db.connect((err) => {
@@ -435,7 +435,7 @@ transporter.sendMail(mailOptions, function(error, info){
 
 
 app.post("/approval", async(req, res) => {
-let query = "SELECT * FROM pets" ;
+let query = "SELECT * FROM pets" ; //only if when approved is false
   console.log(query);
   db.query(query, async (err, rows) => {
    if (err) {

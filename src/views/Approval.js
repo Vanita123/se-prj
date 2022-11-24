@@ -12,14 +12,12 @@ export default function Approval(){
                  }
                 });
         
-        //get all pet reservations that have approved feild as False - give an Approve button to admin - onclick set Approved field to True
-        //Have 2 sections - to Approve & approved 
         setApprovals();
         console.log(approvals);
     })
     return (
         <div>
-            <h2>Approvals page</h2>
+            <h2>Approvals page - Admin view</h2>
         </div>
     )
 }
