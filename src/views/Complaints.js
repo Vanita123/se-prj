@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {useLocation} from 'react-router-dom';
 import {  useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Complaints(){
     const [complaints, setComplaints] = useState();
@@ -15,10 +16,24 @@ export default function Complaints(){
             setComplaints();//res
             console.log(complaints);
         }
+        
+        
+        //get all pet reservations that have approved feild as False - give an Approve button to admin - onclick set Approved field to True
+        //Have 2 sections - to Approve & approved 
+        setComplaints();
+        console.log(complaints);
     })
 
     function handleReturn(){
         //update the complaint here
+        axios.post("http://localhost:3000/complaints", {
+            
+                }).then((response) => {
+                 if(response.data){
+                   console.log(response);
+                 }
+                });
+                
         console.log(givenComplaint);
         navigate('/reservations');
     }

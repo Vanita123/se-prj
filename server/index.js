@@ -435,7 +435,7 @@ transporter.sendMail(mailOptions, function(error, info){
 
 
 app.post("/approval", async(req, res) => {
-let query = "SELECT * FROM pets" ; //only if when approved is false
+let query = "SELECT * FROM approvals" ; //only if when approved is false
   console.log(query);
   db.query(query, async (err, rows) => {
    if (err) {
@@ -448,6 +448,54 @@ res.send(rows);
 
  });
 });
+
+app.post("/complaints", async(req, res) => {
+  let query = "SELECT * FROM pets" ;
+    console.log(query);
+    db.query(query, async (err, rows) => {
+     if (err) {
+         console.log("internal error", err);
+         return;
+     }
+     console.log('row data is',rows);  
+   
+  res.send(rows);
+  
+   });
+  });
+
+  app.post("/rating", async(req, res) => {
+    let query = "SELECT * FROM pets" ;
+      console.log(query);
+      db.query(query, async (err, rows) => {
+       if (err) {
+           console.log("internal error", err);
+           return;
+       }
+       console.log('row data is',rows);  
+     
+    res.send(rows);
+    
+     });
+    });
+
+    app.post("/reservation", async(req, res) => {
+      let query = "SELECT * FROM pets" ;
+        console.log(query);
+        db.query(query, async (err, rows) => {
+         if (err) {
+             console.log("internal error", err);
+             return;
+         }
+         console.log('row data is',rows);  
+       
+      res.send(rows);
+      
+       });
+      });
+
+  
+
 
 
 app.listen(3000, () => {

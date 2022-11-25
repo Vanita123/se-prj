@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {  useNavigate } from "react-router-dom";
+import axios from "axios";
 import {useLocation} from 'react-router-dom';
 
 export default function Rating(){
@@ -10,6 +11,8 @@ export default function Rating(){
     const navigate = useNavigate();
 
     useEffect(()=>{
+
+
         //get reservations of the logged in user
         if(!giveRating){
             //backend call
@@ -25,6 +28,14 @@ export default function Rating(){
 
     function handleReturn(){
         //update the pet rating here 
+        axios.post("http://localhost:3000/rating", {
+            
+        }).then((response) => {
+         if(response.data){
+           console.log(response);
+         }
+        });
+
         console.log(givenRating);
         navigate('/reservations');
     }
