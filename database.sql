@@ -165,14 +165,34 @@ update pets a set owner=(select b.username from users b where a.owner=b.fname);
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`)
- VALUES ('Brown7612','30',3,'2022-09-09 00:00:00','Brown7612','Approved');
-INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`)
- VALUES ('9sainz45','30',3,'2022-10-09 00:00:00','sainz8714','Approved');
-INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`)
- VALUES ('8lghanta355','4',4,'2022-08-12 00:00:00','lghanta355','Approved');
-INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`)
- VALUES ('Muser6601','40',4,'2022-03-22 00:00:00','Muser6601','Approved');
- INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`)
- VALUES ('DanielR8186','10',1,'2022-11-19 00:00:00','DanielR8186','Approved');
+INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('4svasire578','10',1,'2022-11-25 00:00:00','svasire578','Approved');
+INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('8lghanta355','40',4,'2022-08-12 00:00:00','lghanta355','Approved');
+INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('Brown7612','30',3,'2022-09-09 00:00:00','Brown7612','Approved');
+INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('DanielR8186','10',1,'2022-11-19 00:00:00','DanielR8186','Approved');
+INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('Muser6601','40',4,'2022-03-22 00:00:00','Muser6601','Approved');
+
+
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('4svasire578','10',1,'2022-11-25 00:00:00','svasire578','Approved');
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('8lghanta355','40',4,'2022-08-12 00:00:00','lghanta355','Approved');
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('Brown7612','30',3,'2022-09-09 00:00:00','Brown7612','Approved');
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('DanielR8186','10',1,'2022-11-19 00:00:00','DanielR8186','Approved');
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('Muser6601','40',4,'2022-03-22 00:00:00','Muser6601','Approved');
+
+
+INSERT INTO `approval` (`booking_id`,`renter_name`,`owner_details`,`pet_id`) VALUES ('4svasire578','svasire578','svasire578',12);
+INSERT INTO `approval` (`booking_id`,`renter_name`,`owner_details`,`pet_id`) VALUES ('8lghanta355','lghanta355','svasire578',14);
+INSERT INTO `approval` (`booking_id`,`renter_name`,`owner_details`,`pet_id`) VALUES ('Brown7612','Brown7612','svasire578',3);
+INSERT INTO `approval` (`booking_id`,`renter_name`,`owner_details`,`pet_id`) VALUES ('DanielR8186','DanielR8186','svasire578',1);
+INSERT INTO `approval` (`booking_id`,`renter_name`,`owner_details`,`pet_id`) VALUES ('Muser6601','Muser6601','svasire578',4);
+
+
+ 
+ 
+ 
+ update pets set approval='True' where id in (select pet_id from bookings)
+ 
+ 
+ 
+ 
+ 
 
