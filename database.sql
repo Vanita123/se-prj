@@ -18,16 +18,16 @@ CREATE TABLE Security(SQID int PRIMARY KEY NOT NULL AUTO_INCREMENT, username var
 		     
 -- 5 Booking table		
 
- CREATE TABLE bookings(booking_id varchar(255) NOT NULL PRIMARY KEY, owner_name varchar(255) not null, renter_name varchar(255) not null, pet varchar(255) not null, booking_duration int not null, rating int, rent_price int not null, booking_date datetime, FOREIGN KEY (renter_name) REFERENCES users(username));
-
+--  CREATE TABLE bookings(booking_id varchar(255) NOT NULL PRIMARY KEY, owner_name varchar(255) not null, renter_name varchar(255) not null, pet_id int not null, booking_duration int not null, rating int, rent_price int not null, booking_date datetime, FOREIGN KEY (renter_name) REFERENCES users(username));
+ CREATE TABLE bookings(booking_id varchar(255) NOT NULL PRIMARY KEY,payment_amount int not null,booking_hours int not null,date datetime,owner varchar(255),status varchar(255));
 -- 6 payments table
 
  create table payments(booking_id varchar(255) not null primary key,payment_amount varchar(255) not null,booking_hours int not null,date datetime not null,owner varchar(255) not null,status varchar(255) not null);
 
-		     
+ 
 -- 7 approval table		     
 		     
- CREATE TABLE  approval(booking_id varchar(255) not null, renter_name varchar(255) not null, owner_details varchar(255) not null,pet varchar(255), foreign key (booking_id) references bookings(booking_id));
+ CREATE TABLE  approval(booking_id varchar(255) not null, renter_name varchar(255) not null, owner_details varchar(255) not null,pet_id int, foreign key (booking_id) references bookings(booking_id));
 
 -- 8 pets table		     
 		     
