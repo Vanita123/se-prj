@@ -65,7 +65,7 @@ const db = mysql.createConnection({
     user: "root",
     host: "localhost",
     password: "projectse",
-    database: "paw",
+    database: "test",
 });
 db.connect((err) => {
     if (err) {
@@ -435,7 +435,7 @@ transporter.sendMail(mailOptions, function(error, info){
 
 
 app.post("/approval", async(req, res) => {
-let query = "SELECT * FROM approvals" ; //only if when approved is false
+let query = "SELECT * FROM approval" ; //only if when approved is false
   console.log(query);
   db.query(query, async (err, rows) => {
    if (err) {
@@ -450,7 +450,7 @@ res.send(rows);
 });
 
 app.post("/complaints", async(req, res) => {
-  let query = "SELECT * FROM pets" ;
+  let query = "SELECT * FROM complaints" ;
     console.log(query);
     db.query(query, async (err, rows) => {
      if (err) {
@@ -465,7 +465,7 @@ app.post("/complaints", async(req, res) => {
   });
 
   app.post("/rating", async(req, res) => {
-    let query = "SELECT * FROM pets" ;
+    let query = "SELECT * FROM ratings" ;
       console.log(query);
       db.query(query, async (err, rows) => {
        if (err) {

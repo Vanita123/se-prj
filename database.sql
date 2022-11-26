@@ -185,9 +185,21 @@ INSERT INTO `approval` (`booking_id`,`renter_name`,`owner_details`,`pet_id`) VAL
 INSERT INTO `approval` (`booking_id`,`renter_name`,`owner_details`,`pet_id`) VALUES ('DanielR8186','DanielR8186','svasire578',1);
 INSERT INTO `approval` (`booking_id`,`renter_name`,`owner_details`,`pet_id`) VALUES ('Muser6601','Muser6601','svasire578',4);
 
+----------------------------------------------------------------------------------------------------------------------------
 
+INSERT INTO `ratings` (`id`,`booking_id`,`rating`) VALUES (1, '4svasire578', 1);
+INSERT INTO `ratings` (`id`,`booking_id`,`rating`) VALUES (2, '8lghanta355', 3);
+INSERT INTO `ratings` (`id`,`booking_id`,`rating`) VALUES (3, 'Brown7612', 5);
+INSERT INTO `ratings` (`id`,`booking_id`,`rating`) VALUES (4, 'DanielR8186', 4);
+
+------------------------------------------------------------------------------------
  
- 
+INSERT INTO `complaints` (`booking_id`, `pet`, `owner_name`, `renter_name`, `issue`) VALUES (1, 'clove',  'alse7656', 'Brown7612', 'too much hair shedding');
+INSERT INTO `complaints` (`booking_id`, `pet`, `owner_name`, `renter_name`, `issue`) VALUES (2, 'suuny',  'DanielR8186', 'EsterJ3006','the dog bites');
+INSERT INTO `complaints` (`booking_id`, `pet`, `owner_name`, `renter_name`, `issue`) VALUES (3, 'maxie',  'lghanta@iu.edu', 'Joy@gmail.com','too hyper');
+INSERT INTO `complaints` (`booking_id`, `pet`, `owner_name`, `renter_name`, `issue`) VALUES (4, 'puddle',  'Muser@gmail.com', 'Lizy@gmail.com','the dog has alegeries which are not listed');
+
+----------------------------------------------------------------------------------------
  
  update pets set approval='True' where id in (select pet_id from bookings)
  
