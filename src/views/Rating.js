@@ -19,6 +19,13 @@ export default function Rating(){
             setRatings();//res
             console.log(ratings);
         }
+        axios.post("http://localhost:3000/rating", {
+            
+        }).then((response) => {
+         if(response.data){
+           console.log(response);
+         }
+        });
        
     });
 
@@ -28,13 +35,7 @@ export default function Rating(){
 
     function handleReturn(){
         //update the pet rating here 
-        axios.post("http://localhost:3000/rating", {
-            
-        }).then((response) => {
-         if(response.data){
-           console.log(response);
-         }
-        });
+        
 
         console.log(givenRating);
         navigate('/reservations');

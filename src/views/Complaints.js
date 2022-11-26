@@ -15,6 +15,14 @@ export default function Complaints(){
         if(!giveComplaint){
             setComplaints();//res
             console.log(complaints);
+            axios.post("http://localhost:3000/complaints", {
+            
+                }).then((response) => {
+                 if(response.data){
+                   console.log(response);
+                 }
+                });
+                
         }
         
         
@@ -26,14 +34,7 @@ export default function Complaints(){
 
     function handleReturn(){
         //update the complaint here
-        axios.post("http://localhost:3000/complaints", {
-            
-                }).then((response) => {
-                 if(response.data){
-                   console.log(response);
-                 }
-                });
-                
+        
         console.log(givenComplaint);
         navigate('/reservations');
     }

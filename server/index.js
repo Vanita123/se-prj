@@ -64,7 +64,7 @@ app.use(
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "password",
+    password: "projectse",
     database: "paw",
 });
 db.connect((err) => {
