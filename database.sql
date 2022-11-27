@@ -33,7 +33,7 @@ CREATE TABLE Security(SQID int PRIMARY KEY NOT NULL AUTO_INCREMENT, username var
 		     
 		     
 create table pets(id int PRIMARY KEY NOT NULL AUTO_INCREMENT, name varchar(255) not null, owner varchar(255), pet varchar(255) not null, age varchar(255) not null, breed varchar(255) not null, size varchar(255) not null, temp varchar(255) not null,
-color varchar(255) not null, no_shedding boolean, no_biting boolean, non_allergic boolean, vaccinated boolean, images varchar(1000));
+color varchar(255) not null, no_shedding boolean, no_biting boolean, non_allergic boolean, vaccinated boolean, image varchar(1000));
 		     
 -- ---OR alter the existing pets table:
 		     
@@ -51,7 +51,7 @@ color varchar(255) not null, no_shedding boolean, no_biting boolean, non_allergi
 
 create table refunds(refund_id int auto_increment primary key not null, booking_id varchar(255)  not null, refund_reason varchar(1000),  foreign key (booking_id) references bookings(booking_id));
 
---- aproval column in pets table 
+-- aproval column in pets table 
 
 alter table pets add column approval varchar(6);
 update pets set approval='False' where approval is null;
@@ -59,9 +59,9 @@ update pets set approval='False' where approval is null;
 ALTER TABLE pets
 ADD amount int;
 		     
-DELETE FROM pets WHERE image IS NOT NULL;
-alter table pets
-modify image varchar(100);
+-- DELETE FROM pets WHERE image IS NOT NULL;
+-- alter table pets
+-- modify image varchar(100);
 
 -- address table
 		     
@@ -70,9 +70,9 @@ CREATE TABLE address(AddressID int NOT NULL AUTO_INCREMENT  PRIMARY KEY, Address
  username varchar(50) not null, foreign key(username) references users(username));
 		     
 		     
------ create images table
-create table images(image int PRIMARY KEY NOT NULL AUTO_INCREMENT, username varchar(255) not null, img varchar(1000) 
-		    not null, FOREIGN KEY (username) REFERENCES users(username));
+-- create images table
+-- create table images(image int PRIMARY KEY NOT NULL AUTO_INCREMENT, username varchar(255) not null, img varchar(1000) 
+-- 		    not null, FOREIGN KEY (username) REFERENCES users(username));
 		    
 		    
 		    
@@ -141,14 +141,14 @@ INSERT INTO `address` (`AddressID`,`Address`,`City`,`State`,`Country`,`Zipcode`,
 INSERT INTO `address` (`AddressID`,`Address`,`City`,`State`,`Country`,`Zipcode`,`username`) VALUES (15,' 3128 Zimmerman Lane','Los Angeles','California','USA','90071','Joy5658');
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`images`) VALUES (1,'Snowflake','Emma','Cat','Early age','Domestic Longhair','Medium','Active','White',NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`images`) VALUES (2,'Coonie','Ester','Cat','Early age','Maine Coon','Large','Active','Brown',NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`images`) VALUES (3,'Buttercup','Adam','Cat','Early age','Siamese','Small','Passive','Black',NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`images`) VALUES (4,'Cooper','Max','Dog','Early age','German Shephard','Large','Active','White',NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`images`) VALUES (5,'Blossom','Ellie','Cat','Middle Age','American Shorthair','Medium','Passive','White',NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`images`) VALUES (6,'Snoie','George','Dog','Old Age','Golden Retriever','Small','Active','Brown',NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`images`) VALUES (7,'Poodle','Alexa','Dog','Middle Age','French Bulldog','Medium','Active','Brown',NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`images`) VALUES (8,'Daisy','Lizy','Cat','Old Age','Domestic Longhair','Large','Passive','White',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`image`) VALUES (1,'Snowflake','Emma','Cat','Early age','Domestic Longhair','Medium','Active','White',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`image`) VALUES (2,'Coonie','Ester','Cat','Early age','Maine Coon','Large','Active','Brown',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`image`) VALUES (3,'Buttercup','Adam','Cat','Early age','Siamese','Small','Passive','Black',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`image`) VALUES (4,'Cooper','Max','Dog','Early age','German Shephard','Large','Active','White',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`image`) VALUES (5,'Blossom','Ellie','Cat','Middle Age','American Shorthair','Medium','Passive','White',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`image`) VALUES (6,'Snoie','George','Dog','Old Age','Golden Retriever','Small','Active','Brown',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`image`) VALUES (7,'Poodle','Alexa','Dog','Middle Age','French Bulldog','Medium','Active','Brown',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `pets` (`id`,`name`,`owner`,`pet`,`age`,`breed`,`size`,`temp`,`color`,`no_shedding`,`no_biting`,`non_allergic`,`vaccinated`,`image`) VALUES (8,'Daisy','Lizy','Cat','Old Age','Domestic Longhair','Large','Passive','White',NULL,NULL,NULL,NULL,NULL);
 
 update pets a set owner=(select b.username from users b where a.owner=b.fname);
 -- Role id changes:
@@ -201,7 +201,7 @@ INSERT INTO `complaints` (`booking_id`, `pet`, `owner_name`, `renter_name`, `iss
 
 ----------------------------------------------------------------------------------------
  
- update pets set approval='True' where id in (select pet_id from bookings)
+--  update pets set approval='True' where id in (select pet_id from bookings)
  
  
  
