@@ -479,8 +479,8 @@ app.post("/complaints", async(req, res) => {
      });
     });
 
-    app.post("/reservation", async(req, res) => {
-      let query = "SELECT * FROM pets" ;
+    app.post("/refund", async(req, res) => {
+      let query = "SELECT * FROM refund" ;
         console.log(query);
         db.query(query, async (err, rows) => {
          if (err) {
