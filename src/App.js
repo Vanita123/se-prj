@@ -46,7 +46,7 @@ const App = () => {
      
         <Routes>
           <Route path="/" element={<AppRoute exact path="/" component={Home} layout={LayoutDefault} />}  />
-          <Route path="/login" element={<AppRoute exact path="/login" component={Login} layout={LayoutUser} />}  />
+          <Route path="/login" element={<AppRoute exact path="/login" component={Login} layout={LayoutCustom} />}  />
           <Route path="/signin" element={<AppRoute exact path="/signin" component={UserRegistration} layout={LayoutCustom} />}  />
           <Route path="/gsignin" element={<AppRoute exact path="/gsignin" component={GSignIn} layout={LayoutCustom} />}  />
           <Route path="/search" element={<AppRoute exact path="/search" component={Search} layout={LayoutUser} />}  />
