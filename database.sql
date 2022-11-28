@@ -12,14 +12,14 @@ CREATE TABLE Roles(roleid int NOT NULL PRIMARY KEY, role varchar(255) NOT NULL, 
   FOREIGN KEY (roleid) REFERENCES Roles(roleid));
 
 -- 4 for security questions
-CREATE TABLE Security(SQID int PRIMARY KEY NOT NULL AUTO_INCREMENT, username varchar(255) NOT NULL,
- sq1 varchar(255) NOT NULL, sq2 VARCHAR(255) NOT NULL, sq1_ans varchar(255) not null, sq2_ans varchar(255) not null,
+CREATE TABLE Security(SQID int PRIMARY KEY NOT NULL AUTO_INCREMENT, username varchar(255) ,
+ sq1 varchar(255)  default 'What would you name your pet?', sq2 VARCHAR(255) default 'What would you name your pets house?' , sq1_ans varchar(255) , sq2_ans varchar(255) ,
  FOREIGN KEY (username) REFERENCES users(username));
 		     
 -- 5 Booking table		
 
 --  CREATE TABLE bookings(booking_id varchar(255) NOT NULL PRIMARY KEY, owner_name varchar(255) not null, renter_name varchar(255) not null, pet_id int not null, booking_duration int not null, rating int, rent_price int not null, booking_date datetime, FOREIGN KEY (renter_name) REFERENCES users(username));
- CREATE TABLE bookings(booking_id varchar(255) NOT NULL PRIMARY KEY,payment_amount int not null,booking_hours int not null,date datetime,owner varchar(255),status varchar(255));
+ CREATE TABLE bookings(booking_id varchar(255) NOT NULL PRIMARY KEY,payment_amount int not null,booking_hours int not null,date datetime,owner varchar(255),renter varchar(255), status varchar(255));
 -- 6 payments table
 
  create table payments(booking_id varchar(255) not null primary key,payment_amount varchar(255) not null,booking_hours int not null,date datetime not null,owner varchar(255) not null,status varchar(255) not null);
@@ -172,11 +172,11 @@ INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`ow
 INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('Muser6601','40',4,'2022-03-22 00:00:00','Muser6601','Approved');
 
 
-INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('4svasire578','10',1,'2022-11-25 00:00:00','svasire578','Approved');
-INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('8lghanta355','40',4,'2022-08-12 00:00:00','lghanta355','Approved');
-INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('Brown7612','30',3,'2022-09-09 00:00:00','Brown7612','Approved');
-INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('DanielR8186','10',1,'2022-11-19 00:00:00','DanielR8186','Approved');
-INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('Muser6601','40',4,'2022-03-22 00:00:00','Muser6601','Approved');
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`) VALUES ('4svasire578','10',1,'2022-11-25 00:00:00','svasire578','alse7656','Approved');
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`) VALUES ('8lghanta355','40',4,'2022-08-12 00:00:00','lghanta355','EsterJ3006','Approved');
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`) VALUES ('Brown7612','30',3,'2022-09-09 00:00:00','Brown7612','Grace8309','Approved');
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`) VALUES ('DanielR8186','10',1,'2022-11-19 00:00:00','DanielR8186','Joy5658','Approved');
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`) VALUES ('Muser6601','40',4,'2022-03-22 00:00:00','Muser6601','Lizy4235','Approved');
 
 
 INSERT INTO `approval` (`booking_id`,`renter_name`,`owner_details`,`pet_id`) VALUES ('4svasire578','svasire578','svasire578',12);
@@ -200,15 +200,45 @@ INSERT INTO `complaints` (`booking_id`, `pet`, `owner_name`, `renter_name`, `iss
 INSERT INTO `complaints` (`booking_id`, `pet`, `owner_name`, `renter_name`, `issue`) VALUES (4, 'puddle',  'Muser@gmail.com', 'Lizy@gmail.com','the dog has alegeries which are not listed');
 
 ----------------------------------------------------------------------------------------
- INSERT INTO `refunds` (`refund_id`, `booking_id`, `refund_reason`) VALUES (1, 1,'pet got allergy');
-INSERT INTO `refunds` (`refund_id`, `booking_id`, `refund_reason`) VALUES (2, 2,'pet not same as description');
-INSERT INTO `refunds` (`refund_id`, `booking_id`, `refund_reason`) VALUES (3, 3,'pet got ill');
-INSERT INTO `refunds` (`refund_id`, `booking_id`, `refund_reason`) VALUES (4, 4,'pet sheds alot of hair and makes home dirty');
+ 
+  update pets set approval='False' where id is not null;
+   
+  update pets set approval='True' where id in (select pet_id from approval);
+  
+  ---------------------------------------------------------------------
+  
+  
+INSERT INTO `users` (`username`,`fname`,`lname`,`email`,`phno`,`password`,`role`,`roleid`) VALUES ('Alison101','Alison','Grey','alison@gmail.com','3123986102','pass2343','Admin',3);
+INSERT INTO `users` (`username`,`fname`,`lname`,`email`,`phno`,`password`,`role`,`roleid`) VALUES ('Henry324','Henry','Cavil','Cavil@gmail.com','4324353242','Henry101','Admin',3);
+INSERT INTO `users` (`username`,`fname`,`lname`,`email`,`phno`,`password`,`role`,`roleid`) VALUES ('Mable323','Mable','Coleman','Coleman@gmail.com','4325429861','Cole4324','Admin',3);
+INSERT INTO `users` (`username`,`fname`,`lname`,`email`,`phno`,`password`,`role`,`roleid`) VALUES ('JudyS32','Judy','Smith','Jsmith@gmail.com','4355224521','Jsmith432','Admin',3);
+INSERT INTO `users` (`username`,`fname`,`lname`,`email`,`phno`,`password`,`role`,`roleid`) VALUES ('spencer782','Duke','Spencer','Dukespencer@gmail.com','4324789823','Dukes','Admin',3);
 
---  update pets set approval='True' where id in (select pet_id from bookings)
+  
  
  
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  
- 
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (1,'alse7656','What would you name your pet?','What would you name your pets house?','polly','home');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (2,'EsterJ3006','What would you name your pet?','What would you name your pets house?','snoopie','den');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (3,'Joy5658','What would you name your pet?','What would you name your pets house?','cooper','cave');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (4,'Lizy4235','What would you name your pet?','What would you name your pets house?','poodle','pud');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (5,'Brown7612','What would you name your pet?','What would you name your pets house?','Pepsi','cola');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (6,'DanielR8186','What would you name your pet?','What would you name your pets house?','oreo','cream');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (7,'EmmaSmith1944','What would you name your pet?','What would you name your pets house?','zeus','thunder');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (8,'Grace8309','What would you name your pet?','What would you name your pets house?','harley','ride');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (9,'lghanta355','What would you name your pet?','What would you name your pets house?','dexter','lab');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (10,'Maxmiller2857','What would you name your pet?','What would you name your pets house?','piper','pied');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (11,'Muser6601','What would you name your pet?','What would you name your pets house?','ginger','bread');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (12,'sainz8714','What would you name your pet?','What would you name your pets house?','hazel','nut');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (13,'svasire578','What would you name your pet?','What would you name your pets house?','teddy','den');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (14,'vlalwani467','What would you name your pet?','What would you name your pets house?','ollie','olie');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (15,'Williamson3626','What would you name your pet?','What would you name your pets house?','Blitz','butter');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (16,'zorth768','What would you name your pet?','What would you name your pets house?','harry','hen');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (17,'Alison101','What would you name your pet?','What would you name your pets house?','nami','wave');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (18,'Henry324','What would you name your pet?','What would you name your pets house?','yuzu','house');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (19,'JudyS32','What would you name your pet?','What would you name your pets house?','sushi','[ot');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (20,'Mable323','What would you name your pet?','What would you name your pets house?','beige','bun');
+INSERT INTO `security` (`SQID`,`username`,`sq1`,`sq2`,`sq1_ans`,`sq2_ans`) VALUES (21,'spencer782','What would you name your pet?','What would you name your pets house?','cookie','dough');
  
 
