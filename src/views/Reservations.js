@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import axios from "axios";
 import {  useNavigate } from "react-router-dom";
 
 export default function Reservations(){
@@ -9,6 +9,16 @@ export default function Reservations(){
         //fetch reults from bookings table based on username 
        setReservations();
        console.log(reservations);
+
+       axios.post("http://localhost:3000/reservation", {
+            
+    }).then((response) => {
+     if(response.data){
+       console.log(response);
+       setReservations(response.data);
+     }
+    });
+
    })
 
 //    function handleRatePet(details) {

@@ -64,8 +64,8 @@ app.use(
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "password",
-    database: "paw_test",
+    password: "projectse",
+    database: "test",
 });
 db.connect((err) => {
     if (err) {
@@ -493,6 +493,25 @@ app.post("/complaints", async(req, res) => {
       
        });
       });
+
+      app.post("/reservation", async(req, res) => {
+        let query = "SELECT * FROM bookings" ;
+          console.log(query);
+          db.query(query, async (err, rows) => {
+           if (err) {
+               console.log("internal error", err);
+               return;
+           }
+           console.log('row data is',rows);  
+         
+        res.send(rows);
+        
+         });
+        });
+  
+
+
+
 
   
 
