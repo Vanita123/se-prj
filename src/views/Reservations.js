@@ -19,7 +19,7 @@ export default function Reservations(){
      }
     });
 
-   })
+   },[])
 
 //    function handleRatePet(details) {
         

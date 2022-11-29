@@ -200,7 +200,13 @@ INSERT INTO `complaints` (`booking_id`, `pet`, `owner_name`, `renter_name`, `iss
 INSERT INTO `complaints` (`booking_id`, `pet`, `owner_name`, `renter_name`, `issue`) VALUES (4, 'puddle',  'Muser@gmail.com', 'Lizy@gmail.com','the dog has alegeries which are not listed');
 
 ----------------------------------------------------------------------------------------
- 
+INSERT INTO `refunds` (`refund_id`, `booking_id`, `refund_reason`) VALUES (1, 1,'pet got allergy');
+INSERT INTO `refunds` (`refund_id`, `booking_id`, `refund_reason`) VALUES (2, 2,'pet not same as description');
+INSERT INTO `refunds` (`refund_id`, `booking_id`, `refund_reason`) VALUES (3, 3,'pet got ill');
+INSERT INTO `refunds` (`refund_id`, `booking_id`, `refund_reason`) VALUES (4, 4,'pet sheds alot of hair and makes home dirty');
+
+  
+  
   update pets set approval='False' where id is not null;
    
   update pets set approval='True' where id in (select pet_id from approval);
