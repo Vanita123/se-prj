@@ -105,6 +105,7 @@ export default function Rating(){
         setGiveRating(false);
         
         //backend post call
+        
 
         alert('Rating submitted.We will put in best efforts to improve the experience. Thank you!');
     }

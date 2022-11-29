@@ -11,7 +11,7 @@ function MyChatComponent() {
     Talk.ready.then(() => markTalkLoaded(true));
 
     if (talkLoaded) {
-      const currentUser = new Talk.User({
+      const otherUser = new Talk.User({
         id: '1',
         name: 'Henry Mill',
         email: 'henrymill@example.com',
@@ -20,7 +20,7 @@ function MyChatComponent() {
         role: 'default',
       });
 
-      const otherUser = new Talk.User({
+      const currentUser = new Talk.User({
         id: 'admin',
         name: 'Pawsome admin',
         email: 'admin@pawsome.com',
