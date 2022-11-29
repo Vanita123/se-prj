@@ -19,7 +19,7 @@ CREATE TABLE Security(SQID int PRIMARY KEY NOT NULL AUTO_INCREMENT, username var
 -- 5 Booking table		
 
 --  CREATE TABLE bookings(booking_id varchar(255) NOT NULL PRIMARY KEY, owner_name varchar(255) not null, renter_name varchar(255) not null, pet_id int not null, booking_duration int not null, rating int, rent_price int not null, booking_date datetime, FOREIGN KEY (renter_name) REFERENCES users(username));
- CREATE TABLE bookings(booking_id varchar(255) NOT NULL PRIMARY KEY,payment_amount int not null,booking_hours int not null,date datetime,owner varchar(255),renter varchar(255), status varchar(255));
+ CREATE TABLE bookings(booking_id varchar(255) NOT NULL PRIMARY KEY,payment_amount int not null,booking_hours int not null,date datetime,owner varchar(255),renter varchar(255), status varchar(255), pet_id int);
 -- 6 payments table
 
  create table payments(booking_id varchar(255) not null primary key,payment_amount varchar(255) not null,booking_hours int not null,date datetime not null,owner varchar(255) not null,status varchar(255) not null);
@@ -45,16 +45,18 @@ color varchar(255) not null, no_shedding boolean, no_biting boolean, non_allergi
 
  --  9 Ratings table
  
- create table ratings(id int auto_increment primary key, booking_id varchar(255), rating int not null, foreign key (booking_id) references bookings(booking_id));
+ create table ratings(id int auto_increment primary key, booking_id varchar(255), rating int not null, username varchar(255), rating_given varchar(255),foreign key (booking_id) references bookings(booking_id));
 
 ---  10 Refunds table
 
-create table refunds(refund_id int auto_increment primary key not null, booking_id varchar(255)  not null, refund_reason varchar(1000),  foreign key (booking_id) references bookings(booking_id));
+create table refunds(refund_id int auto_increment primary key not null, booking_id varchar(255)  not null, refund_reason varchar(1000),  refund_requested varchar(255), refund_amount int, foreign key (booking_id) references bookings(booking_id));
 
 -- aproval column in pets table 
 
 alter table pets add column approval varchar(6);
 update pets set approval='False' where approval is null;
+
+alter table ratings add foreign key(username) references users(username);
 
 ALTER TABLE pets
 ADD amount int;
@@ -78,7 +80,7 @@ CREATE TABLE address(AddressID int NOT NULL AUTO_INCREMENT  PRIMARY KEY, Address
 		    
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ---- create table complaints 
- create table complaints(booking_id varchar(255) not null primary key, pet varchar(255) not null, owner_name varchar(255) not null, renter_name varchar(255) not null, issue varchar(1000) not null);
+ create table complaints(booking_id varchar(255) not null primary key, pet varchar(255) not null, owner_name varchar(255) not null, renter_name varchar(255) not null, issue varchar(1000) not null, complaints_given varchar(255));
 
 		     
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -172,11 +174,11 @@ INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`ow
 INSERT INTO `payments` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`status`) VALUES ('Muser6601','40',4,'2022-03-22 00:00:00','Muser6601','Approved');
 
 
-INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`) VALUES ('4svasire578','10',1,'2022-11-25 00:00:00','svasire578','alse7656','Approved');
-INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`) VALUES ('8lghanta355','40',4,'2022-08-12 00:00:00','lghanta355','EsterJ3006','Approved');
-INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`) VALUES ('Brown7612','30',3,'2022-09-09 00:00:00','Brown7612','Grace8309','Approved');
-INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`) VALUES ('DanielR8186','10',1,'2022-11-19 00:00:00','DanielR8186','Joy5658','Approved');
-INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`) VALUES ('Muser6601','40',4,'2022-03-22 00:00:00','Muser6601','Lizy4235','Approved');
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`,`pet_id`) VALUES ('4svasire578','10',1,'2022-11-25 00:00:00','svasire578','alse7656','Approved',12);
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`,`pet_id`) VALUES ('8lghanta355','40',4,'2022-08-12 00:00:00','lghanta355','EsterJ3006','Approved',14);
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`,`pet_id`) VALUES ('Brown7612','30',3,'2022-09-09 00:00:00','Brown7612','Grace8309','Approved',3);
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`,`pet_id`) VALUES ('DanielR8186','10',1,'2022-11-19 00:00:00','DanielR8186','Joy5658','Approved',1);
+INSERT INTO `bookings` (`booking_id`,`payment_amount`,`booking_hours`,`date`,`owner`,`renter`,`status`,`pet_id`) VALUES ('Muser6601','40',4,'2022-03-22 00:00:00','Muser6601','Lizy4235','Approved',4);
 
 
 INSERT INTO `approval` (`booking_id`,`renter_name`,`owner_details`,`pet_id`) VALUES ('4svasire578','svasire578','svasire578',12);
