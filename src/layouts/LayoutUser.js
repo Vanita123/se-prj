@@ -10,7 +10,16 @@ export function LayoutUser({ children }){
   const handleChange = event => {
     console.log('Label ', event.target);
     console.log(event.target.value);
-    navigate(event.target.value);
+    const val = event.target.value;
+    if(roleid == 1){
+      if(val == '/ratings' || val == '/complaints'){
+        navigate(val,{state:{giveFlow: true}});
+      }
+      else{
+        navigate(val);
+      }
+    }
+    navigate(val);
   };
 
   return (
@@ -28,6 +37,8 @@ export function LayoutUser({ children }){
       {roleid == 1? <><option id='action' value="">Action center ⎈</option>
     <option id='rent' value="/search">Search for pet ♞</option>
     <option id='order' value="/reservations">Order history ♾</option>
+    <option id='rating' value="/ratings">Give rating 🀐</option>
+    <option id='complaint' value="/complaints">Raise complaint ⚉</option>
     <option id='chat' value="/chat">Chat section ⍩</option>
   <option id='logout' value="/">Logout ☹︎</option></> : null}
 
@@ -36,14 +47,14 @@ export function LayoutUser({ children }){
     <option id='order' value="/reservations">Pet bookings ♾</option>
     <option id='rating' value="/ratings">Pet ratings 🀐</option>
     <option id='complaint' value="/complaints">Complaints ⚉</option>
-    <option id='order' value="/refunds">Refunds ♾</option>
+    <option id='order' value="/refund">Refunds ♾</option>
     <option id='chat' value="/chat">Chat section ⍩</option>
   <option id='logout' value="/">Logout ☹︎</option></> : null}
 
   {roleid == 3? <><option id='profile' value="">Action center ⎈</option>
     <option id='approval' value="/approvals">To do - Approvals ♾</option>
     <option id='rent' value="/complaints">Customer complaints ♞</option>
-    <option id='order' value="/refunds">Refund requests ♾</option>
+    <option id='order' value="/refund">Refund requests ♾</option>
     <option id='chat' value="/chat">Chat section ⍩</option>
   <option id='logout' value="/">Logout ☹︎</option></> : null}
     

@@ -1,44 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
 import axios from "axios";
 import {  useNavigate } from "react-router-dom";
 
-export default function Reservations(){
+export function Reservations(){
     const [reservations, setReservations] = useState([]);
-    const navigate = useNavigate();
-    
-    useEffect(()=>{
-        //fetch reults from bookings table based on username 
- axios.post("http://localhost:3000/reservation", {
+    const [refundRequested,setRefundRequested] = useState(false);
+    const [reason, setReason] = useState('');
+    const [bookingId, setBookingId] = useState();
+
+    const getReservations =  () => {
+        axios.post("http://localhost:3000/reservation", {
             
-    }).then((response) => {
-     if(response.data){
-       console.log(response);
-       setReservations(response.data);
-     }
-    });
+        }).then((response) => {
+         if(response.data){
+           console.log(response);
+           setReservations(response.data);
+         }
+        });
+    }
 
-   },[])
+    useEffect(()=>{
+        getReservations();
+    },[]);
 
-   function handleRatePet(details) {
-        
-    console.log('in handler');
-    console.log(details);
-    //get the current loggedin username, petid, price 
- navigate('/ratings',{state:{ giveRating: true}}); 
-}
 
-function handleRaiseComplaint(details) {
-        
-    console.log('in handler');
-    console.log(details);
-    //get the current loggedin username, petid, price 
-    navigate('/complaints',{state:{ giveComplaint: true}});
-}
-
-function handleCancelOrder() {
-        
-    alert(`Order cancellation request was sent to Admin. You'll get an email with the next steps. Thankyou!`);
-    //update backend to admin about the order cancellations
+function handleRequest(details) {
+    setRefundRequested(true);
+    setBookingId(details.booking_id);  
 }
 
 
@@ -46,7 +34,7 @@ function handleCancelOrder() {
    const RenderResults = () => {
         const tbodyData = reservations;
         const theadData = Object.keys(tbodyData[0]);
-        theadData.push('Actions');
+       
         return (
             <table>
                 <thead>
@@ -60,29 +48,46 @@ function handleCancelOrder() {
                 {tbodyData.map((row, index) => {
                 return <tr key={index}>
                 {theadData.map((key, index) => {
-                return <td key={row[key]}>{row[key]}</td>
+                return <td key={index}>{row[key]}</td>
                 })}
+                <td key='action'>
+                    <div className="btn-group">
+                    <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={() => handleRequest(row)}>Request refund</button>
+                    </div>
+                    </td>
                 </tr>;
                 })}
-                <tr key='actions'>
-                    <td>
-                    <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleRatePet()}>Rate the pet</button>
-                    <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleRaiseComplaint()}>Raise complaint</button>
-                    <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleCancelOrder()}>Cancel order</button>
-
-                    </td>
-                </tr>
                 </tbody>
                 </table>
            )
    }
+   const handleRefundRequest = () =>{
+    console.log(reason);
+    console.log(bookingId);
+    setRefundRequested(false);
+    
+    //backend post call
 
+    alert('Refund request submitted.We will get back to you soon. Thank you!');
+   }
 
     return (
         <div>
             <h2>Order history</h2>
-            <p>Need data to implement</p>
-            <RenderResults/>
+            {/* {reservations.length == 0 ? <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={getReservations}>Get orders</button> : null} */}
+            {reservations.length>0 && !refundRequested ? <RenderResults/> : null}
+            {refundRequested ? <div>
+                <h3>Enter refund reason</h3>
+           
+                <textarea name='reason' rows="8" cols="50" onChange={(e)=>setReason(e.target.value)} value={reason}/>
+                <br/>
+                <br/>
+                <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleRefundRequest}>Request refund</button>
+
+            </div> : null}
         </div>
     )
-}
+};
+
+export default Reservations;
+

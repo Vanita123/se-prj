@@ -6,13 +6,16 @@ import axios from "axios";
 export default function Complaints(){
     const [complaints, setComplaints] = useState([]);
     const location = useLocation();
-    const {giveComplaint} = location.state ? location.state : {giveComplaint : false} ;
+    const {giveFlow} = location.state ? location.state : {giveFlow : false} ;
     const [givenComplaint, setGivenComplaint] = useState('');
+    const [giveComplaint,setGiveComplaint]= useState(false);
     const navigate = useNavigate();
+    const [reservations, setReservations] = useState([]);
+    const [bookingId, setBookingId] = useState();
 
     useEffect(()=>{
         //get reservations of the logged in user
-        if(!giveComplaint){
+        if(!giveFlow){
             axios.post("http://localhost:3000/complaints", {
             
                 }).then((response) => {
@@ -24,6 +27,16 @@ export default function Complaints(){
                 });
                 
         }
+        else{
+            axios.post("http://localhost:3000/reservation", {
+            
+        }).then((response) => {
+         if(response.data){
+           console.log(response);
+           setReservations(response.data);
+         }
+        });
+        } 
         
         
         //get all pet reservations that have approved feild as False - give an Approve button to admin - onclick set Approved field to True
@@ -58,22 +71,68 @@ export default function Complaints(){
            )
     }
 
-    function handleReturn(){
-        //update the complaint here
-        
+    function handleRequest(details) {
+        console.log(details);
+        setGiveComplaint(true);
+        setBookingId(details.booking_id);  
+    }
+    const RenderResults = () => {
+        const tbodyData = reservations;
+        const theadData = Object.keys(tbodyData[0]);
+       
+        return (
+            <table>
+                <thead>
+                <tr>
+                {theadData.map(heading => {
+                return <th key={heading}>{heading}</th>
+                })}
+                </tr>
+                </thead>
+                <tbody>
+                {tbodyData.map((row, index) => {
+                return <tr key={index}>
+                {theadData.map((key, index) => {
+                return <td key={index}>{row[key]}</td>
+                })}
+                <td key='action'>
+                    <div className="btn-group">
+                    <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={() => handleRequest(row)}>Raise complaint</button>
+                    </div>
+                    </td>
+                </tr>;
+                })}
+                </tbody>
+                </table>
+           )
+   }
+
+
+    function handleReturn(){        
         console.log(givenComplaint);
-        navigate('/reservations');
+        console.log(bookingId);
+        setGiveComplaint(false);
+
+        //backend post call
+
+        alert('Complaint is registered. We will put in best efforts to address your complaint. Thank you!');
+        
     }
 
     return (
         <div>
-            {giveComplaint ? <div>
+            {giveFlow && giveComplaint? <div>
                 <label for='complaint'>Please describe the issue</label>
-                <input type='textarea' name='complaint' onChange={(e)=>{setGivenComplaint(e.target.value)}} value={givenComplaint} required></input>
-                <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleReturn()}>Submit</button>
+                <br/>
+                <br/>
+                <textarea name='complaint' rows="8" cols="50" onChange={(e)=>{setGivenComplaint(e.target.value)}} value={givenComplaint} required/>
+                <br/>
+                <br/>
+                <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={handleReturn}>Submit</button>
                 </div> :  <div> 
-                    <h2>Renter complaints</h2> 
-                   { complaints.length > 0 ? <RenderTable/> : <h4>No complaints to show</h4>}
+                    <h2>Complaints</h2> 
+                   { complaints.length > 0 && !giveFlow? <RenderTable/> : null}
+                   {reservations.length > 0 && giveFlow && !giveComplaint? <RenderResults/> : null}
                 </div>}
           
         </div>

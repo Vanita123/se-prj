@@ -464,7 +464,7 @@ app.post("/complaints", async(req, res) => {
    });
   });
 
-  app.post("/rating", async(req, res) => {
+  app.post("/ratings", async(req, res) => {
     let query = "SELECT * FROM ratings" ;
       console.log(query);
       db.query(query, async (err, rows) => {
@@ -480,7 +480,7 @@ app.post("/complaints", async(req, res) => {
     });
 
     app.post("/refund", async(req, res) => {
-      let query = "SELECT * FROM refund" ;
+      let query = "SELECT * FROM refunds" ;
         console.log(query);
         db.query(query, async (err, rows) => {
          if (err) {

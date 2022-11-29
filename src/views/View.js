@@ -17,11 +17,15 @@ export function View(){
         {username == '' ? null :<> <p> Please use this username - <b>'{username}'</b> and password given to login to Pawsome next time! </p> </>}
         {view == 1 ? 
         (<div className="view-buttongroup">
-            <h2>Welcome {name} to Pawsome!</h2>
+            <h2>Welcome {name} to Pawsome!What are you looking for today?</h2>
             <br/>
             <Link to='/search'><button type="submit" className="button button-primary button-wide-mobile button-sm">Search for pets</button></Link> 
             <br/>
-        <Link to='/reservations'><button type="submit" className="button button-primary button-wide-mobile button-sm">Order history</button></Link>
+        <Link to='/reservations'><button type="submit" className="button button-primary button-wide-mobile button-sm">Order history - refunds</button></Link>
+        <br/>
+        <Link to='/complaints' state={{giveFlow: true}}><button type="submit" className="button button-primary button-wide-mobile button-sm">Raise complaint</button></Link>
+        <br/>
+        <Link to='/ratings' state={{giveFlow: true}}><button type="submit" className="button button-primary button-wide-mobile button-sm">Give rating</button></Link>
         <br/>
         <Link to='/chat'><button type="submit" className="button button-primary button-wide-mobile button-sm">Chat section</button></Link>
         <br/>
@@ -40,7 +44,7 @@ export function View(){
         <br/>
         <Link to='/complaints'><button type="submit" className="button button-primary button-wide-mobile button-sm">Complaints</button></Link>
         <br/>
-        <Link to='/complaints'><button type="submit" className="button button-primary button-wide-mobile button-sm">Refunds</button></Link>
+        <Link to='/refund'><button type="submit" className="button button-primary button-wide-mobile button-sm">Refunds</button></Link>
         <br/>
         <Link to='/chat'><button type="submit" className="button button-primary button-wide-mobile button-sm">Chat section</button></Link>
         </div>
@@ -55,7 +59,7 @@ export function View(){
                 <br/>
                 <Link to='/complaints'><button type="submit" className="button button-primary button-wide-mobile button-sm">Customer complaints</button></Link>
                 <br/>
-                <Link to='/refunds'><button type="submit" className="button button-primary button-wide-mobile button-sm">Refund requests</button></Link>
+                <Link to='/refund'><button type="submit" className="button button-primary button-wide-mobile button-sm">Refund requests</button></Link>
                 <br/>
                 <Link to='/chat'><button type="submit" className="button button-primary button-wide-mobile button-sm">Chat section</button></Link>
 

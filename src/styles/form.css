@@ -121,3 +121,10 @@ a{
   display: flex;
   flex-direction: column;
 }
+
+.btn-group{
+  display: flex;
+  flex-direction: column;
+  gap:6px;
+  width:150px;
+}

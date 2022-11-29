@@ -47,7 +47,8 @@ export default function Approval(){
     return (
         <div>
             <h2>Approve the pets</h2>
-            <RenderTable/>
+            {approvals.length > 0  ? <RenderTable/> : null
+}
         </div>
     )
 }

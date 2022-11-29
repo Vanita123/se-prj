@@ -49,7 +49,7 @@ export default function Refund(){
     return (
         <div>
             <h3>Refunds page</h3>
-            <RenderTable/>
+            {refund.length > 0 ? <RenderTable/> : null}
         </div>
     )
 }
