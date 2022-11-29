@@ -5,6 +5,7 @@ import '../styles/form.css';
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
+import Talk from 'talkjs';
 
 export function UserRegistration(props){
     const navigate = useNavigate();
@@ -84,6 +85,14 @@ const logOut = () => {
        if(profile.username){
         localStorage.setItem("username", JSON.stringify(profile.username));
        localStorage.setItem("roleid", JSON.stringify(profile.roleid));
+       new Talk.User({
+        id: profile.username,
+        name: profile.fname+' '+profile.lname,
+        email: profile.email,
+        photoUrl: '',
+        welcomeMessage: 'Hello,'+' '+profile.fname+'here!',
+        role: profile.role,
+      });
         navigate('/view',{state:{ name: profile.fname, view: profile.roleid, username: profile.username}});
        }
        else if (response.data.errno){
