@@ -47,7 +47,7 @@ export default function Refund(){
     }
 
     return (
-        <div>
+        <div className="table-content">
             <h3>Refunds page</h3>
             {refund.length > 0 ? <RenderTable/> : null}
         </div>

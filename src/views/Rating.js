@@ -5,16 +5,18 @@ import {useLocation} from 'react-router-dom';
 
 export default function Rating(){
     const location = useLocation();
+    console.log(location);
     const [ratings, setRatings] = useState([]);
     const [giveRating, setGiveRating]=useState(false);
     const [givenRating, setGivenRating] = useState(1);
-   const {giveFlow} = location.state ? location.state : {giveFlow:false} ;
+   const giveFlow = localStorage.getItem('roleid') == 1 ;
     const navigate = useNavigate();
     const [reservations, setReservations] = useState([]);
     const [bookingId, setBookingId] = useState();
 
     useEffect(()=>{
         //get reservations of the logged in user
+        console.log(giveFlow);
         if(!giveFlow){
             axios.post("http://localhost:3000/ratings", {
             
@@ -70,7 +72,8 @@ export default function Rating(){
     }
     const RenderResults = () => {
         const tbodyData = reservations;
-        const theadData = Object.keys(tbodyData[0]);
+        const theadData = ['booking_id','owner','payment_amount','pet_id']
+       
        
         return (
             <table>
@@ -111,10 +114,10 @@ export default function Rating(){
     }
 
     return (
-        <div>
+        <div className="table-content">
             {giveFlow && giveRating? 
             <div>
-                 <h3>Pet rating </h3>
+                 <label for='rating'>Please move the below slider for the rating</label>
                     <br/>
                   <input type="range" min="1" max="10" value={givenRating} onInput={(e) => setGivenRating(e.target.value)} required></input>
                   <br/>

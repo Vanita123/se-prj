@@ -128,3 +128,8 @@ a{
   gap:6px;
   width:150px;
 }
+
+.table-content{
+  padding: 20px;
+  width: 60%;
+}

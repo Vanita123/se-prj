@@ -39,7 +39,7 @@ function MyChatComponent() {
       conversation.setParticipant(currentUser);
       conversation.setParticipant(otherUser);
 
-      const chatbox = session.createChatbox();
+      const chatbox = session.createInbox();
       chatbox.select(conversation);
       chatbox.mount(chatboxEl.current);
 
