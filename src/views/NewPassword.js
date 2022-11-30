@@ -14,7 +14,7 @@ const NewPassword = () => {
 
     const handleSubmit = (event) => {
         console.log("Here in new : ",password );
-        axios.post("http://localhost:3000/password", {
+        axios.post("http://localhost:3000/newpassword", {
           email: 'svasire@iu.edu',
           password: password.password,
         }).then((response) => {
@@ -40,13 +40,6 @@ const NewPassword = () => {
             password,
             
         };
-        axios({
-            url: "http://localhost:3000/password",
-            data: body,
-            method: "patch"
-        }).then(() => {
-            // props.history.push("/login");
-        })
     }
 
       return (

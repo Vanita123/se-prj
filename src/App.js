@@ -27,6 +27,9 @@ import Rating from './views/Rating';
 import Refund from './views/Refund';
 import Chat from './views/Chat';
 
+import NewPassword from './views/NewPassword';
+import ResetPassword from './views/ResetPassword';
+
 const App = () => {
 
   const childRef = useRef();
@@ -61,6 +64,9 @@ const App = () => {
           <Route path="/ratings" element={<AppRoute exact path="/rating" component={Rating} layout={LayoutUser} />}  />
           <Route path="/refund" element={<AppRoute exact path="/refund" component={Refund} layout={LayoutUser} />}  />
           <Route path="/chat" element={<AppRoute exact path="/chat" component={Chat} layout={LayoutUser} />}  />
+          <Route path="/reset" element={<AppRoute exact path="/reset" component={ResetPassword} layout={LayoutCustom} />}  />
+          <Route path="/newpassword" element={<AppRoute exact path="/newpassword" component={NewPassword} layout={LayoutCustom} />}  />
+
           </Routes>
   
       )} />

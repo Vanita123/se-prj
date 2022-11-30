@@ -11,6 +11,10 @@ const bcrypt = require('bcrypt');
 const fetch = require('node-fetch');
 var nodemailer = require("nodemailer");
 //  const multer = require('multer');
+const sendResetLink = require("./model/sendEmail");
+const otpGenerator = require('otp-generator');
+const { getResetRequest } = require("./model/resetRequests");
+const e = require("express");
 
 app.use(express.json({limit: '5mb'}));
 app.use(express.urlencoded({limit: '5mb'}));
@@ -508,8 +512,105 @@ app.post("/complaints", async(req, res) => {
         
          });
         });
-  
+ 
+      app.post("/passwordreset", (req, res) => {
+      
+        db.query(
+      
+          "select email from users WHERE  email=?;",
+          [req.body.email],
+          (err, result) => {
+            console.log("result ...", result);
+          const thisUser =  result[0].email;
+        
+        console.log("inside passwordreset", thisUser);
+        res.send({user : thisUser}).status(200).json();
+        console.log()
+        if (thisUser) {
 
+          db.query(
+            "SELECT * FROM security WHERE sq1_ans = ? and sq2_ans= ?;",
+            [req.body.sq1,req.body.sq2],
+            (err, result) => {
+              console.log(result);
+              if (err) {
+                res.send({ err: err });
+              }
+              if (result.length > 0) {
+                console.log("username in fp",result[0].username);
+          
+              }
+          });
+         let otp= otpGenerator.generate(4, { upperCaseAlphabets: false, specialChars: false });
+         db.query(
+
+          "INSERT INTO otp (email, otp) VALUES (?,?)",
+          [thisUser,otp],
+    
+        
+      );
+         console.log("This is email",req.body.email,otp);
+     
+          sendResetLink(thisUser.email, otp);
+
+          console.log("This is email",req.body.email,otp);
+        }
+        
+       res.status(200).json();
+      });
+      });
+
+      app.post("/reset", (req, res) => {
+        const thisRequest = req.body.otp;
+        console.log(thisRequest);
+        if (thisRequest) {
+          console.log("hello",req.body.otp);
+
+          db.query(
+            "SELECT * FROM otp WHERE otp = ?;",
+            [req.body.otp],
+            (err, result) => {
+              console.log("this is rezsult",result.length );
+              if (err) {
+                res.send({ message: "Invalid otp" });
+              }
+              if (result.length > 0) {
+                console.log("otp in reset",result[0].otp);
+                res.send(result); }
+              else{
+                console.log("else",result);
+                res.send({ message: "Invalid otp" });
+              }
+          });
+
+
+       
+        } else {
+            res.status(404).json();
+        }
+      });
+
+
+      app.post("/newpassword", (req, res) => {
+        const thisRequest = req.body.password;
+        console.log(thisRequest);
+        if (thisRequest) {
+          console.log("hello this is new password",req.body.password);
+
+          db.query(
+            "UPDATE USERS set password= ? where email= ?",
+            [req.body.password,req.body.email],
+      
+            () => {
+            }
+        );
+
+
+       
+        } else {
+            res.status(404).json();
+        }
+      });
 
 
 
