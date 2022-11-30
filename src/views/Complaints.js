@@ -6,7 +6,7 @@ import axios from "axios";
 export default function Complaints(){
     const [complaints, setComplaints] = useState([]);
     const location = useLocation();
-    const {giveFlow} = location.state ? location.state : {giveFlow : false} ;
+    const giveFlow = localStorage.getItem('roleid') == 1 ;
     const [givenComplaint, setGivenComplaint] = useState('');
     const [giveComplaint,setGiveComplaint]= useState(false);
     const navigate = useNavigate();
@@ -78,7 +78,8 @@ export default function Complaints(){
     }
     const RenderResults = () => {
         const tbodyData = reservations;
-        const theadData = Object.keys(tbodyData[0]);
+        const theadData = ['booking_id','owner','payment_amount','pet_id']
+       
        
         return (
             <table>
@@ -120,7 +121,7 @@ export default function Complaints(){
     }
 
     return (
-        <div>
+        <div className="table-content">
             {giveFlow && giveComplaint? <div>
                 <label for='complaint'>Please describe the issue</label>
                 <br/>

@@ -12,8 +12,10 @@ export function LayoutUser({ children }){
     console.log(event.target.value);
     const val = event.target.value;
     if(roleid == 1){
+      console.log('inside first if');
       if(val == '/ratings' || val == '/complaints'){
-        navigate(val,{state:{giveFlow: true}});
+        console.log('Inside if - state-true');
+        navigate(event.target.value, { state: {giveFlow: true}});
       }
       else{
         navigate(val);

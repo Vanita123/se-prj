@@ -7,6 +7,7 @@ export function Reservations(){
     const [refundRequested,setRefundRequested] = useState(false);
     const [reason, setReason] = useState('');
     const [bookingId, setBookingId] = useState();
+    const roleid = localStorage.getItem('roleid');
 
     const getReservations =  () => {
         axios.post("http://localhost:3000/reservation", {
@@ -33,7 +34,7 @@ function handleRequest(details) {
 
    const RenderResults = () => {
         const tbodyData = reservations;
-        const theadData = Object.keys(tbodyData[0]);
+        const theadData = ['booking_id','owner','payment_amount','pet_id'];
        
         return (
             <table>
@@ -50,11 +51,11 @@ function handleRequest(details) {
                 {theadData.map((key, index) => {
                 return <td key={index}>{row[key]}</td>
                 })}
-                <td key='action'>
+                {roleid == 1?<td key='action'>
                     <div className="btn-group">
                     <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={() => handleRequest(row)}>Request refund</button>
                     </div>
-                    </td>
+                    </td> : null }
                 </tr>;
                 })}
                 </tbody>
@@ -72,12 +73,12 @@ function handleRequest(details) {
    }
 
     return (
-        <div>
+        <div className="table-content">
             <h2>Order history</h2>
             {/* {reservations.length == 0 ? <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={getReservations}>Get orders</button> : null} */}
             {reservations.length>0 && !refundRequested ? <RenderResults/> : null}
             {refundRequested ? <div>
-                <h3>Enter refund reason</h3>
+                <label for='refund'>Enter refund reason</label>
            
                 <textarea name='reason' rows="8" cols="50" onChange={(e)=>setReason(e.target.value)} value={reason}/>
                 <br/>

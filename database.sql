@@ -80,7 +80,7 @@ CREATE TABLE address(AddressID int NOT NULL AUTO_INCREMENT  PRIMARY KEY, Address
 		    
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ---- create table complaints 
- create table complaints(booking_id varchar(255) not null primary key, pet varchar(255) not null, owner_name varchar(255) not null, renter_name varchar(255) not null, issue varchar(1000) not null, complaints_given varchar(255));
+ create table complaints(id int auto_increment primary key, booking_id varchar(255) not null , issue varchar(1000) not null, foreign key(booking_id) references bookings(booking_id) );
 
 		     
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
