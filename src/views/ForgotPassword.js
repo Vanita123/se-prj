@@ -6,6 +6,8 @@ import Input from "../components/elements/Input";
 import Button from "../components/elements/Button";
 import {  useNavigate } from "react-router-dom";
 
+import FormLabel from '../components/elements/FormLabel';
+
 
 export function ForgotPassword(){
     const navigate = useNavigate();
@@ -72,6 +74,15 @@ export function ForgotPassword(){
 
     return (
         <div className='form-content'>
+        <FormLabel children = {<h4>User login form</h4>}
+  labelHidden = {true}
+  id = {'forgotpassword'}/>
+  {loginStatus == 'error' ? (<div className='form-element'>
+      <h4 htmlFor="error"><b>Invalid data. </b></h4>
+      </div>) : null}
+        <form  action="/forgotpassword" method="POST" encType="multipart/form-date"  onSubmit={handleSubmit}>
+
+        <div className='form-content'>
          <input type="text"  placeholder="Enter email" name="email" value= {answers.email} onChange = {handleChange} required/>
          <input type="text"  placeholder="What would you name your pet?" name="sq1" value= {answers.sq1} onChange = {handleChange} required/>
          <input type="text"  placeholder="What would you name your pet home?" name="sq2" value= {answers.sq2} onChange = {handleChange} required/>
@@ -80,6 +91,8 @@ export function ForgotPassword(){
   
         
         </div>
+        </form>
+    </div>
     )
 
 
