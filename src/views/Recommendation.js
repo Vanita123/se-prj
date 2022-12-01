@@ -16,6 +16,7 @@ export function Recommendation(){
         }).then((response) => {
          if(response.data){
           console.log("recommendations response is",response.data);
+          setResults(response.data);
          }
         });
 
@@ -47,7 +48,7 @@ export function Recommendation(){
         
         console.log('in handler');
         console.log(details);
-        //get the current loggedin username, petid, price 
+
         navigate('/payment',{state:{ petid: details.id, price:details.petDetails['Pet price']}});
     }
     const RenderResults = () => {
