@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+
 import MapRender from "./Map";
 import {  useNavigate } from "react-router-dom";
-
+import axios from "axios";
+import { useEffect, useState } from "react";
 export function Recommendation(){
     const [results,setResults] = useState([]);
 
-    //Get the recommendations 
+
+    useEffect(()=>{
+  
+       
+
+      axios.post("http://localhost:3000/recommendation", {
+            
+        }).then((response) => {
+         if(response.data){
+          console.log("recommendations response is",response.data);
+         }
+        });
+
+    },[]);
     const navigate = useNavigate();
     const handleResults = () => {
         const a = results;
         const cleanedResults = [];
         console.log(a);
           for(var i=0;i<a.length;i++){
-            // const base64String = a[i].image ? a[i].image.data : '';
-            // console.log('base64String');
             cleanedResults[i]= {
                 'image':a[i].image,
                 'petDetails':{

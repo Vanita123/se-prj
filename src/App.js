@@ -30,6 +30,7 @@ import Chat from './views/Chat';
 import NewPassword from './views/NewPassword';
 import ResetPassword from './views/ResetPassword';
 
+
 const App = () => {
 
   const childRef = useRef();
@@ -66,7 +67,6 @@ const App = () => {
           <Route path="/chat" element={<AppRoute exact path="/chat" component={Chat} layout={LayoutUser} />}  />
           <Route path="/reset" element={<AppRoute exact path="/reset" component={ResetPassword} layout={LayoutCustom} />}  />
           <Route path="/newpassword" element={<AppRoute exact path="/newpassword" component={NewPassword} layout={LayoutCustom} />}  />
-
           </Routes>
   
       )} />

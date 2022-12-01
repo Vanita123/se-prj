@@ -29,6 +29,9 @@ export function View(){
         <br/>
         <Link to='/chat'><button type="submit" className="button button-primary button-wide-mobile button-sm">Chat section</button></Link>
         <br/>
+        <br/>
+        <Link to='/recommendation'><button type="submit" className="button button-primary button-wide-mobile button-sm">Recommendation</button></Link>
+        <br/>
         </div>
         )
 

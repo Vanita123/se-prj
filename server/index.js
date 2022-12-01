@@ -69,7 +69,7 @@ const db = mysql.createConnection({
     user: "root",
     host: "localhost",
     password: "password",
-    database: "pawsome",
+    database: "paw",
 });
 db.connect((err) => {
     if (err) {
@@ -364,7 +364,8 @@ app.post("/payment", (req, res) => {
   const orderComplete = 'booked';
   const amount=req.body.amount;
   const hours=req.body.hours;
-
+const owner='Grace8309';
+const pet_id=1;
   console.log(date);
   console.log(hours);
   console.log(username);
@@ -393,11 +394,10 @@ db.query(
 
 db.query(
       
-  "INSERT INTO payments (orderid,amount,booking_hours,date,owner,status) VALUES (?,?,?,?,?,?)",
-    [ orderId,amount,hours,date,username,orderComplete],
+  "INSERT INTO bookings (booking_id,payment_amount,booking_hours,date,owner,renter,status,pet_id) VALUES (?,?,?,?,?,?,?,?)",
+    [ orderId,amount,hours,date,owner,username,orderComplete,pet_id],
     (err, result) => {
       console.log(err,result);
-  
       if(err){
         res.send(err);
       }
@@ -515,6 +515,7 @@ app.post("/complaints", async(req, res) => {
  
       app.post("/passwordreset", (req, res) => {
       
+        console.log("hello",req.body.email);
         db.query(
       
           "select email from users WHERE  email=?;",
@@ -612,6 +613,57 @@ app.post("/complaints", async(req, res) => {
         }
       });
 
+
+      app.post("/recommendation", (req, res) => {
+        var pets=[];
+        let temp='svasire578';
+        db.query(
+          "SELECT pet_id FROM bookings WHERE renter = ?;",
+          [temp],
+          (err, result) => {
+            console.log(result);
+            if (err) {
+              res.send({ err: err });
+            }
+            if (result.length > 0) {
+              console.log("entered if",result);
+              const sql = "SELECT * FROM pets WHERE id = ?;"
+  
+              db.query(sql, [result[0].pet_id] , (err, result) => {
+
+              if (err) {
+              console. log(err)
+              res.send({
+              msg: err
+              })
+            } 
+              if(result){
+                console.log(result);
+                const query = "SELECT * FROM pets WHERE pet = ? or breed= ? or temp =?;"
+
+                db.query(query, [result[0].pet, result[0].breed, result[0].temp] , (err, result) => {
+
+                  if (err) {
+                  console. log(err)
+                  res.send({
+                  msg: err
+                  })
+                } 
+                  if(result){
+                    console.log(result);
+                    res.send(result);
+                   
+                  }
+                });
+               
+              }
+            });
+ }
+
+            
+        });
+       
+      });
 
 
   
