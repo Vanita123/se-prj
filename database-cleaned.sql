@@ -17,6 +17,9 @@ INSERT INTO `users` (`username`,`fname`,`lname`,`email`,`phno`,`password`,`role`
 INSERT INTO `users` (`username`,`fname`,`lname`,`email`,`phno`,`password`,`role`,`roleid`) VALUES ('Vanita324','Vanita','L','vanitha@gmail.com','4324353242','vanitha101','Admin',3);
 INSERT INTO `users` (`username`,`fname`,`lname`,`email`,`phno`,`password`,`role`,`roleid`) VALUES ('Tejaswy324','Tejaswy','G','gltejaswi@gmail.com','4324353242','tejaswy101','Admin',3);
 
+-- new data -- 
+INSERT INTO `users` (`username`,`fname`,`lname`,`email`,`phno`,`password`,`role`,`roleid`) VALUES ('Admin123','Pawsome','Admin','pawsome@gmail.com','123456789','admin','Admin',3);
+
 
 -- 4 for security questions
 CREATE TABLE Security(SQID int PRIMARY KEY NOT NULL AUTO_INCREMENT, username varchar(255) ,

@@ -61,7 +61,7 @@ export function Search(){
     console.log('in handler');
     console.log(details);
     //get the current loggedin username, petid, price 
-    navigate('/payment',{state:{ petid: details.id, price:details.petDetails['Pet price']}});
+    navigate('/payment',{state:{ petid: details.id, price:details.petDetails['Pet price'], owner:details.petDetails['Pet owner']}});
 }
     const RenderResults = () => {
         const res = handleResults();
