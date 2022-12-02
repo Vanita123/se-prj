@@ -68,6 +68,17 @@ function handleRequest(details) {
     setRefundRequested(false);
     
     //backend post call
+    axios.post("http://localhost:3000/refund-renter", {
+            reason : reason,
+            
+        }).then((response) => {
+         if(response.data){
+           console.log(response.data);
+           setReason(response.data);
+        console.log(reason);
+         }
+        });
+
 
     alert('Refund request submitted.We will get back to you soon. Thank you!');
    }

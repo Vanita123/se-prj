@@ -120,7 +120,8 @@ export default function Complaints(){
 
         //backend post call
         axios.post("http://localhost:3000/complaints-renter", {
-            complaints : giveComplaint
+            complaints : giveComplaint,
+            
         }).then((response) => {
          if(response.data){
            console.log(response.data);

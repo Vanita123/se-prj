@@ -2,7 +2,7 @@ const express = require("express");
 const mysql = require("mysql");
 const app = express();
 const cors = require("cors");
-const bodyParser = require("body-parser");
+//const bodyParser = require("body-parser");
 //const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const { generateFromEmail, generateUsername } = require("unique-username-generator");
@@ -52,7 +52,8 @@ app.use(
     })
 
 );
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname));
 
 app.use(
     session({
@@ -454,7 +455,7 @@ transporter.sendMail(mailOptions, function(error, info){
 
 
 app.post("/approval", async(req, res) => {
-let query = "SELECT * FROM approval" ; //only if when approved is false
+let query = "SELECT * FROM pets where approved = 'false'" ; //only if when approved is false
   console.log(query);
   db.query(query, async (err, rows) => {
    if (err) {
@@ -496,22 +497,6 @@ app.post("/complaints-owner", async(req, res) => {
 
   app.post("/complaints-renter", async(req, res) => {
 
-    
-
-    /*let query =  "INSERT INTO Complanints (booking_id,issue) VALUES (?,?)",
-    [booking_id,issue],
-
-      console.log(query);
-      db.query(query, async (err, rows) => {
-       if (err) {
-           console.log("internal error", err);
-           return;
-       }
-       console.log('row data is',rows);  
-     
-    res.send(rows);
-    
-     });*/
      const username = 'alse7656';
 
      db.query(
@@ -535,7 +520,7 @@ app.post("/complaints-owner", async(req, res) => {
     "SELECT booking_id FROM bookings WHERE renter = ?",
     [username],
       (err, result) => {
-        console.log(err,result);
+        console.log(err,'result for insert is'+result);
     
         if(err){
           res.send(err);
@@ -545,15 +530,15 @@ app.post("/complaints-owner", async(req, res) => {
     }
 );
     var booking_id = '1DanielR8186';
-    //const issue = req.body.complaints;
-    console.log(issue);
-    var issue = 'bad pet';
+    const issue = req.body.complaints;
+    console.log('issue is'+issue);
+    //var issue = 'bad pet';
 
      db.query(
       "INSERT INTO Complaints(booking_id,issue) VALUES (?,?)",
       [booking_id,issue],
         (err, result) => {
-          console.log(err,result);
+          console.log(err,result[0]);
       
           if(err){
             res.send(err);
@@ -581,6 +566,59 @@ app.post("/complaints-owner", async(req, res) => {
      });
     });
 
+    app.post("/rating-renter", async(req, res) => {
+
+       const username = 'alse7656';
+       db.query(
+        
+        "UPDATE bookings SET rating_given = 'true' WHERE renter = ?",
+        [username],
+          (err, result) => {
+            console.log(err,result);
+        
+            if(err){
+              res.send(err);
+            }
+            //console.log('row data is ++++++++++++++++',rows);  
+            //res.send(result);
+        }
+    );
+    
+  
+    db.query(
+        
+      "SELECT booking_id FROM bookings WHERE renter = ?",
+      [username],
+        (err, result) => {
+          console.log(err,'result for insert is'+result);
+      
+          if(err){
+            res.send(err);
+          }
+          //console.log('row data is ---------------',rows);  
+          //res.send(result);
+      }
+  );
+      var booking_id = '1DanielR8186';
+      const rating = req.body.ratings;
+      console.log('rating is'+rating);
+  
+       db.query(
+        "INSERT INTO Ratings(booking_id,rating) VALUES (?,?)",
+        [booking_id,rating],
+          (err, result) => {
+            console.log(err,result[0]);
+        
+            if(err){
+              res.send(err);
+            }
+            //console.log('row data is',rows);  
+            //res.send(result);
+        }
+    );
+  });
+
+
     app.post("/refund-owner", async(req, res) => {
       const username = 'Brown7612';
       let query = "SELECT * FROM refunds as a inner join bookings as b on a.booking_id=b.booking_id WHERE b.refund_requested='true' and b.owner= ?" ;;
@@ -597,6 +635,59 @@ app.post("/complaints-owner", async(req, res) => {
        });
       });
 
+
+        app.post("/refund-renter", async(req, res) => {
+    
+           const username = 'alse7656';
+           db.query(
+            
+            "UPDATE bookings SET refund_requested = 'true' WHERE renter = ?",
+            [username],
+              (err, result) => {
+                console.log(err,result);
+            
+                if(err){
+                  res.send(err);
+                }
+                //console.log('row data is ++++++++++++++++',rows);  
+                //res.send(result);
+            }
+        );
+        
+      
+        db.query(
+            
+          "SELECT booking_id FROM bookings WHERE renter = ?",
+          [username],
+            (err, result) => {
+              console.log(err,'result for insert is'+result);
+          
+              if(err){
+                res.send(err);
+              }
+              //console.log('row data is ---------------',rows);  
+              //res.send(result);
+          }
+      );
+          var booking_id = '1DanielR8186';
+          const reason = req.body.reason;
+          console.log('reason is'+reason);
+          //var issue = 'bad pet';
+      
+           db.query(
+            "INSERT INTO Refunds(booking_id,refund_reason) VALUES (?,?)",
+            [booking_id,reason],
+              (err, result) => {
+                console.log(err,result);
+            
+                if(err){
+                  res.send(err);
+                }
+                //console.log('row data is',rows);  
+                //res.send(result);
+            }
+        );
+      });
       app.post("/reservation", async(req, res) => {
         let query = "SELECT * FROM bookings" ;
           console.log(query);

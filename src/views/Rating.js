@@ -108,6 +108,16 @@ export default function Rating(){
         setGiveRating(false);
         
         //backend post call
+        axios.post("http://localhost:3000/rating-renter", {
+            ratings : givenRating,
+            
+        }).then((response) => {
+         if(response.data){
+           console.log(response.data);
+           setRatings(response.data);
+        console.log(ratings);
+         }
+        });
         
         
 
