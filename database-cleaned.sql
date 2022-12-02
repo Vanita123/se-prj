@@ -84,16 +84,16 @@ INSERT INTO `complaints` (`id`, `booking_id`, `issue`) VALUES (2,  '3Brown7612',
 
 -- address table
 		     
-CREATE TABLE address(AddressID int NOT NULL AUTO_INCREMENT  PRIMARY KEY, Address varchar(255) not null,
- City VARCHAR(100) NOT NULL, State varchar(50) not null, Country varchar(50) not null, Zipcode varchar(10) not null, 
+CREATE TABLE address(AddressID int NOT NULL AUTO_INCREMENT  PRIMARY KEY, address varchar(255) not null,
+ city VARCHAR(100) NOT NULL, state varchar(50) not null, country varchar(50) not null, zipcode varchar(10) not null, 
  username varchar(50) not null, foreign key(username) references users(username));
 
 -- address data
 
-INSERT INTO `address` (`AddressID`,`Address`,`City`,`State`,`Country`,`Zipcode`,`username`) VALUES (2,'354 Poor House Drive','Lansdale','PA','USA','28655','Brown7612');
-INSERT INTO `address` (`AddressID`,`Address`,`City`,`State`,`Country`,`Zipcode`,`username`) VALUES (9,'3710 Rawlins St #1380','Dallas','Texas','USA','75219','DanielR8186');
-INSERT INTO `address` (`AddressID`,`Address`,`City`,`State`,`Country`,`Zipcode`,`username`) VALUES (12,' 3128 Zimmerman Lane','er3','432','43','423','alse7656');
-INSERT INTO `address` (`AddressID`,`Address`,`City`,`State`,`Country`,`Zipcode`,`username`) VALUES (7,'301 E 18th St','Oakland','California','USA','94606','EsterJ3006');
+INSERT INTO `address` (`AddressID`,`address`,`city`,`state`,`country`,`zipcode`,`username`) VALUES (2,'354 Poor House Drive','Lansdale','PA','USA','28655','Brown7612');
+INSERT INTO `address` (`AddressID`,`address`,`city`,`state`,`country`,`zipcode`,`username`) VALUES (9,'3710 Rawlins St #1380','Dallas','Texas','USA','75219','DanielR8186');
+INSERT INTO `address` (`AddressID`,`address`,`city`,`state`,`country`,`zipcode`,`username`) VALUES (12,' 3128 Zimmerman Lane','er3','432','43','423','alse7656');
+INSERT INTO `address` (`AddressID`,`address`,`city`,`state`,`country`,`zipcode`,`username`) VALUES (7,'301 E 18th St','Oakland','California','USA','94606','EsterJ3006');
 
 
 		     
