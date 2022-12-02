@@ -18,7 +18,7 @@ export default function Rating(){
         //get reservations of the logged in user
         console.log(giveFlow);
         if(!giveFlow){
-            axios.post("http://localhost:3000/ratings", {
+            axios.post("http://localhost:3000/ratings-owner", {
             
         }).then((response) => {
          if(response.data){
@@ -108,6 +108,7 @@ export default function Rating(){
         setGiveRating(false);
         
         //backend post call
+        
         
 
         alert('Rating submitted.We will put in best efforts to improve the experience. Thank you!');

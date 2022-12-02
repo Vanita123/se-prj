@@ -10,6 +10,7 @@ const { generateFromEmail, generateUsername } = require("unique-username-generat
 const bcrypt = require('bcrypt');
 const fetch = require('node-fetch');
 var nodemailer = require("nodemailer");
+var cookieParser = require('cookie-parser');
 //  const multer = require('multer');
 const sendResetLink = require("./model/sendEmail");
 const otpGenerator = require('otp-generator');
@@ -51,25 +52,26 @@ app.use(
     })
 
 );
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
     session({
         key: "userId",
         secret: "subscribe",
-        resave: false,
-        saveUninitialized: false,
+        resave: true,
+        saveUninitialized: true,
         cookie: {
-            expires: 60 * 60 * 24,
+            expires: 1000* 60 * 60 * 24,
         },
     })
 );
 
+app.use(cookieParser());
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "password",
-    database: "paw",
+    password: "projectse",
+    database: "pawsome",
 });
 db.connect((err) => {
     if (err) {
@@ -131,9 +133,22 @@ app.post("/signin", (req, res) => {
 res.send({username,fname,roleid})
 });
 
+
+// a variable to save a session
+//var session;
+
+
+
 app.post("/login", (req, res) => {
-  const username = req.body.username;
+
+  let session=req.session;
+  session.username=req.body.username;
+  console.log(req.session)
+  console.log(session.username);
+  const username = session.username
+  //const username = req.body.username;
   const password = req.body.password;
+
   db.query(
     "SELECT * FROM Users WHERE username = ?;",
     [username],
@@ -249,7 +264,7 @@ list_global=[];
         const data = await fetch_response.json();
         api_data = data.results[0]["geometry"].location
         console.log('api data is ',data.results[0]["geometry"].location);
-console.log("api data",api_data);
+//console.log("api data",api_data);
 if(rows[i].image){
   rows[i].image.data = rows[i].image.toString('base64');
 }
@@ -453,10 +468,21 @@ res.send(rows);
  });
 });
 
-app.post("/complaints", async(req, res) => {
-  let query = "SELECT * FROM complaints" ;
-    console.log(query);
-    db.query(query, async (err, rows) => {
+app.post("/complaints-owner", async(req, res) => {
+  //let query = "SELECT * FROM complaints" ;
+  //console.log(username);
+  //session=req.session;
+  
+  const username = 'Brown7612';
+  //let session=req.session;
+  // session.username=req.body.username;
+  // console.log(req.session)
+  // console.log(session.username);
+  //const username = session.username
+
+  let query = "SELECT * FROM complaints as a inner join bookings as b on a.booking_id=b.booking_id WHERE b.raised_complaint='true' and b.owner= ?" ;
+  console.log(query);
+    db.query(query, [username] ,async (err, rows) => {
      if (err) {
          console.log("internal error", err);
          return;
@@ -468,10 +494,82 @@ app.post("/complaints", async(req, res) => {
    });
   });
 
-  app.post("/ratings", async(req, res) => {
-    let query = "SELECT * FROM ratings" ;
+  app.post("/complaints-renter", async(req, res) => {
+
+    
+
+    /*let query =  "INSERT INTO Complanints (booking_id,issue) VALUES (?,?)",
+    [booking_id,issue],
+
       console.log(query);
       db.query(query, async (err, rows) => {
+       if (err) {
+           console.log("internal error", err);
+           return;
+       }
+       console.log('row data is',rows);  
+     
+    res.send(rows);
+    
+     });*/
+     const username = 'alse7656';
+
+     db.query(
+      
+      "UPDATE bookings SET raised_complaint = 'true' WHERE renter = ?",
+      [username],
+        (err, result) => {
+          console.log(err,result);
+      
+          if(err){
+            res.send(err);
+          }
+          //console.log('row data is ++++++++++++++++',rows);  
+          //res.send(result);
+      }
+  );
+  
+
+  db.query(
+      
+    "SELECT booking_id FROM bookings WHERE renter = ?",
+    [username],
+      (err, result) => {
+        console.log(err,result);
+    
+        if(err){
+          res.send(err);
+        }
+        //console.log('row data is ---------------',rows);  
+        //res.send(result);
+    }
+);
+    var booking_id = '1DanielR8186';
+    //const issue = req.body.complaints;
+    console.log(issue);
+    var issue = 'bad pet';
+
+     db.query(
+      "INSERT INTO Complaints(booking_id,issue) VALUES (?,?)",
+      [booking_id,issue],
+        (err, result) => {
+          console.log(err,result);
+      
+          if(err){
+            res.send(err);
+          }
+          //console.log('row data is',rows);  
+          //res.send(result);
+      }
+  );
+    });
+    
+
+  app.post("/ratings-owner", async(req, res) => {
+    const username = 'Brown7612';
+    let query = "SELECT * FROM ratings as a inner join bookings as b on a.booking_id=b.booking_id WHERE b.rating_given='true' and b.owner= ?" ;
+      console.log(query);
+      db.query(query,[username], async (err, rows) => {
        if (err) {
            console.log("internal error", err);
            return;
@@ -483,10 +581,11 @@ app.post("/complaints", async(req, res) => {
      });
     });
 
-    app.post("/refund", async(req, res) => {
-      let query = "SELECT * FROM refunds" ;
+    app.post("/refund-owner", async(req, res) => {
+      const username = 'Brown7612';
+      let query = "SELECT * FROM refunds as a inner join bookings as b on a.booking_id=b.booking_id WHERE b.refund_requested='true' and b.owner= ?" ;;
         console.log(query);
-        db.query(query, async (err, rows) => {
+        db.query(query, [username], async (err, rows) => {
          if (err) {
              console.log("internal error", err);
              return;
@@ -512,163 +611,112 @@ app.post("/complaints", async(req, res) => {
         
          });
         });
- 
-      app.post("/passwordreset", (req, res) => {
-      
-        console.log("hello",req.body.email);
-        db.query(
-      
-          "select email from users WHERE  email=?;",
-          [req.body.email],
-          (err, result) => {
-            console.log("result ...", result);
-          const thisUser =  result[0].email;
+  
+        app.post("/reset", (req, res) => {
+          const thisRequest = req.body.otp;
+          console.log(thisRequest);
+          if (thisRequest) {
+            console.log("hello",req.body.otp);
+  
+            db.query(
+              "SELECT * FROM otp WHERE otp = ?;",
+              [req.body.otp],
+              (err, result) => {
+                console.log("this is rezsult",result.length );
+                if (err) {
+                  res.send({ message: "Invalid otp" });
+                }
+                if (result.length > 0) {
+                  console.log("otp in reset",result[0].otp);
+                  res.send(result); }
+                else{
+                  console.log("else",result);
+                  res.send({ message: "Invalid otp" });
+                }
+            });
+  
+  
+         
+          } else {
+              res.status(404).json();
+          }
+        });
+  
+  
+        app.post("/newpassword", (req, res) => {
+          const thisRequest = req.body.password;
+          console.log(thisRequest);
+          if (thisRequest) {
+            console.log("hello this is new password",req.body.password);
+  
+            db.query(
+              "UPDATE USERS set password= ? where email= ?",
+              [req.body.password,req.body.email],
         
-        console.log("inside passwordreset", thisUser);
-        res.send({user : thisUser}).status(200).json();
-        console.log()
-        if (thisUser) {
-
+              () => {
+              }
+          );
+  
+  
+         
+          } else {
+              res.status(404).json();
+          }
+        });
+  
+  
+        app.post("/recommendation", (req, res) => {
+          var pets=[];
+          let temp='svasire578';
           db.query(
-            "SELECT * FROM security WHERE sq1_ans = ? and sq2_ans= ?;",
-            [req.body.sq1,req.body.sq2],
+            "SELECT pet_id FROM bookings WHERE renter = ?;",
+            [temp],
             (err, result) => {
               console.log(result);
               if (err) {
                 res.send({ err: err });
               }
               if (result.length > 0) {
-                console.log("username in fp",result[0].username);
-          
-              }
-          });
-         let otp= otpGenerator.generate(4, { upperCaseAlphabets: false, specialChars: false });
-         db.query(
-
-          "INSERT INTO otp (email, otp) VALUES (?,?)",
-          [thisUser,otp],
+                console.log("entered if",result);
+                const sql = "SELECT * FROM pets WHERE id = ?;"
     
-        
-      );
-         console.log("This is email",req.body.email,otp);
-     
-          sendResetLink(thisUser.email, otp);
-
-          console.log("This is email",req.body.email,otp);
-        }
-        
-       res.status(200).json();
-      });
-      });
-
-      app.post("/reset", (req, res) => {
-        const thisRequest = req.body.otp;
-        console.log(thisRequest);
-        if (thisRequest) {
-          console.log("hello",req.body.otp);
-
-          db.query(
-            "SELECT * FROM otp WHERE otp = ?;",
-            [req.body.otp],
-            (err, result) => {
-              console.log("this is rezsult",result.length );
-              if (err) {
-                res.send({ message: "Invalid otp" });
-              }
-              if (result.length > 0) {
-                console.log("otp in reset",result[0].otp);
-                res.send(result); }
-              else{
-                console.log("else",result);
-                res.send({ message: "Invalid otp" });
-              }
+                db.query(sql, [result[0].pet_id] , (err, result) => {
+  
+                if (err) {
+                console. log(err)
+                res.send({
+                msg: err
+                })
+              } 
+                if(result){
+                  console.log(result);
+                  const query = "SELECT * FROM pets WHERE pet = ? or breed= ? or temp =?;"
+  
+                  db.query(query, [result[0].pet, result[0].breed, result[0].temp] , (err, result) => {
+  
+                    if (err) {
+                    console. log(err)
+                    res.send({
+                    msg: err
+                    })
+                  } 
+                    if(result){
+                      console.log(result);
+                      res.send(result);
+                     
+                    }
+                  });
+                 
+                }
+              });
+   }
+  
+              
           });
-
-
-       
-        } else {
-            res.status(404).json();
-        }
-      });
-
-
-      app.post("/newpassword", (req, res) => {
-        const thisRequest = req.body.password;
-        console.log(thisRequest);
-        if (thisRequest) {
-          console.log("hello this is new password",req.body.password);
-
-          db.query(
-            "UPDATE USERS set password= ? where email= ?",
-            [req.body.password,req.body.email],
-      
-            () => {
-            }
-        );
-
-
-       
-        } else {
-            res.status(404).json();
-        }
-      });
-
-
-      app.post("/recommendation", (req, res) => {
-        var pets=[];
-        let temp='svasire578';
-        db.query(
-          "SELECT pet_id FROM bookings WHERE renter = ?;",
-          [temp],
-          (err, result) => {
-            console.log(result);
-            if (err) {
-              res.send({ err: err });
-            }
-            if (result.length > 0) {
-              console.log("entered if",result);
-              const sql = "SELECT * FROM pets WHERE id = ?;"
-  
-              db.query(sql, [result[0].pet_id] , (err, result) => {
-
-              if (err) {
-              console. log(err)
-              res.send({
-              msg: err
-              })
-            } 
-              if(result){
-                console.log(result);
-                const query = "SELECT * FROM pets WHERE pet = ? or breed= ? or temp =?;"
-
-                db.query(query, [result[0].pet, result[0].breed, result[0].temp] , (err, result) => {
-
-                  if (err) {
-                  console. log(err)
-                  res.send({
-                  msg: err
-                  })
-                } 
-                  if(result){
-                    console.log(result);
-                    res.send(result);
-                   
-                  }
-                });
-               
-              }
-            });
- }
-
-            
+         
         });
-       
-      });
-
-
   
-
-
+  
 
 app.listen(3000, () => {
     console.log("running server on port 3000" );

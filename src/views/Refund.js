@@ -8,7 +8,7 @@ export default function Refund(){
         //get refunds of the loggedin user
        
 
-        axios.post("http://localhost:3000/refund", {
+        axios.post("http://localhost:3000/refund-owner", {
             
         }).then((response) => {
          if(response.data){

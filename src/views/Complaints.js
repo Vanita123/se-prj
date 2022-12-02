@@ -16,7 +16,7 @@ export default function Complaints(){
     useEffect(()=>{
         //get reservations of the logged in user
         if(!giveFlow){
-            axios.post("http://localhost:3000/complaints", {
+            axios.post("http://localhost:3000/complaints-owner", {
             
                 }).then((response) => {
                  if(response.data){
@@ -38,10 +38,14 @@ export default function Complaints(){
         });
         } 
         
+       
+
+
         
         //get all pet reservations that have approved feild as False - give an Approve button to admin - onclick set Approved field to True
         //Have 2 sections - to Approve & approved 
         
+
     },[]);
 
     function RenderTable(){
@@ -115,6 +119,15 @@ export default function Complaints(){
         setGiveComplaint(false);
 
         //backend post call
+        axios.post("http://localhost:3000/complaints-renter", {
+            complaints : giveComplaint
+        }).then((response) => {
+         if(response.data){
+           console.log(response.data);
+           setComplaints(response.data);
+        console.log(complaints);
+         }
+        });
 
         alert('Complaint is registered. We will put in best efforts to address your complaint. Thank you!');
         
