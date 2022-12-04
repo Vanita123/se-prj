@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default function Refund(){
     const [refund, setRefund] = useState([]);
+    const roleid = localStorage.getItem('roleid');
 
     useEffect(()=>{
         //get refunds of the loggedin user
@@ -19,9 +20,15 @@ export default function Refund(){
 
     },[]);
 
+    function handleAdminRequest(details) {
+        console.log(details);
+     
+        //backend - route the refund to the owner 
+    }
+
     function RenderTable(){
         const tbodyData = refund;
-        const theadData = Object.keys(tbodyData[0]);
+        const theadData = ['id','booking_id','refund_reason'];
 
                 return (
             <table>
@@ -38,6 +45,11 @@ export default function Refund(){
                 {theadData.map((key, index) => {
                 return <td key={row[key]}>{row[key]}</td>
                 })}
+                {roleid == 3 ?<td key='action'>
+                    <div className="btn-group">
+                    <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={() => handleAdminRequest(row)}>Approve refund</button>
+                    </div>
+                    </td> : null }
                 </tr>;
                 })}
               
