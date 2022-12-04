@@ -27,11 +27,12 @@ export function View(){
         <br/>
         <Link to='/ratings' state={{giveFlow: true}}><button type="submit" className="button button-primary button-wide-mobile button-sm">Give rating</button></Link>
         <br/>
+     
+        <Link to='/recommendation'><button type="submit" className="button button-primary button-wide-mobile button-sm">Check Recommendations</button></Link>
+        <br/>
         <Link to='/chat'><button type="submit" className="button button-primary button-wide-mobile button-sm">Chat section</button></Link>
         <br/>
-        <br/>
-        <Link to='/recommendation'><button type="submit" className="button button-primary button-wide-mobile button-sm">Recommendation</button></Link>
-        <br/>
+        
         </div>
         )
 
@@ -58,6 +59,8 @@ export function View(){
             view == 3 ?( <div className="view-buttongroup">
                 <h4>Welcome Admin, you've got many things to check upon!</h4> 
                 <br/>
+                <Link to='/reservations'><button type="submit" className="button button-primary button-wide-mobile button-sm">Order history</button></Link>
+        <br/>
                 <Link to='/approvals'><button type="submit" className="button button-primary button-wide-mobile button-sm">To do - Approvals</button></Link> 
                 <br/>
                 <Link to='/complaints'><button type="submit" className="button button-primary button-wide-mobile button-sm">Customer complaints</button></Link>

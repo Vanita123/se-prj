@@ -13,13 +13,17 @@ export default function Approval(){
                    console.log(approvals);
                  }
                 });
-        
-       
     },[]);
+
+    function handleRequest(details) {
+      console.log(details.booking_id);
+      // backend API call - set approval true
+   
+    }
 
     function RenderTable(){
         const tbodyData = approvals;
-        const theadData = Object.keys(tbodyData[0]);
+        const theadData = ['id','name','owner','pet','bredd','amount'];
 
                 return (
             <table>
@@ -36,6 +40,11 @@ export default function Approval(){
                 {theadData.map((key, index) => {
                 return <td key={row[key]}>{row[key]}</td>
                 })}
+                <td key='action'>
+                    <div className="btn-group">
+                    <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={() => handleRequest(row)}>Approve</button>
+                    </div>
+                    </td>
                 </tr>;
                 })}
               {/* Add approve button */}

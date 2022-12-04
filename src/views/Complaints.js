@@ -12,6 +12,7 @@ export default function Complaints(){
     const navigate = useNavigate();
     const [reservations, setReservations] = useState([]);
     const [bookingId, setBookingId] = useState();
+    const roleid = localStorage.getItem('roleid');
 
     useEffect(()=>{
         //get reservations of the logged in user
@@ -48,9 +49,15 @@ export default function Complaints(){
 
     },[]);
 
+    function handleAdminRequest(details) {
+        console.log(details);
+        setBookingId(details.booking_id);  
+        //backend - route the complaint to the owner 
+    }
+
     function RenderTable(){
         const tbodyData = complaints;
-        const theadData = Object.keys(tbodyData[0]);
+        const theadData = ['id','booking_id','issue'];
 
                 return (
             <table>
@@ -67,6 +74,11 @@ export default function Complaints(){
                 {theadData.map((key, index) => {
                 return <td key={row[key]}>{row[key]}</td>
                 })}
+                {roleid == 3 ?<td key='action'>
+                    <div className="btn-group">
+                    <button type="submit" className="button button-primary button-wide-mobile button-sm" onClick={() => handleAdminRequest(row)}>Route complaint</button>
+                    </div>
+                    </td> : null }
                 </tr>;
                 })}
               
@@ -79,10 +91,14 @@ export default function Complaints(){
         console.log(details);
         setGiveComplaint(true);
         setBookingId(details.booking_id);  
+       
     }
+
+
+
     const RenderResults = () => {
         const tbodyData = reservations;
-        const theadData = ['booking_id','owner','payment_amount','pet_id']
+        const theadData = ['booking_id','owner','payment_amount','pet_id'];
        
        
         return (
@@ -136,6 +152,7 @@ export default function Complaints(){
 
     return (
         <div className="table-content">
+            
             {giveFlow && giveComplaint? <div>
                 <label for='complaint'>Please describe the issue</label>
                 <br/>
