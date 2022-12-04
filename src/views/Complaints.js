@@ -27,16 +27,16 @@ export default function Complaints(){
                 });
                 
         }
-        else{
-            axios.post("http://localhost:3000/reservation", {
+        // else{
+        //     axios.post("http://localhost:3000/reservation", {
             
-        }).then((response) => {
-         if(response.data){
-           console.log(response);
-           setReservations(response.data);
-         }
-        });
-        } 
+        // }).then((response) => {
+        //  if(response.data){
+        //    console.log(response);
+        //    setReservations(response.data);
+        //  }
+        // });
+        // } 
         
        
 
@@ -120,7 +120,7 @@ export default function Complaints(){
 
         //backend post call
         axios.post("http://localhost:3000/complaints-renter", {
-            complaints : giveComplaint,
+            complaints : givenComplaint,
             
         }).then((response) => {
          if(response.data){

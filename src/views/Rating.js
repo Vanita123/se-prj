@@ -29,7 +29,7 @@ export default function Rating(){
             
         } 
         else{
-            axios.post("http://localhost:3000/reservation", {
+            axios.post("http://localhost:3000/ratings-owner", {
             
         }).then((response) => {
          if(response.data){
