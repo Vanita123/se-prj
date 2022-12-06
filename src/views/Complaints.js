@@ -17,6 +17,7 @@ export default function Complaints(){
     useEffect(()=>{
         //get reservations of the logged in user
         if(!giveFlow){
+            
             axios.post("http://localhost:3000/complaints-owner", {
                 username:localStorage.getItem("username"),
                 }).then((response) => {

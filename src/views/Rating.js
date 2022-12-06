@@ -109,6 +109,7 @@ export default function Rating(){
         
         //backend post call
         axios.post("http://localhost:3000/rating-renter", {
+            //username:localStorage.getItem("username"),
             ratings : givenRating,
             
         }).then((response) => {

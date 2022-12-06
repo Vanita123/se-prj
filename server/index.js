@@ -86,6 +86,7 @@ db.connect((err) => {
 
 app.post("/signin", (req, res) => {
 
+    
     const fname = req.body.fname;
     const lname = req.body.lname;
     const email = req.body.email;
@@ -470,13 +471,14 @@ res.send(rows);
 });
 
 app.post("/complaints-owner", async(req, res) => {
-
+  
   //const username = 'Brown7612';
   username =req.body.username;
-    console.log(username);
-    var name =  JSON.parse(username);
-    console.log("name",name);
-  
+  console.log(username);
+  var name =  JSON.parse(username);
+  console.log("name",name);
+      
+
   let query = "SELECT * FROM complaints as a inner join bookings as b on a.booking_id=b.booking_id WHERE b.raised_complaint='true' and b.owner= ?" ;
   console.log(query);
     db.query(query, [name] ,async (err, rows) => {
@@ -493,7 +495,12 @@ app.post("/complaints-owner", async(req, res) => {
 
   app.post("/complaints-renter", async(req, res) => {
 
-     const username = 'alse7656';
+    const username = 'alse7656';
+
+  // username =req.body.username;
+  // console.log(username);
+  // var name =  JSON.parse(username);
+  // console.log("name",name);
 
      db.query(
       
@@ -548,7 +555,6 @@ app.post("/complaints-owner", async(req, res) => {
 
   app.post("/ratings-owner", async(req, res) => {
     //const username = 'Brown7612';
-
     username =req.body.username;
     console.log(username);
     var name =  JSON.parse(username);
@@ -570,7 +576,12 @@ app.post("/complaints-owner", async(req, res) => {
 
     app.post("/rating-renter", async(req, res) => {
 
-       const username = 'alse7656';
+      // username =req.body.username;
+      // console.log(username);
+      // var name =  JSON.parse(username);
+      // console.log("name",name);
+
+      const username = 'alse7656';
        db.query(
         
         "UPDATE bookings SET rating_given = 'true' WHERE renter = ?",
@@ -623,12 +634,11 @@ app.post("/complaints-owner", async(req, res) => {
 
     app.post("/refund-owner", async(req, res) => {
       //const username = 'Brown7612';
-
       username =req.body.username;
       console.log(username);
       var name =  JSON.parse(username);
       console.log("name",name);
-  
+      
       let query = "SELECT * FROM refunds as a inner join bookings as b on a.booking_id=b.booking_id WHERE b.refund_requested='true' and b.owner= ?" ;;
         console.log(query);
         db.query(query, [name], async (err, rows) => {
