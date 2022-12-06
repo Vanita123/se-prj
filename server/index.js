@@ -71,7 +71,7 @@ app.use(cookieParser());
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "projectse",
+    password: "password",
     database: "pawsome",
 });
 db.connect((err) => {
