@@ -470,6 +470,23 @@ res.send(rows);
  });
 });
 
+app.post("/approval-true", async(req, res) => {
+  var owner = 'Brown7612';
+  
+  let query = "UPDATE pets SET approved = 'true' WHERE owner = ?" ; //only if when approved is false
+    console.log(query);
+    db.query(query,[owner],async (err, rows) => {
+     if (err) {
+         console.log("internal error", err);
+         return;
+     }
+     console.log('row data is',rows);  
+   
+  res.send(rows);
+  
+   });
+  });
+
 app.post("/complaints-owner", async(req, res) => {
   
   //const username = 'Brown7612';

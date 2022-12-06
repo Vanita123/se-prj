@@ -29,6 +29,7 @@ export default function Complaints(){
                 });
                 
         }
+        
         else{
             axios.post("http://localhost:3000/reservation", {
             
@@ -51,6 +52,15 @@ export default function Complaints(){
         console.log(details);
         setBookingId(details.booking_id);  
         //backend - route the complaint to the owner 
+        axios.post("http://localhost:3000/reservation", {
+            
+        }).then((response) => {
+         if(response.data){
+           console.log(response);
+           setReservations(response.data);
+         }
+        });
+
     }
 
     function RenderTable(){
@@ -89,6 +99,15 @@ export default function Complaints(){
         console.log(details);
         setGiveComplaint(true);
         setBookingId(details.booking_id);  
+        axios.post("http://localhost:3000/complaints-owner", {
+                username:localStorage.getItem("username"),
+                }).then((response) => {
+                 if(response.data){
+                   console.log(response.data);
+                   setComplaints(response.data);
+                console.log(complaints);
+                 }
+                });
        
     }
 

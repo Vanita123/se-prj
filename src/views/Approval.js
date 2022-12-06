@@ -18,6 +18,15 @@ export default function Approval(){
     function handleRequest(details) {
       console.log(details.booking_id);
       // backend API call - set approval true
+      axios.post("http://localhost:3000/approval-true", {
+            
+      }).then((response) => {
+       if(response.data){
+         console.log(response);
+         setApprovals(response.data);
+         console.log(approvals);
+       }
+      });
    
     }
 
