@@ -14,7 +14,7 @@ export default function Approval(){
                  }
                 });
     },[]);
-
+    
     function handleRequest(details) {
       console.log(details.booking_id);
       // backend API call - set approval true
