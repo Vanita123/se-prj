@@ -12,6 +12,7 @@ export function Recommendation(){
        
 
       axios.post("http://localhost:3000/recommendation", {
+        username:localStorage.getItem("username"),
             
         }).then((response) => {
          if(response.data){
