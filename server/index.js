@@ -16,6 +16,7 @@ const sendResetLink = require("./model/sendEmail");
 const otpGenerator = require('otp-generator');
 const { getResetRequest } = require("./model/resetRequests");
 const e = require("express");
+const { json } = require("body-parser");
 
 app.use(express.json({limit: '5mb'}));
 app.use(express.urlencoded({limit: '5mb'}));
@@ -381,8 +382,12 @@ app.post("/payment", (req, res) => {
   const orderComplete = 'booked';
   const amount=req.body.amount;
   const hours=req.body.hours;
-const owner='Grace8309';
-const pet_id=1;
+ 
+  console.log("This is index",index);
+// const user=req.body.owner;
+
+// let owner=JSON.parse(user);
+const pet_id=req.body.pet_id;
   console.log(date);
   console.log(hours);
   console.log(username);
@@ -394,6 +399,8 @@ const pet_id=1;
   console.log(cvv);
   console.log(orderComplete);   
   console.log(amount);   
+  console.log("id",req.body.petid);
+  let owner='Brown7612';
 
 db.query(
   "SELECT * FROM Users WHERE username = ?;",
@@ -625,8 +632,7 @@ app.post("/complaints-owner", async(req, res) => {
           if(err){
             res.send(err);
           }
-          //console.log('row data is ---------------',rows);  
-          //res.send(result);
+        
       }
   );
       var booking_id = '1DanielR8186';

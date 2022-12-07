@@ -216,7 +216,3 @@ return (
 }
 
 export default UserRegistration;
-
-
-
-
