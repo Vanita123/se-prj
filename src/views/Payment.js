@@ -2,13 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import '../styles/form.css';
 import {useLocation} from 'react-router-dom';
+import Talk from 'talkjs';
 
 export default function Payment(){
     const location = useLocation();
    
     const username = JSON.parse(localStorage.getItem('username'));
     const [hours,setHrs] = useState(1);
-    const {price,petid} = location.state;
+    const {price,petid,owner} = location.state;
     const [paymentDetails,setPaymentDetails] = useState({
         date: '',
         amount:JSON.stringify(price*hours),//rate * number_of_hours
@@ -47,8 +48,59 @@ export default function Payment(){
                 }).then((response) => {
                  if(response.data){
                     setPaymentDetails({...paymentDetails, orderComplete:true });
+
+                    var user = localStorage.getItem('username');
+                    var url = "https://api.talkjs.com/v1/tWWjpWJv/users/"+JSON.parse(user);
+                    var currentUser;
+                    var owner;
+
+                    fetch(url, {
+                        headers: {
+                            Authorization: `Bearer sk_test_k8p8zNNQmwjqINnzBNE2MEC47YRm7vQN`
+                      }}).then((response) => response.json()).then((json) => {
+                      if(json){
+                         console.log(json);
+                      
+                         currentUser = new Talk.User({
+                          id:user,
+                          name: json.name,
+                          email: json.email,
+                          photoUrl: json.photoUrl,
+                          welcomeMessage: json.welcomeMessage,
+                          role: json.role,
+                        });
+                    }
+                 });
+                 user = JSON.parse(owner);
+                 url = "https://api.talkjs.com/v1/tWWjpWJv/users/"+JSON.parse(user);
+                 fetch(url, {
+                    headers: {
+                        Authorization: `Bearer sk_test_k8p8zNNQmwjqINnzBNE2MEC47YRm7vQN`
+                  }}).then((response) => response.json()).then((json) => {
+                  if(json){
+                     console.log(json);
+                  
+                     owner = new Talk.User({
+                      id:user,
+                      name: json.name,
+                      email: json.email,
+                      photoUrl: json.photoUrl,
+                      welcomeMessage: json.welcomeMessage,
+                      role: json.role,
+                    });
+                }
+             });
+
+             const session = new Talk.Session({
+                appId: 'tWWjpWJv',
+                me: currentUser,
+              });
+        
+              const conversationId = Talk.oneOnOneId(currentUser, owner);
+              const conversation = session.getOrCreateConversation(conversationId);
+              conversation.setParticipant(currentUser);
+              conversation.setParticipant(owner);
                  }
-                
                 });
         console.log(paymentDetails);
     }
@@ -62,7 +114,7 @@ export default function Payment(){
         <div>
         {
         paymentDetails && paymentDetails.orderComplete
-        ? (<div><h4>Order successful, confirmation email sent! We, the team of Pawsome hope you'll have a great time with the pet!</h4></div>) 
+        ? (<div><h4>Order successful, confirmation email sent! You can use the chat section for communication with the admin or the pet owner!</h4></div>) 
         :
         <div className='form-content'>
         

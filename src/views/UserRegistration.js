@@ -5,6 +5,7 @@ import '../styles/form.css';
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
+import Talk from 'talkjs';
 
 export function UserRegistration(props){
     const navigate = useNavigate();
@@ -84,6 +85,52 @@ const logOut = () => {
        if(profile.username){
         localStorage.setItem("username", JSON.stringify(profile.username));
        localStorage.setItem("roleid", JSON.stringify(profile.roleid));
+       const user ={
+        id:profile.username,
+        name: profile.fname+' '+profile.lname,
+        email: profile.email,
+        photoUrl: '/test.jpg',
+        welcomeMessage: 'Hello,'+' '+profile.fname+' here!',
+        role: profile.role,
+      };
+      const userJSON = JSON.stringify({
+        "name": profile.fname+' '+profile.lname,
+"email": [profile.email],
+"welcomeMessage": "Hello,"+" "+profile.fname+" here!",
+"photoUrl": "/test.jpeg",
+"role":profile.role
+      })
+      const url =   "https://api.talkjs.com/v1/tWWjpWJv/users/"+profile.username;
+      fetch(url, 
+         {
+            
+            method: 'PUT',
+            headers : {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer sk_test_k8p8zNNQmwjqINnzBNE2MEC47YRm7vQN`
+            },
+            body:userJSON
+      }).then((response) => response.json()).then((json) => {console.log(json)});
+
+      const admin = new Talk.User({
+        id: 'Admin123',
+        name: 'Pawsome Admin',
+        email: 'pawsome@gmail.com',
+        photoUrl: '/test.jpg',
+        welcomeMessage: 'Hey, admin here!',
+        role: 'admin',
+      });
+
+      const session = new Talk.Session({
+        appId: 'tWWjpWJv',
+        me: user,
+      });
+
+      const conversationId = Talk.oneOnOneId(user, admin);
+      const conversation = session.getOrCreateConversation(conversationId);
+      conversation.setParticipant(user);
+      conversation.setParticipant(admin);
+
         navigate('/view',{state:{ name: profile.fname, view: profile.roleid, username: profile.username}});
        }
        else if (response.data.errno){

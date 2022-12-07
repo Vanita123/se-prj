@@ -21,7 +21,9 @@ export function Login(){
       console.log(response);
       if(response.data.message){
       setLoginStatus('error');
+      console.log("login status",loginStatus);
     } else {
+
       setLoginStatus('');
       const { fname, roleid} = response.data[0];
       localStorage.setItem("username", JSON.stringify(username));
