@@ -82,7 +82,7 @@ const logOut = () => {
        console.log(response.data);
        profile.username = response.data.username;
        
-       if(profile.username){
+       if(profile.username && profile.username!='Admin123'){
         localStorage.setItem("username", JSON.stringify(profile.username));
        localStorage.setItem("roleid", JSON.stringify(profile.roleid));
        const user ={
@@ -126,8 +126,18 @@ const logOut = () => {
         me: user,
       });
 
-      const conversationId = Talk.oneOnOneId(user, admin);
-      const conversation = session.getOrCreateConversation(conversationId);
+      let conversationId = Talk.oneOnOneId(user, admin);
+      let conversation = session.getOrCreateConversation(conversationId);
+      conversation.setParticipant(user);
+      conversation.setParticipant(admin);
+
+      const session2 = new Talk.Session({
+        appId: 'tWWjpWJv',
+        me: admin,
+      });
+
+      conversationId = Talk.oneOnOneId(admin, user);
+     conversation = session2.getOrCreateConversation(conversationId);
       conversation.setParticipant(user);
       conversation.setParticipant(admin);
 
@@ -216,7 +226,3 @@ return (
 }
 
 export default UserRegistration;
-
-
-
-

@@ -6,6 +6,7 @@ import Talk from 'talkjs';
 
 export default function Payment(){
     const location = useLocation();
+    const pet_id = location.state.petid;
    
     const username = JSON.parse(localStorage.getItem('username'));
     const [hours,setHrs] = useState(1);
@@ -43,7 +44,10 @@ export default function Payment(){
             expmonth:paymentDetails.expmonth,
             expyear:paymentDetails.expyear,
             cvv:paymentDetails.cvv,
-            orderComplete:paymentDetails.orderComplete
+            orderComplete:paymentDetails.orderComplete,
+            owner:localStorage.getItem("results"),
+            pet_id:petid,
+
             
                 }).then((response) => {
                  if(response.data){
