@@ -99,4 +99,8 @@ INSERT INTO `address` (`AddressID`,`address`,`city`,`state`,`country`,`zipcode`,
 INSERT INTO `address` (`AddressID`,`address`,`city`,`state`,`country`,`zipcode`,`username`) VALUES (7,'301 E 18th St','Oakland','California','USA','94606','EsterJ3006');
 
 
-		     
+-- modifications for chat
+
+update users
+set fname='Alse', lname='Queen'
+where username = 'Alse7656';

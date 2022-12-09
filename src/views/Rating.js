@@ -42,7 +42,7 @@ export default function Rating(){
 
     function RenderTable(){
         const tbodyData = ratings;
-        const theadData = Object.keys(tbodyData[0]);
+        const theadData = ['id','booking_id','renter','rating'];
 
                 return (
             <table>
