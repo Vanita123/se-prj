@@ -135,9 +135,3 @@ function MyChatComponent() {
 }
 
 export default MyChatComponent;
-<<<<<<< HEAD
-=======
-/**
- * delete conv - d0b9c8c38dfab5d0b605 (Daniel,Ester), 63529d324e6c8c267a9e (Daniel - Alse)
- */
->>>>>>> scratch/sprint5
